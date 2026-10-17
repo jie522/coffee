@@ -3,44 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#FFF4EE">
+<meta name="theme-color" content="#FBF1E6">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
 <title>豆豆手沖帳</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Huninn&family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
 <style>
-/* Layout: a phone-sized app column — header, scrolling view, fixed bottom tab bar. Soft "strawberry milk + cocoa" café palette. */
+/* Layout: phone-sized app column on a warm café-paper ground — illustrated header, olive "today's tip" card, white bean cards, floating pink add button, rounded bottom tab bar. One committed light look. */
 :root{
-  --bg:#FFF4EE; --surface:#FFFFFF; --surface-2:#FFE9DF; --ink:#4A2C22; --ink-soft:#8C6A5E;
-  --line:#F2D6CB; --accent:#FF7A93; --accent-soft:#FFE0E6; --accent-ink:#FFFFFF;
-  --mint:#5FBFA3; --mint-soft:#DDF4EC; --butter:#FFD36E; --butter-soft:#FFF3D1;
-  --shadow:0 6px 18px rgba(122,62,40,.10);
-  --f-display:"Huninn","Zen Maru Gothic","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --bg:#FBF1E6; --blob:#F7DFCC; --surface:#FFFCF8; --surface-2:#F8EADC; --ink:#4A2A1C; --ink-soft:#8A6A58;
+  --line:#EED9C6; --accent:#F2647E; --accent-soft:#FBDCE2; --accent-ink:#FFFFFF;
+  --rasp:#C65370; --mustard:#C49A45; --teal:#4E9688; --olive:#8D9B6E; --leaf:#7FA05E;
+  --mint:#4E9688; --mint-soft:#DCEDE6; --butter:#F2C66B; --butter-soft:#FBEFD3;
+  --shadow:0 6px 18px rgba(140,80,50,.10);
+  --f-title:"Zen Maru Gothic","Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-display:"Zen Maru Gothic","Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
   --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   --f-num:"Fredoka","Huninn",ui-rounded,system-ui,sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#4A352E; --surface:#5B443B; --surface-2:#6B5046; --ink:#FBE9E1; --ink-soft:#E3CBC0;
-  --line:#7A5E53; --accent:#FF8FA4; --accent-soft:#744550; --accent-ink:#2A1512;
-  --mint:#6CC9AE; --mint-soft:#3C6254; --butter:#F2C35A; --butter-soft:#67562F;
-  --shadow:0 6px 18px rgba(0,0,0,.25); color-scheme:dark }}
-:root[data-theme="dark"]{
-  --bg:#4A352E; --surface:#5B443B; --surface-2:#6B5046; --ink:#FBE9E1; --ink-soft:#E3CBC0;
-  --line:#7A5E53; --accent:#FF8FA4; --accent-soft:#744550; --accent-ink:#2A1512;
-  --mint:#6CC9AE; --mint-soft:#3C6254; --butter:#F2C35A; --butter-soft:#67562F;
-  --shadow:0 6px 18px rgba(0,0,0,.25); color-scheme:dark }
 
 *{box-sizing:border-box}
-html,body{background:var(--bg);color:var(--ink)}
-body{font-family:var(--f-body);font-size:15px;line-height:1.6;
+html{background:var(--bg)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.6;color:var(--ink);
+  background:radial-gradient(circle at 105% -2%,var(--blob) 0,transparent 260px),radial-gradient(circle at -10% 55%,var(--blob) 0,transparent 220px),var(--bg);
+  background-attachment:fixed;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:0 calc(88px + env(safe-area-inset-bottom,0px))}
+  padding-block:0 calc(96px + env(safe-area-inset-bottom,0px))}
 .app{max-width:520px;margin:0 auto}
-h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;line-height:1.3}
-h1{font-size:26px} h2{font-size:20px} h3{font-size:17px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:26px;font-weight:900} h2{font-size:21px;font-weight:900} h3{font-size:17px}
 .num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -51,58 +46,76 @@ button{cursor:pointer}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 
 /* header */
-.top{display:flex;align-items:center;gap:12px;padding-block:18px 6px}
-.top .t{flex:1;min-width:0}
-.setup{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:var(--surface-2);font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
-.chip.pink{background:var(--accent-soft);color:var(--ink)}
-.chip.mint{background:var(--mint-soft);color:var(--ink)}
-.chip.butter{background:var(--butter-soft);color:var(--ink)}
+.top{position:relative;display:flex;align-items:center;gap:10px;padding-block:16px 4px}
+.top .mascot{flex:none}
+.top .t{flex:1;min-width:0;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:6px}
+.brand{padding-right:40px}
+.brand h1{white-space:nowrap;font-family:var(--f-title);font-size:clamp(26px,8.2vw,34px);font-weight:900;letter-spacing:.04em;line-height:1.15}
+.top .sprig{position:absolute;right:-14px;top:44px;z-index:0;pointer-events:none}
+.gear{position:absolute;right:0;top:12px;z-index:2;border:0;background:transparent;width:40px;height:40px;display:grid;place-items:center;color:var(--ink)}
+.setup{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;background:var(--surface-2);font-size:12.5px;color:var(--ink);white-space:nowrap}
+.chip svg{flex:none}
+.chip.c-peach{background:#FBE3D3;border:1.5px solid #F2CDB6}
+.chip.c-pink{background:#FBE0E4;border:1.5px solid #F3C6CE}
+.chip.c-sage{background:#E7EEDC;border:1.5px solid #D2DFC2}
+.chip.pink{background:var(--rasp);color:#fff}
+.chip.butter{background:var(--mustard);color:#fff}
+.chip.mint{background:var(--teal);color:#fff}
 .iconbtn{border:0;background:var(--surface);border-radius:14px;width:42px;height:42px;display:grid;place-items:center;box-shadow:var(--shadow);font-size:18px}
 
 /* knowledge card */
-.tip{background:var(--butter-soft);border-radius:22px;padding:16px 16px 14px;position:relative;overflow:hidden}
-.tip .lab{font-family:var(--f-display);font-size:13px;letter-spacing:.06em;color:var(--ink-soft)}
-.tip p{margin:6px 0 8px}
-.tip .more{border:0;background:transparent;padding:0;color:var(--ink);font-size:13px;text-decoration:underline;text-underline-offset:3px}
-.tip svg.deco{position:absolute;right:-8px;bottom:-10px;opacity:.9}
+.tip{background:var(--olive);color:#fff;border-radius:24px;padding:16px 18px 16px;position:relative;overflow:hidden;min-height:150px;box-shadow:0 8px 20px rgba(110,120,70,.25)}
+.tip .lab{display:flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:700;font-size:14px;letter-spacing:.04em;color:#fff}
+.tip h3{font-size:21px;font-weight:900;color:#fff;margin-top:4px}
+.tip h3,.tip p{max-width:calc(100% - 112px)}
+.tip p{margin:6px 0 12px;color:#fff;opacity:.95}
+.tip .more{border:0;background:#FFFCF8;color:var(--ink);border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:700;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tip svg.deco{position:absolute;right:4px;bottom:6px}
+
+/* section head */
+.sechead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sechead h2{display:flex;align-items:center;gap:8px}
 
 /* search */
 .search{width:100%;border:2px solid var(--line);background:var(--surface);border-radius:16px;padding:10px 14px;outline:none}
 .search:focus{border-color:var(--accent)}
 
 /* bean card */
-.bean{display:flex;gap:12px;align-items:center;background:var(--surface);border-radius:22px;padding:12px 14px;box-shadow:var(--shadow);border:0;text-align:left;width:100%}
+.bean{display:flex;gap:12px;align-items:center;background:var(--surface);border-radius:24px;padding:14px 14px 14px 10px;box-shadow:var(--shadow);border:0;text-align:left;width:100%}
+.bean .pic{flex:none;width:76px;height:76px;border-radius:50%;background:#FBE9DC;display:grid;place-items:center}
 .bean .info{flex:1;min-width:0}
-.bean .name{font-family:var(--f-display);font-size:17px;overflow-wrap:anywhere}
-.bean .meta{font-size:12.5px;color:var(--ink-soft);overflow-wrap:anywhere}
-.bean .chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
-.bean .go{color:var(--ink-soft);font-size:20px}
+.bean .name{font-family:var(--f-display);font-weight:900;font-size:18px;line-height:1.35;overflow-wrap:anywhere}
+.bean .meta{font-size:12.5px;color:var(--ink-soft);overflow-wrap:anywhere;margin-top:2px}
+.bean .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.bean .chips .chip{font-weight:600;padding:3px 12px}
+.bean .go{color:var(--ink-soft);font-size:22px}
 .example{font-size:11px;background:var(--mint-soft);color:var(--ink);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:2px;font-family:var(--f-body)}
 
 .empty{text-align:center;padding:28px 12px;background:var(--surface);border-radius:22px;border:2px dashed var(--line)}
 .empty p{margin:8px 0 0}
 
 /* FAB + buttons */
-.btn{border:0;border-radius:16px;padding:11px 18px;background:var(--surface-2);font-weight:500}
+.btn{border:0;border-radius:16px;padding:11px 18px;background:var(--surface-2);font-weight:600}
 .btn.primary{background:var(--accent);color:var(--accent-ink)}
-.btn.mint{background:var(--mint);color:#fff}
+.btn.mint{background:var(--teal);color:#fff}
 .btn.ghost{background:transparent;border:2px solid var(--line)}
-.btn.danger{background:transparent;color:#D94A5F;border:2px solid currentColor}
+.btn.danger{background:transparent;color:#C8394F;border:2px solid currentColor}
 .btn:disabled{opacity:.5;cursor:default}
 .btn.block{width:100%}
-.fab{position:fixed;right:max(18px,calc(env(safe-area-inset-right,0px) + 18px));bottom:calc(84px + env(safe-area-inset-bottom,0px));border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:13px 20px;font-family:var(--f-display);font-size:16px;box-shadow:0 8px 20px rgba(255,90,120,.35);z-index:5}
+.fab{position:fixed;right:max(18px,calc(env(safe-area-inset-right,0px) + 18px));bottom:calc(96px + env(safe-area-inset-bottom,0px));border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:12px 22px 12px 18px;font-family:var(--f-display);font-weight:900;font-size:18px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 8px 20px rgba(242,100,126,.38);z-index:5}
 
 /* tab bar */
-.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
-  padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:6}
-.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.tab{border:0;background:transparent;border-radius:14px;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:12px;color:var(--ink-soft)}
-.tab .ic{font-size:20px;line-height:1.1;font-family:var(--f-display)}
-.tab[aria-current="page"]{background:var(--accent-soft);color:var(--ink)}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-radius:24px 24px 0 0;box-shadow:0 -4px 18px rgba(140,80,50,.10);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:6}
+.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tab{border:0;background:transparent;border-radius:18px;padding:8px 0 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;font-weight:700;color:var(--ink-soft)}
+.tab svg{display:block}
+.tab[aria-current="page"]{background:var(--accent-soft);color:var(--rasp)}
 
 /* detail */
-.back{border:0;background:transparent;padding:14px 0 4px;color:var(--ink-soft)}
+.back{border:0;background:transparent;padding:14px 0 4px;color:var(--ink-soft);font-weight:600}
 .hero{display:flex;gap:14px;align-items:center}
 .hero .t{min-width:0;flex:1}
 .hero h1{overflow-wrap:anywhere}
@@ -122,7 +135,7 @@ button{cursor:pointer}
 .step{background:var(--surface);border-radius:20px;padding:14px;display:grid;grid-template-columns:40px 1fr;gap:4px 12px;box-shadow:var(--shadow)}
 .step > :not(.n){grid-column:2;min-width:0}
 .step .n{grid-row:1/span 4;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-num);font-weight:700;font-size:17px;background:var(--butter);color:#4A2C22}
-.step:nth-child(2) .n{background:var(--mint);color:#fff}
+.step:nth-child(2) .n{background:var(--teal);color:#fff}
 .step:nth-child(n+3) .n{background:var(--accent);color:var(--accent-ink)}
 .step .hd{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
 .step .hd h3{font-size:16px}
@@ -135,12 +148,12 @@ button{cursor:pointer}
 .flav{background:var(--surface);border-radius:20px;padding:4px 14px}
 .flav .r{display:grid;grid-template-columns:88px 1fr;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
 .flav .r:last-child{border:0}
-.flav .r .k{font-family:var(--f-display);font-size:13.5px}
-.flav .r .k small{display:block;font-family:var(--f-body);font-size:11px;color:var(--ink-soft);letter-spacing:.04em}
+.flav .r .k{font-family:var(--f-display);font-weight:700;font-size:13.5px}
+.flav .r .k small{display:block;font-family:var(--f-body);font-weight:400;font-size:11px;color:var(--ink-soft);letter-spacing:.04em}
 .dial{display:grid;gap:10px}
 .dial .d{border-radius:18px;padding:12px 14px;font-size:14px}
 .dial .d.u{background:var(--mint-soft)} .dial .d.o{background:var(--accent-soft)}
-.dial .d b{font-family:var(--f-display);font-weight:400;display:block;margin-bottom:2px}
+.dial .d b{font-family:var(--f-display);font-weight:700;display:block;margin-bottom:2px}
 
 .log{background:var(--surface);border-radius:18px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
 .log .lh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
@@ -164,39 +177,41 @@ textarea.inp{min-height:76px;resize:vertical}
 /* timer */
 .clock{text-align:center;padding:18px 10px 14px;background:var(--surface);border-radius:28px;box-shadow:var(--shadow)}
 .clock .big{font-family:var(--f-num);font-size:64px;font-weight:600;line-height:1}
-.clock .cur{font-family:var(--f-display);font-size:20px;margin-top:10px}
+.clock .cur{font-family:var(--f-display);font-weight:900;font-size:20px;margin-top:10px}
 .clock .tgt{font-size:15px;margin-top:2px}
 .clock .tgt b{font-family:var(--f-num);font-size:30px;color:var(--accent)}
 .bar{display:flex;gap:4px;margin-top:14px;height:12px}
 .bar i{flex:1;border-radius:6px;background:var(--surface-2);overflow:hidden;position:relative}
-.bar i span{position:absolute;inset:0;width:0;background:var(--mint);border-radius:6px}
+.bar i span{position:absolute;inset:0;width:0;background:var(--teal);border-radius:6px}
 .nextup{font-size:13.5px;color:var(--ink-soft);margin-top:10px}
 
 /* sheet */
-.scrim{position:fixed;inset:0;background:rgba(40,20,14,.45);z-index:10;display:flex;align-items:flex-end;justify-content:center}
+.scrim{position:fixed;inset:0;background:rgba(60,30,18,.40);z-index:10;display:flex;align-items:flex-end;justify-content:center}
 .sheet{background:var(--bg);width:100%;max-width:560px;border-radius:26px 26px 0 0;max-height:88%;overflow:auto;
   padding:18px max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
 .cupsel{display:flex;gap:6px}
 .cupsel button{border:0;background:var(--surface-2);border-radius:12px;width:44px;height:44px;font-size:20px}
 .cupsel button[aria-pressed="true"]{background:var(--butter)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.kv dt{color:var(--ink-soft)} .kv dd{margin:0}
 
-.kn{background:var(--surface);border-radius:20px;padding:14px 16px}
+.kn{background:var(--surface);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow)}
 .kn .tag{font-size:11.5px;letter-spacing:.06em}
-.kn h3{margin:4px 0 4px}
+.kn h3{margin:6px 0 4px}
 .kn p{margin:0;font-size:14px}
 
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;z-index:20}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(160px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;z-index:20}
 
-@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
-.wob{animation:wob 2.4s ease-in-out infinite;transform-origin:50% 80%}
+@keyframes wob{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.wob{animation:wob 2.6s ease-in-out infinite;transform-origin:50% 90%}
 @media (prefers-reduced-motion:reduce){.wob{animation:none}}
 </style>
 
 <div class="app" id="app"></div>
 <nav class="tabs" aria-label="主要分頁"><div class="in">
-  <button class="tab" id="tab-home" data-tab="home"><span class="ic">◍</span>豆櫃</button>
-  <button class="tab" id="tab-timer" data-tab="timer"><span class="ic">◷</span>沖煮計時</button>
-  <button class="tab" id="tab-know" data-tab="know"><span class="ic">✎</span>咖啡知識</button>
+  <button class="tab" id="tab-home" data-tab="home"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(20 12 12)"/><path d="M14.6 3.6C9.6 8 15 14 9.4 20.4"/></svg>豆櫃</button>
+  <button class="tab" id="tab-timer" data-tab="timer"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5h4"/></svg>沖煮計時</button>
+  <button class="tab" id="tab-know" data-tab="know"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>咖啡知識</button>
 </div></nav>
 <div id="layer"></div>
 
@@ -237,29 +252,79 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const uid = ()=> "b"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const today = ()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
 
-function beanSvg(roast,size=56,mood="happy"){
+const INK = "#3A1E14";
+function heartPath(x,y,s,fill){
+  return `<path d="M${x} ${y+s*0.9} C${x-s*1.7} ${y-s*0.1} ${x-s*0.8} ${y-s*1.4} ${x} ${y-s*0.45} C${x+s*0.8} ${y-s*1.4} ${x+s*1.7} ${y-s*0.1} ${x} ${y+s*0.9}Z" fill="${fill}"/>`;
+}
+function beanSvg(roast,size=56,mood="happy",prop=""){
   const c = ROAST_COLOR[roast]||"#8F5635";
-  const mouth = mood==="sleep" ? '<path d="M25 38 q5 3 10 0" stroke="#3A1E14" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
-    : '<path d="M24 36 q6 6 12 0" stroke="#3A1E14" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
-  const leg = '<path d="M23 40 L21 53 M37 40 L39 53" stroke="#3A1E14" stroke-width="3.2" stroke-linecap="round" fill="none"/><ellipse cx="19.5" cy="55" rx="5" ry="2.8" fill="#3A1E14"/><ellipse cx="40.5" cy="55" rx="5" ry="2.8" fill="#3A1E14"/>';
+  const mouth = mood==="sleep" ? `<path d="M25 38 q5 3 10 0" stroke="${INK}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`
+    : `<path d="M24 36 q6 6 12 0" stroke="${INK}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+  const leg = `<path d="M23 40 L21 53 M37 40 L39 53" stroke="${INK}" stroke-width="3.2" stroke-linecap="round" fill="none"/><ellipse cx="19.5" cy="55" rx="5" ry="2.8" fill="${INK}"/><ellipse cx="40.5" cy="55" rx="5" ry="2.8" fill="${INK}"/>`;
+  const arm = (d,hx,hy)=>`<path d="${d}" stroke="${INK}" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="${hx}" cy="${hy}" r="2.4" fill="${INK}"/>`;
+  let arms, extra="";
+  if(prop==="sprout"){
+    arms = arm("M15 30 q-6 4 -6 10",9,40) + arm("M45 27 q6 -3 7 -11",52,16);
+    extra = `<path d="M52 16 L53 4" stroke="#6E9150" stroke-width="2.2" stroke-linecap="round"/>
+      <ellipse cx="49" cy="6" rx="4.4" ry="2.4" fill="#7FA05E" transform="rotate(-30 49 6)"/>
+      <ellipse cx="57" cy="5" rx="4.4" ry="2.4" fill="#93B36F" transform="rotate(30 57 5)"/>`;
+  } else if(prop==="cup"){
+    arms = arm("M15 31 q1 7 9 9",24,40) + arm("M45 31 q-1 7 -9 9",36,40);
+    extra = `<path d="M23 37 h14 v5 a5 5 0 0 1 -5 5 h-4 a5 5 0 0 1 -5 -5z" fill="#FFFCF8" stroke="#E6CDBB" stroke-width="1"/>
+      <path d="M37 39 a3 3 0 0 1 0 6" stroke="#FFFCF8" stroke-width="2" fill="none"/>
+      <ellipse cx="30" cy="37.4" rx="6.4" ry="1.5" fill="#6B3B24"/>
+      ${heartPath(50,9,4.2,"#F2647E")}`;
+  } else {
+    arms = arm("M15 30 q-6 4 -6 10",9,40) + arm("M45 30 q6 4 6 10",51,40);
+  }
   return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" aria-hidden="true">
     ${leg}
     <g transform="translate(6 0) scale(.8)">
     <ellipse cx="30" cy="33" rx="21" ry="24" fill="${c}"/>
-    <ellipse cx="23" cy="22" rx="7" ry="5" fill="#fff" opacity=".18"/>
-    <path d="M30 10 C24 22 36 40 30 56" stroke="#2E160D" stroke-opacity=".35" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="23" cy="22" rx="7" ry="5" fill="#fff" opacity=".2"/>
+    <path d="M30 10 C24 22 36 40 30 56" stroke="#2E160D" stroke-opacity=".3" stroke-width="2.5" fill="none" stroke-linecap="round"/>
     <circle cx="22" cy="30" r="2.6" fill="#2A140C"/><circle cx="38" cy="30" r="2.6" fill="#2A140C"/>
     <circle cx="21" cy="29" r=".9" fill="#fff"/><circle cx="37" cy="29" r=".9" fill="#fff"/>
-    <ellipse cx="17" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".75"/>
-    <ellipse cx="43" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".75"/>
-    ${mouth}</g></svg>`;
+    <ellipse cx="17" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".8"/>
+    <ellipse cx="43" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".8"/>
+    ${mouth}</g>${arms}${extra}</svg>`;
 }
-const cupSvg = `<svg class="deco" width="84" height="84" viewBox="0 0 84 84" aria-hidden="true">
-  <path d="M14 34h44v18a20 20 0 0 1-20 20h-4a20 20 0 0 1-20-20z" fill="#FFFFFF" opacity=".85"/>
-  <path d="M58 40h6a8 8 0 0 1 0 16h-7" stroke="#FFFFFF" stroke-opacity=".85" stroke-width="5" fill="none"/>
-  <circle cx="28" cy="50" r="2" fill="#4A2C22"/><circle cx="44" cy="50" r="2" fill="#4A2C22"/>
-  <path d="M32 56q4 4 8 0" stroke="#4A2C22" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M28 26q-4-6 0-12M40 26q-4-6 0-12" stroke="#FFFFFF" stroke-opacity=".9" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+function cupArt(w=120,cls="deco"){
+  return `<svg class="${cls}" width="${w}" height="${Math.round(w*110/130)}" viewBox="0 0 130 110" aria-hidden="true">
+    <path d="M48 36 q-6 -7 0 -14 q6 -7 0 -14 M62 34 q-6 -7 0 -14 q6 -7 0 -14" stroke="#FFFFFF" stroke-opacity=".85" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse cx="62" cy="97" rx="50" ry="10" fill="#B9804F"/>
+    <ellipse cx="62" cy="94" rx="40" ry="6.5" fill="#D9A673"/>
+    <path d="M22 48 h80 v16 a30 30 0 0 1 -30 30 h-20 a30 30 0 0 1 -30 -30z" fill="#FFFCF8"/>
+    <path d="M101 56 a11 11 0 0 1 0 22 h-5" stroke="#FFFCF8" stroke-width="6" fill="none"/>
+    <ellipse cx="62" cy="48" rx="40" ry="7" fill="#6B3B24" stroke="#FFFCF8" stroke-width="3"/>
+    <circle cx="51" cy="68" r="2.8" fill="#4A2A1C"/><circle cx="73" cy="68" r="2.8" fill="#4A2A1C"/>
+    <ellipse cx="44" cy="75" rx="4.4" ry="2.6" fill="#F7A3B2"/><ellipse cx="80" cy="75" rx="4.4" ry="2.6" fill="#F7A3B2"/>
+    <path d="M57 74 q5 5 10 0" stroke="#4A2A1C" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g transform="rotate(14 113 44)">
+      <ellipse cx="113" cy="44" rx="11" ry="14" fill="#A8693F"/>
+      <path d="M113 31 C109 39 117 49 113 58" stroke="#2E160D" stroke-opacity=".3" stroke-width="1.8" fill="none"/>
+      <circle cx="109" cy="42" r="1.7" fill="#2A140C"/><circle cx="117" cy="42" r="1.7" fill="#2A140C"/>
+      <path d="M110.5 47 q2.5 2.5 5 0" stroke="#2A140C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </g>
+    <circle cx="98" cy="15" r="12" fill="#FFFCF8"/><path d="M93 24 l-3 7 l8 -5z" fill="#FFFCF8"/>
+    ${heartPath(98,15,5,"#F2647E")}
+  </svg>`;
+}
+const cupSvg = cupArt(110);
+const icoBean = (col="#9A5A34",s=14)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-hidden="true"><ellipse cx="10" cy="10" rx="6.5" ry="8.5" fill="${col}" transform="rotate(25 10 10)"/><path d="M12.5 3 C8 7 13 12 7.5 17" stroke="#fff" stroke-opacity=".7" stroke-width="1.4" fill="none"/></svg>`;
+const icoLeaf = `<svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17 C3 8 9 3 17 3 C17 11 12 17 3 17Z" fill="#7FA05E"/><path d="M4 16 L13 7" stroke="#fff" stroke-opacity=".7" stroke-width="1.3"/></svg>`;
+const icoSun = `<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#FFF3C4" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>`;
+const icoGear = `<svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M10.3 2.5h3.4l.5 2.6 1.7.9 2.4-1.2 2.4 2.4-1.2 2.4.9 1.7 2.6.5v3.4l-2.6.5-.9 1.7 1.2 2.4-2.4 2.4-2.4-1.2-1.7.9-.5 2.6h-3.4l-.5-2.6-1.7-.9-2.4 1.2-2.4-2.4 1.2-2.4-.9-1.7-2.6-.5v-3.4l2.6-.5.9-1.7-1.2-2.4 2.4-2.4 2.4 1.2 1.7-.9z"/><circle cx="12" cy="12" r="3.2"/></svg>`;
+const icoPlus = `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5v13M3.5 10h13" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`;
+const sparks = (col="#E8B04B")=>`<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M5 10 L2 7 M11 6 L11 2 M17 10 L20 7" stroke="${col}" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+const heartTitle = `<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">${heartPath(13,14,6.5,"#F28AA0")}<path d="M24 8 L27 5 M26 14 L30 14 M24 20 L27 23" stroke="#E8B04B" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+const sprig = `<svg class="sprig" width="70" height="90" viewBox="0 0 70 90" aria-hidden="true">
+  <path d="M60 88 C52 64 46 40 40 6" stroke="#9AAE7E" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="34" cy="20" rx="9" ry="4.5" fill="#B5C69B" transform="rotate(-40 34 20)"/>
+  <ellipse cx="50" cy="28" rx="10" ry="5" fill="#A3B886" transform="rotate(35 50 28)"/>
+  <ellipse cx="38" cy="46" rx="10" ry="5" fill="#A3B886" transform="rotate(-35 38 46)"/>
+  <ellipse cx="56" cy="56" rx="10" ry="5" fill="#B5C69B" transform="rotate(40 56 56)"/>
+  <ellipse cx="44" cy="72" rx="9" ry="4.5" fill="#B5C69B" transform="rotate(-30 44 72)"/></svg>`;
 
 /* ---------- recipe estimator (no AI needed) ---------- */
 function estimateRecipe(b){
@@ -383,19 +448,21 @@ function render(){
 
 function header(){
   return `<header class="top">
-    <div class="wob">${beanSvg("中焙",54)}</div>
-    <div class="t"><h1>豆豆手沖帳</h1>
-      <div class="setup"><span class="chip">${DOSE}g 豆量</span><span class="chip">C40 紅軸</span><span class="chip">V60 玻璃</span></div></div>
+    <div class="mascot wob">${beanSvg("中焙",76,"happy","sprout")}</div>
+    <div class="t"><div class="brand"><h1>豆豆手沖帳</h1>${heartTitle}</div>
+      <div class="setup"><span class="chip c-peach">${icoBean("#9A5A34")}${DOSE}g 豆量</span><span class="chip c-pink">${icoBean("#C65370")}C40 紅軸</span><span class="chip c-sage">${icoLeaf}V60 玻璃</span></div></div>
+    <button class="gear" data-act="settings" id="settings-btn" aria-label="器具設定">${icoGear}</button>
+    ${sprig}
   </header>`;
 }
 
 function tipCard(){
   const k=KNOW[ui.tipIdx%KNOW.length];
   return `<section class="tip" aria-label="今日咖啡小知識">
-    <div class="lab">今日小知識 · ${esc(k.tag)}</div>
-    <h3 style="margin-top:2px">${esc(k.t)}</h3>
-    <p class="small" style="padding-right:64px">${esc(k.p)}</p>
-    <button class="more" id="tip-next" data-act="tip-next">再一則</button>
+    <div class="lab">${icoSun}今日小知識 · ${esc(k.tag)}</div>
+    <h3>${esc(k.t)}</h3>
+    <p class="small">${esc(k.p)}</p>
+    <button class="more" id="tip-next" data-act="tip-next">再一則 ›</button>
     ${cupSvg}
   </section>`;
 }
@@ -403,7 +470,7 @@ function tipCard(){
 function beanCard(b){
   const r=b.recipe||{}; const n=(b.logs||[]).length; const av=avgRating(b);
   return `<button class="bean" data-act="open" data-id="${esc(b.id)}" id="bean-${esc(b.id)}">
-    ${beanSvg(b.roast,52)}
+    <span class="pic">${beanSvg(b.roast,70,"happy","cup")}</span>
     <div class="info">
       <div class="name">${esc(b.name||"未命名的豆子")}${b.example?'<span class="example">範例</span>':''}</div>
       <div class="meta">${esc([b.origin,b.process,b.roast].filter(Boolean).join(" · "))}</div>
@@ -428,11 +495,11 @@ function viewList(){
   return `${header()}<div class="stack" style="margin-top:10px">
     ${tipCard()}
     ${beans.length>2?`<input class="search" id="q" type="search" placeholder="搜尋豆名、產區、風味…" value="${esc(ui.q)}" aria-label="搜尋豆子">`:""}
-    <div class="row" style="justify-content:space-between"><h2>我的豆櫃</h2><span class="muted small num">${beans.length} 支</span></div>
+    <div class="sechead"><h2>${icoBean("#8A5232",24)}我的豆櫃${sparks()}</h2><span class="muted small num">${beans.length} 支</span></div>
     ${store.mode==="local"&&ready?`<div class="status small">目前存在這台裝置的瀏覽器裡。登入 Claude 開啟這頁，豆子就會同步，也能請 Claude 幫你新增。</div>`:""}
     <div class="stack" style="gap:10px">${body}</div>
   </div>
-  ${canWrite?`<button class="fab" id="fab-add" data-act="new">＋ 新豆子</button>`:""}`;
+  ${canWrite?`<button class="fab" id="fab-add" data-act="new">${icoPlus}新豆子</button>`:""}`;
 }
 
 function viewDetail(b){
@@ -484,7 +551,7 @@ function viewDetail(b){
     <section class="section"><h2>滋味微調</h2><div class="dial">
       <div class="d u"><b>喝起來太酸、太淡</b>${esc(r.dialIn.under)}</div>
       <div class="d o"><b>喝起來太苦、太澀</b>${esc(r.dialIn.over)}</div></div></section>
-    ${b.tip?`<section class="tip"><div class="lab">這支豆子的小知識</div><p class="small" style="padding-right:64px">${esc(b.tip)}</p>${cupSvg}</section>`:""}
+    ${b.tip?`<section class="tip"><div class="lab">這支豆子的小知識</div><p class="small">${esc(b.tip)}</p>${cupSvg}</section>`:""}
 
     <section class="section"><div class="row" style="justify-content:space-between"><h2>沖煮紀錄</h2><span class="muted small">${logs.length} 杯</span></div>
       ${logs.length?logs.map(l=>`<div class="log"><div class="lh"><span class="num">${esc(l.date)}</span><span class="cups" aria-label="評分 ${esc(l.rating)} 分">${"☕".repeat(Number(l.rating)||0)}</span></div>
@@ -694,6 +761,22 @@ function openLog(b){
   };
 }
 
+/* ---------- settings sheet ---------- */
+function openSettings(){
+  const layer=$("#layer");
+  layer.innerHTML=`<div class="scrim" data-act="close-sheet"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="器具設定">
+    <div class="row" style="justify-content:space-between"><h2>器具設定</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
+    <div class="card"><dl class="kv">
+      <dt>豆量</dt><dd class="num">${DOSE}g（固定）</dd>
+      <dt>磨豆機</dt><dd>Comandante C40 · 紅軸（每響約 15 微米）</dd>
+      <dt>濾杯</dt><dd>HARIO V60 玻璃（02 / 03 號）</dd>
+      <dt>粉水比</dt><dd class="num">1:15（450g）或 1:16（480g）</dd>
+    </dl></div>
+    <div class="status small">${store.mode==="db"?"豆子存在你的 Claude 帳號裡，每台裝置看到的都一樣。":"豆子存在這台裝置的瀏覽器裡，換裝置或清除瀏覽資料就會不見。"}</div>
+  </div></div>`;
+  layer.onclick=ev=>{ const t=ev.target.closest("[data-act]"); if(t && t.dataset.act==="close-sheet" && (t===ev.target || t.classList.contains("iconbtn"))){ layer.innerHTML=""; layer.onclick=null; } };
+}
+
 /* ---------- events ---------- */
 document.addEventListener("input",ev=>{
   if(ev.target.id==="q"){ ui.q=ev.target.value; const pos=ev.target.selectionStart; render(); const q=$("#q"); if(q){ q.focus(); try{q.setSelectionRange(pos,pos);}catch(e){} } }
@@ -707,6 +790,7 @@ document.addEventListener("click",async ev=>{
   const a=t.dataset.act, id=t.dataset.id;
   if(a!=="del") ui.confirmDel=null;
   switch(a){
+    case "settings": openSettings(); break;
     case "tip-next": ui.tipIdx=(ui.tipIdx+1)%KNOW.length; render(); break;
     case "open": go("home","detail",id); break;
     case "back": { const backId = ui.view==="form" && ui.form?.id && beanById(ui.form.id) ? ui.form.id : null;
