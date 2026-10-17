@@ -83,8 +83,10 @@ button{cursor:pointer}
 .search:focus{border-color:var(--accent)}
 
 /* bean card */
-.bean{display:flex;gap:12px;align-items:center;background:var(--surface);border-radius:24px;padding:14px 14px 14px 10px;box-shadow:var(--shadow);border:0;text-align:left;width:100%}
-.bean .pic{flex:none;width:76px;height:76px;border-radius:50%;background:#FBE9DC;display:grid;place-items:center}
+.bean{display:flex;gap:14px;align-items:center;background:var(--surface);border-radius:24px;padding:10px 14px 10px 10px;box-shadow:var(--shadow);border:0;text-align:left;width:100%}
+.bean .pic,.hero .pic{flex:none;width:104px;height:104px;overflow:hidden;border-radius:34px 46px 40px 44px / 40px 36px 46px 40px;background:#FBE9DC;display:block;line-height:0}
+.bean .pic svg,.hero .pic svg{width:100%;height:100%;display:block}
+.hero .pic{width:92px;height:92px}
 .bean .info{flex:1;min-width:0}
 .bean .name{font-family:var(--f-display);font-weight:900;font-size:18px;line-height:1.35;overflow-wrap:anywhere}
 .bean .meta{font-size:12.5px;color:var(--ink-soft);overflow-wrap:anywhere;margin-top:2px}
@@ -109,8 +111,8 @@ button{cursor:pointer}
 /* tab bar */
 .tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-radius:24px 24px 0 0;box-shadow:0 -4px 18px rgba(140,80,50,.10);
   padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:6}
-.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.tab{border:0;background:transparent;border-radius:18px;padding:8px 0 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;font-weight:700;color:var(--ink-soft)}
+.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.tab{border:0;background:transparent;border-radius:18px;padding:8px 0 6px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;font-weight:700;color:var(--ink-soft)}
 .tab svg{display:block}
 .tab[aria-current="page"]{background:var(--accent-soft);color:var(--rasp)}
 
@@ -166,6 +168,21 @@ button{cursor:pointer}
 .kitem .kn-n{grid-row:1/span 2;width:28px;height:28px;border-radius:50%;background:var(--butter);color:#4A2C22;display:grid;place-items:center;font-family:var(--f-num);font-weight:700;font-size:14px}
 .kitem h3{font-size:16px;font-weight:900;grid-column:2}
 .kitem p{margin:0;font-size:14px;line-height:1.75;grid-column:2;min-width:0}
+.sumgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sum{background:var(--surface);border-radius:20px;padding:12px 14px;box-shadow:var(--shadow)}
+.sum .k{font-size:12px;color:var(--ink-soft)}
+.sum .v{font-family:var(--f-num);font-weight:700;font-size:26px;line-height:1.25;color:var(--rasp)}
+.sum .v small{font-size:13px;font-weight:500;color:var(--ink-soft);margin-left:3px}
+.sum.hi{grid-column:1/-1;background:var(--accent-soft);box-shadow:none}
+.months{background:var(--surface);border-radius:20px;padding:12px 14px;display:flex;flex-direction:column;gap:7px}
+.mrow{display:grid;grid-template-columns:52px 1fr 70px;gap:8px;align-items:center;font-size:13px}
+.mrow .bar2{height:12px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+.mrow .bar2 i{display:block;height:100%;border-radius:6px;background:var(--mustard)}
+.mrow .amt{text-align:right}
+.prow{display:flex;flex-direction:column;gap:3px;background:var(--surface);border-radius:20px;padding:12px 14px;box-shadow:var(--shadow);border:0;text-align:left;width:100%}
+.prow .ph{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.prow .pn{font-family:var(--f-display);font-weight:900;font-size:16px;line-height:1.35;overflow-wrap:anywhere;min-width:0}
+.prow .price{font-family:var(--f-num);font-weight:700;font-size:18px;color:var(--rasp);white-space:nowrap}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
 .buy .price{font-family:var(--f-num);font-weight:700;font-size:17px;color:var(--rasp)}
 .costline{font-size:14px;background:var(--butter-soft);border-radius:14px;padding:10px 12px}
@@ -226,6 +243,7 @@ textarea.inp{min-height:76px;resize:vertical}
 <nav class="tabs" aria-label="主要分頁"><div class="in">
   <button class="tab" id="tab-home" data-tab="home"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(20 12 12)"/><path d="M14.6 3.6C9.6 8 15 14 9.4 20.4"/></svg>豆櫃</button>
   <button class="tab" id="tab-timer" data-tab="timer"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5h4"/></svg>沖煮計時</button>
+  <button class="tab" id="tab-buy" data-tab="buy"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><path d="M5 8h14l-1.1 11.2a1.5 1.5 0 0 1-1.5 1.3H7.6a1.5 1.5 0 0 1-1.5-1.3z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>採購</button>
   <button class="tab" id="tab-know" data-tab="know"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>咖啡知識</button>
 </div></nav>
 <div id="layer"></div>
@@ -271,39 +289,173 @@ const INK = "#3A1E14";
 function heartPath(x,y,s,fill){
   return `<path d="M${x} ${y+s*0.9} C${x-s*1.7} ${y-s*0.1} ${x-s*0.8} ${y-s*1.4} ${x} ${y-s*0.45} C${x+s*0.8} ${y-s*1.4} ${x+s*1.7} ${y-s*0.1} ${x} ${y+s*0.9}Z" fill="${fill}"/>`;
 }
-function beanSvg(roast,size=56,mood="happy",prop=""){
+function starPath(cx,cy,R,r){ let d=""; for(let i=0;i<10;i++){ const a=-Math.PI/2+i*Math.PI/5, rad=i%2?r:R; d+=(i?"L":"M")+(cx+rad*Math.cos(a)).toFixed(1)+" "+(cy+rad*Math.sin(a)).toFixed(1); } return d+"Z"; }
+const VARIANTS=[
+  {eyes:"normal",mouth:"smile",acc:"none",prop:"cup",bg:"#FBE9DC"},
+  {eyes:"happy",mouth:"smile",acc:"none",prop:"sprout",bg:"#E7EEDC"},
+  {eyes:"normal",mouth:"open",acc:"bow",prop:"flower",bg:"#FBE0E4"},
+  {eyes:"wink",mouth:"smile",acc:"none",prop:"star",bg:"#FFF0C9"},
+  {eyes:"normal",mouth:"smile",acc:"chef",prop:"kettle",bg:"#DDEDE6"},
+  {eyes:"happy",mouth:"open",acc:"none",prop:"balloon",bg:"#F3E3F0"},
+  {eyes:"normal",mouth:"cat",acc:"none",prop:"music",bg:"#E3EEF5"},
+  {eyes:"shades",mouth:"smile",acc:"none",prop:"none",bg:"#FDE7CF"},
+  {eyes:"sleepy",mouth:"flat",acc:"none",prop:"zzz",bg:"#E6E6F4"},
+  {eyes:"normal",mouth:"smile",acc:"sprig",prop:"none",bg:"#E9F0D9"}
+];
+function drawBean(roast,size,v){
   const c = ROAST_COLOR[roast]||"#8F5635";
-  const mouth = mood==="sleep" ? `<path d="M25 38 q5 3 10 0" stroke="${INK}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`
-    : `<path d="M24 36 q6 6 12 0" stroke="${INK}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
-  const leg = `<path d="M23 40 L21 53 M37 40 L39 53" stroke="${INK}" stroke-width="3.2" stroke-linecap="round" fill="none"/><ellipse cx="19.5" cy="55" rx="5" ry="2.8" fill="${INK}"/><ellipse cx="40.5" cy="55" rx="5" ry="2.8" fill="${INK}"/>`;
-  const arm = (d,hx,hy)=>`<path d="${d}" stroke="${INK}" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="${hx}" cy="${hy}" r="2.4" fill="${INK}"/>`;
-  let arms, extra="";
-  if(prop==="sprout"){
-    arms = arm("M15 30 q-6 4 -6 10",9,40) + arm("M45 27 q6 -3 7 -11",52,16);
-    extra = `<path d="M52 16 L53 4" stroke="#6E9150" stroke-width="2.2" stroke-linecap="round"/>
-      <ellipse cx="49" cy="6" rx="4.4" ry="2.4" fill="#7FA05E" transform="rotate(-30 49 6)"/>
-      <ellipse cx="57" cy="5" rx="4.4" ry="2.4" fill="#93B36F" transform="rotate(30 57 5)"/>`;
-  } else if(prop==="cup"){
-    arms = arm("M15 31 q1 7 9 9",24,40) + arm("M45 31 q-1 7 -9 9",36,40);
-    extra = `<path d="M23 37 h14 v5 a5 5 0 0 1 -5 5 h-4 a5 5 0 0 1 -5 -5z" fill="#FFFCF8" stroke="#E6CDBB" stroke-width="1"/>
-      <path d="M37 39 a3 3 0 0 1 0 6" stroke="#FFFCF8" stroke-width="2" fill="none"/>
-      <ellipse cx="30" cy="37.4" rx="6.4" ry="1.5" fill="#6B3B24"/>
-      ${heartPath(50,9,4.2,"#F2647E")}`;
-  } else {
-    arms = arm("M15 30 q-6 4 -6 10",9,40) + arm("M45 30 q6 4 6 10",51,40);
+  const sw=(w)=>'stroke="'+INK+'" stroke-width="'+w+'" fill="none" stroke-linecap="round"';
+  const eyeDot=(x)=>'<circle cx="'+x+'" cy="30" r="2.6" fill="#2A140C"/><circle cx="'+(x-1)+'" cy="29" r=".9" fill="#fff"/>';
+  const EYES={
+    normal: eyeDot(22)+eyeDot(38),
+    happy: '<path d="M18.5 31 q3.5 -5 7 0 M34.5 31 q3.5 -5 7 0" '+sw(2.4)+'/>',
+    wink: eyeDot(22)+'<path d="M34.5 31 q3.5 -5 7 0" '+sw(2.4)+'/>',
+    sleepy: '<path d="M18.5 29 q3.5 4 7 0 M34.5 29 q3.5 4 7 0" '+sw(2.4)+'/>',
+    shades: '<rect x="14" y="25.5" width="14" height="9" rx="4" fill="#2A140C"/><rect x="32" y="25.5" width="14" height="9" rx="4" fill="#2A140C"/><path d="M28 29.5 h4" '+sw(2)+'/><path d="M17 28 l3 -1.4 M35 28 l3 -1.4" stroke="#fff" stroke-opacity=".6" stroke-width="1.4" stroke-linecap="round"/>'
+  };
+  const MOUTH={
+    smile: '<path d="M24 36 q6 6 12 0" '+sw(2.4)+'/>',
+    open: '<path d="M24 35 q6 9 12 0z" fill="#7A2E2E"/><path d="M27.5 39.6 q2.5 -2.2 5 0 q-2.5 2.2 -5 0z" fill="#F28AA0"/>',
+    cat: '<path d="M24.5 36 q2.8 3.4 5.5 0 q2.7 3.4 5.5 0" '+sw(2.2)+'/>',
+    flat: '<ellipse cx="30" cy="38" rx="2.4" ry="1.8" fill="'+INK+'"/>'
+  };
+  const ACC={
+    none:'',
+    bow:'<g transform="translate(37 12)"><path d="M0 0 L-8 -5.5 V5.5z M0 0 L8 -5.5 V5.5z" fill="#F2647E"/><circle r="2.4" fill="#D94A68"/></g>',
+    chef:'<circle cx="23.5" cy="9" r="5.5" fill="#FFFCF8"/><circle cx="30" cy="6.8" r="6.4" fill="#FFFCF8"/><circle cx="36.5" cy="9" r="5.5" fill="#FFFCF8"/><rect x="22" y="9" width="16" height="7" rx="2" fill="#FFFCF8"/><path d="M22.5 15.5 h15" stroke="#E6CDBB" stroke-width="1.2"/>',
+    sprig:'<path d="M30 10 L30 3.5" stroke="#6E9150" stroke-width="2" stroke-linecap="round"/><ellipse cx="26.2" cy="4" rx="4.4" ry="2.3" fill="#7FA05E" transform="rotate(-25 26.2 4)"/><ellipse cx="33.8" cy="3.4" rx="4.4" ry="2.3" fill="#93B36F" transform="rotate(25 33.8 3.4)"/>'
+  };
+  const leg='<path d="M23 40 L21 53 M37 40 L39 53" stroke="'+INK+'" stroke-width="3.2" stroke-linecap="round" fill="none"/><ellipse cx="19.5" cy="55" rx="5" ry="2.8" fill="'+INK+'"/><ellipse cx="40.5" cy="55" rx="5" ry="2.8" fill="'+INK+'"/>';
+  const arm=(d,hx,hy)=>'<path d="'+d+'" stroke="'+INK+'" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="'+hx+'" cy="'+hy+'" r="2.4" fill="'+INK+'"/>';
+  const down=arm("M15 30 q-6 4 -6 10",9,40)+arm("M45 30 q6 4 6 10",51,40);
+  const upR=arm("M45 28 q6 -3 7 -10",52,18);
+  let arms=down, extra="";
+  switch(v.prop){
+    case "sprout":
+      arms=arm("M15 30 q-6 4 -6 10",9,40)+arm("M45 27 q6 -3 7 -11",52,16);
+      extra='<path d="M52 16 L53 4" stroke="#6E9150" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="49" cy="6" rx="4.4" ry="2.4" fill="#7FA05E" transform="rotate(-30 49 6)"/><ellipse cx="57" cy="5" rx="4.4" ry="2.4" fill="#93B36F" transform="rotate(30 57 5)"/>'; break;
+    case "cup":
+      arms=arm("M15 31 q1 7 9 9",24,40)+arm("M45 31 q-1 7 -9 9",36,40);
+      extra='<path d="M23 37 h14 v5 a5 5 0 0 1 -5 5 h-4 a5 5 0 0 1 -5 -5z" fill="#FFFCF8" stroke="#E6CDBB" stroke-width="1"/><path d="M37 39 a3 3 0 0 1 0 6" stroke="#FFFCF8" stroke-width="2" fill="none"/><ellipse cx="30" cy="37.4" rx="6.4" ry="1.5" fill="#6B3B24"/>'+heartPath(50,9,4.2,"#F2647E"); break;
+    case "flower": {
+      arms=arm("M15 30 q-6 4 -6 10",9,40)+upR;
+      let petals=""; for(let i=0;i<5;i++){ const a=i*2*Math.PI/5-Math.PI/2; petals+='<circle cx="'+(52+3.3*Math.cos(a)).toFixed(1)+'" cy="'+(7+3.3*Math.sin(a)).toFixed(1)+'" r="2.7" fill="#F7A3B2"/>'; }
+      extra='<path d="M52 18 V9" stroke="#6E9150" stroke-width="2" stroke-linecap="round"/>'+petals+'<circle cx="52" cy="7" r="2.1" fill="#F2C66B"/>'; break; }
+    case "star":
+      arms=arm("M15 30 q-6 4 -6 10",9,40)+upR;
+      extra='<path d="M52 18 L52 13" stroke="#C49A45" stroke-width="2" stroke-linecap="round"/><path d="'+starPath(52,8,6.6,2.9)+'" fill="#F2C66B" stroke="#E0A83E" stroke-width="1" stroke-linejoin="round"/>'; break;
+    case "kettle":
+      arms=arm("M15 30 q-6 4 -6 10",9,40)+arm("M45 31 q4 5 5 11",50,42);
+      extra='<path d="M44 36 q0 -6 6 -6 q6 0 6 6 v5 h-12z" fill="#B7C3C2"/><path d="M56 34 l3.6 -4.4" stroke="#B7C3C2" stroke-width="2.4" stroke-linecap="round"/><path d="M44 33 q-4.4 0 -3 6.4" stroke="#8C9A99" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="50" cy="29.4" r="1.3" fill="#8C9A99"/>'; break;
+    case "balloon":
+      arms=arm("M15 30 q-6 4 -6 10",9,40)+upR;
+      extra='<path d="M52 12.5 L52 18" stroke="#8A6A58" stroke-width="1"/>'+heartPath(52,9,4.8,"#F2647E"); break;
+    case "music":
+      extra='<circle cx="48" cy="14.5" r="2.4" fill="#C65370"/><path d="M50.4 14.5 V6 q3 1 3.6 4.4" stroke="#C65370" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="55" cy="21" r="1.7" fill="#E8B04B"/>'; break;
+    case "zzz":
+      extra='<path d="M44 13 h5 l-5 6 h5" stroke="#8A6A58" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M50.5 5 h3.6 l-3.6 4.4 h3.6" stroke="#8A6A58" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
   }
-  return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" aria-hidden="true">
-    ${leg}
-    <g transform="translate(6 0) scale(.8)">
-    <ellipse cx="30" cy="33" rx="21" ry="24" fill="${c}"/>
-    <ellipse cx="23" cy="22" rx="7" ry="5" fill="#fff" opacity=".2"/>
-    <path d="M30 10 C24 22 36 40 30 56" stroke="#2E160D" stroke-opacity=".3" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <circle cx="22" cy="30" r="2.6" fill="#2A140C"/><circle cx="38" cy="30" r="2.6" fill="#2A140C"/>
-    <circle cx="21" cy="29" r=".9" fill="#fff"/><circle cx="37" cy="29" r=".9" fill="#fff"/>
-    <ellipse cx="17" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".8"/>
-    <ellipse cx="43" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".8"/>
-    ${mouth}</g>${arms}${extra}</svg>`;
+  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 60 60" aria-hidden="true">'+leg+
+    '<g transform="translate(6 0) scale(.8)"><ellipse cx="30" cy="33" rx="21" ry="24" fill="'+c+'"/>'+
+    '<ellipse cx="23" cy="22" rx="7" ry="5" fill="#fff" opacity=".2"/>'+
+    '<path d="M30 10 C24 22 36 40 30 56" stroke="#2E160D" stroke-opacity=".3" stroke-width="2.5" fill="none" stroke-linecap="round"/>'+
+    (EYES[v.eyes]||EYES.normal)+
+    '<ellipse cx="17" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".8"/><ellipse cx="43" cy="36" rx="3.4" ry="2.2" fill="#FF8FA4" opacity=".8"/>'+
+    (MOUTH[v.mouth]||MOUTH.smile)+(ACC[v.acc]||"")+'</g>'+arms+extra+'</svg>';
 }
+function beanSvg(roast,size=56,mood="happy",prop=""){
+  return drawBean(roast,size,{eyes:mood==="sleep"?"sleepy":"normal",mouth:mood==="sleep"?"flat":"smile",acc:"none",prop:prop||"none"});
+}
+function beanRank(b){
+  const l=beans.slice().sort((x,y)=>String(x.createdAt||"").localeCompare(String(y.createdAt||""))||String(x.id).localeCompare(String(y.id)));
+  const i=l.findIndex(x=>x.id===b.id); return i<0?0:i;
+}
+function beanVariant(b){ return VARIANTS[beanRank(b)%VARIANTS.length]; }
+function beanAvatar(b,size){ return drawBean(b.roast,size,beanVariant(b)); }
+const ART_NAMES=[["auto","自動"],["forest","森林小鹿"],["lily","百合"],["rose","玫瑰"],["blossom","櫻花"],["mountain","山湖日出"],["passion","百香果"],["cherry","咖啡櫻桃"]];
+function artKind(b){
+  if(b.art && b.art!=="auto" && ART_NAMES.some(a=>a[0]===b.art)) return b.art;
+  const t=[b.name,b.origin,b.process,b.notes,b.roaster].join(" ");
+  if(/百合|lily/i.test(t)) return "lily";
+  if(/玫瑰|rose/i.test(t)) return "rose";
+  if(/百香|passion/i.test(t)) return "passion";
+  if(/櫻|桃|blossom|peach/i.test(t)) return "blossom";
+  if(/日曬|山|湖|natural/i.test(t)) return "mountain";
+  if(/森林|forest/i.test(t)) return "forest";
+  return "cherry";
+}
+const sp4=(x,y,s,f)=>'<path d="M'+x+' '+(y-s)+' Q'+x+' '+y+' '+(x+s)+' '+y+' Q'+x+' '+y+' '+x+' '+(y+s)+' Q'+x+' '+y+' '+(x-s)+' '+y+' Q'+x+' '+y+' '+x+' '+(y-s)+'Z" fill="'+f+'"/>';
+const faceAt=(x,y,k)=>'<circle cx="'+(x-6*k)+'" cy="'+y+'" r="'+(1.7*k)+'" fill="#3A1E14"/><circle cx="'+(x+6*k)+'" cy="'+y+'" r="'+(1.7*k)+'" fill="#3A1E14"/><ellipse cx="'+(x-10*k)+'" cy="'+(y+4*k)+'" rx="'+(3*k)+'" ry="'+(1.9*k)+'" fill="#FF8FA4" opacity=".75"/><ellipse cx="'+(x+10*k)+'" cy="'+(y+4*k)+'" rx="'+(3*k)+'" ry="'+(1.9*k)+'" fill="#FF8FA4" opacity=".75"/><path d="M'+(x-3.5*k)+' '+(y+3.5*k)+' q'+(3.5*k)+' '+(3.6*k)+' '+(7*k)+' 0" stroke="#3A1E14" stroke-width="'+(1.5*k)+'" fill="none" stroke-linecap="round"/>';
+const pineTree=(x,y,s,c1,c2)=>'<g transform="translate('+x+' '+y+') scale('+s+')"><rect x="-2" y="-9" width="4" height="9" rx="1" fill="#8A6044"/><path d="M-13 -7 L0 -30 L13 -7Z" fill="'+c1+'"/><path d="M-11 -18 L0 -40 L11 -18Z" fill="'+c2+'"/><path d="M-8 -29 L0 -48 L8 -29Z" fill="'+c1+'"/></g>';
+function flower5(cx,cy,r,face){
+  let o=""; for(let i=0;i<5;i++){ const a=i*2*Math.PI/5-Math.PI/2; o+='<circle cx="'+(cx+r*0.62*Math.cos(a)).toFixed(1)+'" cy="'+(cy+r*0.62*Math.sin(a)).toFixed(1)+'" r="'+(r*0.52).toFixed(1)+'" fill="#FBC9D7" stroke="#F4A9BE" stroke-width="'+(r*0.06).toFixed(2)+'"/>'; }
+  o+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.5).toFixed(1)+'" fill="#FFF1F5"/>';
+  if(face) o+=faceAt(cx,cy-r*0.04,r/20); else for(let i=0;i<5;i++){ const a=i*2*Math.PI/5; o+='<circle cx="'+(cx+r*0.22*Math.cos(a)).toFixed(1)+'" cy="'+(cy+r*0.22*Math.sin(a)).toFixed(1)+'" r="'+(r*0.07).toFixed(1)+'" fill="#F2A33A"/>'; }
+  return o;
+}
+const SCENES={
+forest:()=>'<rect width="120" height="120" fill="#DDEFE2"/><circle cx="90" cy="22" r="13" fill="#FFF6D2"/>'+
+  '<path d="M0 82 Q30 64 62 78 T120 72 V120 H0Z" fill="#BADBA4"/>'+
+  pineTree(16,86,0.95,"#5E9E6E","#76B282")+pineTree(34,90,0.7,"#6FAE7C","#84BE8E")+pineTree(100,88,1,"#5E9E6E","#76B282")+pineTree(84,92,0.65,"#6FAE7C","#84BE8E")+
+  '<path d="M0 96 Q40 82 80 94 T120 90 V120 H0Z" fill="#8DC27B"/>'+
+  '<ellipse cx="44" cy="84" rx="3" ry="4" fill="#fff"/>'+
+  '<rect x="48" y="92" width="3.2" height="14" rx="1.6" fill="#A66B3C"/><rect x="54" y="92" width="3.2" height="14" rx="1.6" fill="#B87B48"/><rect x="64" y="92" width="3.2" height="14" rx="1.6" fill="#A66B3C"/><rect x="70" y="92" width="3.2" height="14" rx="1.6" fill="#B87B48"/>'+
+  '<ellipse cx="58" cy="88" rx="17" ry="10" fill="#D49A62"/><path d="M68 84 L74 68 L83 71 L77 88Z" fill="#D49A62"/>'+
+  '<circle cx="50" cy="85" r="1.4" fill="#fff"/><circle cx="57" cy="82" r="1.4" fill="#fff"/><circle cx="64" cy="86" r="1.4" fill="#fff"/><circle cx="53" cy="91" r="1.4" fill="#fff"/><circle cx="61" cy="92" r="1.4" fill="#fff"/>'+
+  '<ellipse cx="76" cy="60" rx="2.4" ry="5" fill="#C78850" transform="rotate(-20 76 60)"/><ellipse cx="84" cy="60" rx="2.4" ry="5" fill="#C78850" transform="rotate(15 84 60)"/>'+
+  '<ellipse cx="82" cy="68" rx="8.5" ry="6.6" fill="#D49A62"/><ellipse cx="89.5" cy="71" rx="4.4" ry="3.2" fill="#F3D9B8"/><circle cx="92.5" cy="70.2" r="1.2" fill="#5A3A2A"/><circle cx="83.5" cy="66" r="1.4" fill="#3A1E14"/>'+
+  '<ellipse cx="92" cy="27" rx="6" ry="4.4" fill="#6FB0DC"/><circle cx="96.5" cy="24.5" r="3.2" fill="#6FB0DC"/><path d="M99 24.5 l3.4 1.2 l-3.4 1z" fill="#F2B84B"/><circle cx="97.4" cy="24" r=".8" fill="#2A140C"/><path d="M86 27 q-4 -3 -8 -1 q4 5 8 3z" fill="#5A9BCB"/>'+
+  '<rect x="22" y="100" width="2.6" height="5" fill="#F4E8D8"/><path d="M19.5 100 a4.2 3.4 0 0 1 8 0z" fill="#E5566F"/><circle cx="21.5" cy="98.4" r=".7" fill="#fff"/><circle cx="25" cy="98.8" r=".7" fill="#fff"/>',
+lily:()=>'<rect width="120" height="120" fill="#D9E8CA"/><circle cx="60" cy="62" r="50" fill="#E6F0D8"/>'+
+  '<path d="M60 112 C40 108 20 96 14 78 C34 80 52 92 60 112Z" fill="#79A566"/><path d="M60 112 C80 108 100 96 106 78 C86 80 68 92 60 112Z" fill="#8DB879"/><path d="M60 112 C52 96 54 84 60 74" stroke="#6C9A5A" stroke-width="2" fill="none"/>'+
+  [60,180,300].map(a=>'<path transform="rotate('+a+' 60 62)" d="M60 62 C50 50 51 34 60 24 C69 34 70 50 60 62Z" fill="#F1EEDF" stroke="#E4DFCB" stroke-width="1"/>').join("")+
+  [0,120,240].map(a=>'<path transform="rotate('+a+' 60 62)" d="M60 62 C49 49 50 31 60 20 C70 31 71 49 60 62Z" fill="#FFFFFF" stroke="#ECE7D6" stroke-width="1"/><path transform="rotate('+a+' 60 62)" d="M60 60 L60 36" stroke="#D9E6A8" stroke-width="1.6" stroke-linecap="round"/>').join("")+
+  [-40,-20,0,20,40].map(a=>'<path transform="rotate('+a+' 60 62)" d="M60 62 L60 48" stroke="#9CBB6A" stroke-width="1.2"/><ellipse transform="rotate('+a+' 60 62)" cx="60" cy="46.5" rx="1.9" ry="3.2" fill="#F0A53A"/>').join("")+
+  sp4(18,28,6,"#fff")+sp4(100,40,5,"#fff")+sp4(92,16,3.4,"#FFF6C8")+sp4(24,60,3.4,"#FFF6C8"),
+rose:()=>'<rect width="120" height="120" fill="#FADFE3"/><circle cx="60" cy="60" r="48" fill="#FCEBEE"/>'+
+  '<path d="M60 112 C58 96 60 84 62 74" stroke="#5F9A55" stroke-width="3" fill="none"/>'+
+  '<path d="M60 100 C44 100 28 92 22 80 C40 76 56 84 60 100Z" fill="#6FA85F"/><path d="M62 96 C78 96 94 88 100 76 C82 72 66 80 62 96Z" fill="#82B972"/>'+
+  '<circle cx="60" cy="56" r="33" fill="#D94B65"/>'+[0,60,120,180,240,300].map(a=>'<circle cx="'+(60+30*Math.cos(a*Math.PI/180)).toFixed(1)+'" cy="'+(56+30*Math.sin(a*Math.PI/180)).toFixed(1)+'" r="9" fill="#E35D76"/>').join("")+
+  '<circle cx="60" cy="56" r="23" fill="#EE6F86"/><circle cx="60" cy="56" r="14" fill="#F58AA0"/>'+
+  '<path d="M60 44 C70 44 74 54 68 61 C62 67 52 63 52 55 C52 50 56 48 60 49" stroke="#D2415C" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+  faceAt(60,56,1.15)+
+  '<path d="M104 62 q8 -4 12 2 q-6 6 -12 -2z" fill="#F58AA0" transform="rotate(20 108 62)"/><ellipse cx="14" cy="92" rx="4" ry="2.4" fill="#F58AA0" transform="rotate(-30 14 92)"/>'+
+  '<path d="M20 26 c-3 -4 -9 -2 -7 3 c1 3 7 7 7 7 s6 -4 7 -7 c2 -5 -4 -7 -7 -3z" fill="#F26A83"/><path d="M98 20 c-2 -3 -6.5 -1.4 -5 2.2 c.8 2 5 5 5 5 s4.2 -3 5 -5 c1.5 -3.6 -3 -5 -5 -2.2z" fill="#F26A83"/>'+sp4(100,92,4,"#fff"),
+blossom:()=>'<rect width="120" height="120" fill="#FCE5EA"/><circle cx="62" cy="58" r="48" fill="#FDEFF2"/>'+
+  '<path d="M-4 112 Q28 96 56 74 T112 24" stroke="#8B5B45" stroke-width="5.5" fill="none" stroke-linecap="round"/><path d="M34 90 Q30 74 38 64" stroke="#8B5B45" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M78 56 Q92 60 100 74" stroke="#8B5B45" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+  '<ellipse cx="46" cy="100" rx="9" ry="4.2" fill="#9CC48A" transform="rotate(-20 46 100)"/>'+
+  flower5(36,62,11,false)+flower5(100,76,10,false)+flower5(100,20,10,false)+flower5(68,48,24,true)+flower5(20,96,8,false)+
+  '<ellipse cx="14" cy="40" rx="4" ry="2.5" fill="#F8BBCB" transform="rotate(30 14 40)"/><ellipse cx="86" cy="100" rx="4" ry="2.5" fill="#F8BBCB" transform="rotate(-20 86 100)"/><ellipse cx="108" cy="50" rx="3.4" ry="2.1" fill="#F8BBCB" transform="rotate(50 108 50)"/>'+sp4(24,22,4,"#fff")+sp4(56,16,3,"#fff"),
+mountain:()=>'<rect width="120" height="120" fill="#D2E9F0"/><rect y="0" width="120" height="50" fill="#E3F2F0" opacity=".6"/>'+
+  '<circle cx="88" cy="28" r="20" fill="#FFE9A6" opacity=".55"/><circle cx="88" cy="28" r="12" fill="#FFD966"/>'+
+  '<path d="M20 30 q4 -5 10 -3 q4 -4 9 0 q6 0 5 5z" fill="#fff" opacity=".9"/><path d="M60 16 q3 -4 8 -2 q4 -3 7 1 q4 1 3 4z" fill="#fff" opacity=".85"/>'+
+  '<path d="M-10 84 L28 38 L58 72 L84 48 L130 84Z" fill="#A9CCB9"/><path d="M28 38 L21 47 L26 45 L30 49 L35 45Z" fill="#fff"/>'+
+  '<path d="M-20 90 L18 54 L56 90Z" fill="#7FA99B"/><path d="M40 90 L84 56 L130 90Z" fill="#8EB7A7"/>'+
+  '<rect y="86" width="120" height="34" fill="#8CC9D9"/><path d="M8 96 h22 M44 102 h30 M80 94 h26 M20 110 h28 M70 112 h30" stroke="#fff" stroke-opacity=".7" stroke-width="1.6" stroke-linecap="round"/>'+
+  pineTree(100,92,.6,"#4F8F6A","#62A27C")+pineTree(110,94,.5,"#5E9E78","#72B08A")+pineTree(14,92,.55,"#4F8F6A","#62A27C")+
+  '<path d="M-4 120 C6 104 20 100 34 104 C24 108 16 114 12 120Z" fill="#A7B85A"/><path d="M120 120 C112 108 100 106 90 108 C98 112 104 116 106 120Z" fill="#B8C86A"/>'+
+  '<circle cx="104" cy="108" r="1.8" fill="#E5566F"/><circle cx="10" cy="104" r="1.6" fill="#F2B84B"/>',
+passion:()=>'<rect width="120" height="120" fill="#F1E2F4"/><circle cx="60" cy="62" r="48" fill="#F7EBF8"/>'+
+  '<path d="M18 40 C30 28 50 30 56 44 C40 48 26 46 18 40Z" fill="#6FAA68"/><path d="M104 34 C92 24 76 28 70 42 C86 46 98 42 104 34Z" fill="#82BC76"/>'+
+  '<circle cx="42" cy="68" r="23" fill="#7F4592"/><ellipse cx="33" cy="58" rx="7" ry="4.6" fill="#fff" opacity=".28" transform="rotate(-30 33 58)"/>'+
+  '<path d="M42 45 q-2 -7 4 -10 q5 3 4 9z" fill="#6FAA68"/>'+faceAt(42,68,1.15)+
+  '<circle cx="84" cy="74" r="22" fill="#7F4592"/><circle cx="84" cy="74" r="19" fill="#F6ECD9"/><circle cx="84" cy="74" r="15.5" fill="#F2B63A"/>'+
+  [0,40,80,120,160,200,240,280,320].map(a=>'<ellipse cx="'+(84+8.4*Math.cos(a*Math.PI/180)).toFixed(1)+'" cy="'+(74+8.4*Math.sin(a*Math.PI/180)).toFixed(1)+'" rx="1.7" ry="2.6" fill="#3F2A36" transform="rotate('+(a+90)+' '+(84+8.4*Math.cos(a*Math.PI/180)).toFixed(1)+' '+(74+8.4*Math.sin(a*Math.PI/180)).toFixed(1)+')"/>').join("")+
+  '<circle cx="84" cy="74" r="3.4" fill="#F7D582"/>'+sp4(100,32,4,"#fff")+sp4(14,92,3.4,"#fff")+
+  '<path d="M104 100 c-2 -3 -6 -1.4 -5 2 c.8 2 5 4.6 5 4.6 s4 -2.6 5 -4.6 c1.4 -3.4 -3 -5 -5 -2z" fill="#F26A83"/>',
+cherry:()=>'<rect width="120" height="120" fill="#F8E9DA"/><circle cx="60" cy="60" r="48" fill="#FBF1E6"/>'+
+  '<path d="M6 30 Q40 22 68 38 T116 30" stroke="#8B5B45" stroke-width="4.5" fill="none" stroke-linecap="round"/>'+
+  '<path d="M20 30 C14 20 22 12 32 16 C34 24 28 30 20 30Z" fill="#6FAA68"/><path d="M96 30 C104 20 112 24 112 34 C104 38 98 36 96 30Z" fill="#82BC76"/><path d="M52 34 C48 24 54 18 62 20 C64 28 60 34 52 34Z" fill="#6FAA68"/>'+
+  '<path d="M38 33 Q36 46 34 56 M82 36 Q84 50 86 60" stroke="#6C8F55" stroke-width="2" fill="none"/>'+
+  '<circle cx="34" cy="72" r="19" fill="#D9485B"/><ellipse cx="27" cy="64" rx="5.4" ry="3.4" fill="#fff" opacity=".32" transform="rotate(-30 27 64)"/>'+faceAt(34,73,1)+
+  '<circle cx="86" cy="78" r="18" fill="#E0566A"/><ellipse cx="80" cy="70" rx="5" ry="3.2" fill="#fff" opacity=".32" transform="rotate(-30 80 70)"/>'+faceAt(86,79,.95)+
+  sp4(62,92,4,"#F2B84B")+sp4(14,40,3.4,"#fff")+sp4(106,60,3.4,"#fff")
+};
+function artSvg(kind,size){
+  const f=SCENES[kind]||SCENES.cherry;
+  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 120 120" aria-hidden="true">'+f()+'</svg>';
+}
+function artThumb(b,size){ return artSvg(artKind(b),size); }
 function cupArt(w=120,cls="deco"){
   return `<svg class="${cls}" width="${w}" height="${Math.round(w*110/130)}" viewBox="0 0 130 110" aria-hidden="true">
     <path d="M48 36 q-6 -7 0 -14 q6 -7 0 -14 M62 34 q-6 -7 0 -14 q6 -7 0 -14" stroke="#FFFFFF" stroke-opacity=".85" stroke-width="3" fill="none" stroke-linecap="round"/>
@@ -401,7 +553,7 @@ let ready = false;
 let store = { mode:"local",
   async save(b){ const i=beans.findIndex(x=>x.id===b.id); if(i>=0) beans[i]=b; else beans.push(b); writeLocal(); render(); },
   async remove(id){ beans=beans.filter(x=>x.id!==id); writeLocal(); render(); } };
-const SEED_BEANS=[{"createdAt":"2026-10-17T13:02:00.000Z","example":false,"knowledge":[{"p":"蜜處理不是加蜂蜜。它是把咖啡果去皮後，保留部分或全部黏稠的果膠直接曬乾。果膠裡的糖分在乾燥時滲入豆子，讓咖啡甜感更重、口感更圓潤。依保留的果膠多寡與日曬方式，常分成白蜜、黃蜜、紅蜜、黑蜜，顏色越深通常越甜、發酵感也越重。","t":"蜜處理是什麼"},{"p":"「百香蜜」這類名稱，通常是在蜜處理的過程中加入百香果一起發酵，讓果香被豆子吸收，所以杯中的百香果酸甜特別明顯。不同莊園做法不太一樣，以包裝上的說明為準。","t":"「百香蜜」的由來"},{"p":"哥倫比亞咖啡沿著安地斯山脈種植，許多產區一年有兩次收成。產區以小農為主，近年很多莊園投入特殊發酵與處理法實驗，讓哥倫比亞從「平衡、好入口」的形象，變成實驗風味的重要產地。","t":"哥倫比亞咖啡"},{"p":"蜜處理加水果發酵的豆子甜度高、很好萃，水溫太高容易出現黏膩、焦糖過頭的苦尾。這份配方用 90°C、53 響，選 1:15 讓口感飽滿；如果覺得太濃，改成 1:16（480g）會更清爽。","t":"沖煮重點"},{"p":"水果發酵類的豆子香氣揮發得比較快，開封後建議 3–4 週內喝完。用有單向排氣閥的袋子密封、放在陰涼處，風味會比較穩定。","t":"保存小提醒"}],"logs":[],"name":"哥倫比亞 托雷斯莊園 百香蜜處理","notes":"百香果、蜜處理","origin":"哥倫比亞 托雷斯莊園","process":"百香蜜處理","purchases":[{"date":"2026-10-17","note":"","price":360,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":53,"dialIn":{"over":"黏膩、苦尾或發酵味太重：研磨調粗 2 響到 55 響、水溫降到 89°C，或第 3 段提早 10g 移開濾杯。","under":"偏酸、甜感不足：研磨調細 2 響到 51 響，或水溫升到 91°C。"},"flavor":{"acidity":"多汁的百香果酸，明亮但圓潤","aftertaste":"甜感持續，帶熱帶水果與焦糖回甘","aroma":"百香果、芒果、柑橘、蜂蜜","body":"中等偏厚、滑順，黑糖蜜般的甜","fragrance":"百香果、熱帶水果乾、紅糖"},"pours":[{"add":65,"from":0,"how":"由中心向外柔和繞圈注水，確認粉層全部濕透，靜置等它排氣。","name":"悶蒸","to":40,"total":65,"why":"蜜處理豆帶有果膠糖分，悶蒸讓粉層均勻吸水，避免後段水流走捷徑。"},{"add":135,"from":40,"how":"中心小圈往外繞，細水流、低擾動，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":200,"why":"帶出百香果的酸甜與熱帶水果香，是這支最搶眼的部分。"},{"add":140,"from":80,"how":"中等水流穩定繞圈，保持水位，不要大力攪動。","name":"第 2 段注水","to":125,"total":340,"why":"萃出黑糖蜜、芒果般厚實的甜感與滑順口感。"},{"add":110,"from":125,"how":"中心小圈輕柔補到 450g，水位快見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":450,"why":"收尾保留甜感，避免糖分焦化帶來的苦澀與黏膩感。"}],"ratio":15,"source":"claude","stdClicks":27,"temp":90,"totalTime":"2:50 - 3:10","water":450},"roast":"淺中焙","roaster":"","tip":"蜜處理加上百香果發酵，甜感厚實、熱帶果香明顯。","id":"colombia-torres-passionfruit-honey"},{"createdAt":"2026-10-17T13:00:00.000Z","example":false,"knowledge":[{"p":"共同發酵是在發酵槽裡，除了咖啡果之外，再放入其他材料一起發酵，例如花瓣、水果或特定菌種。發酵時產生的香氣分子會被生豆吸收，所以杯中會出現品種本身少見的強烈風味，像這支明顯的玫瑰花香。","t":"什麼是「共同發酵」？"},{"p":"傳統發酵靠環境裡的野生微生物，每一批結果都不太一樣。酵母發酵是刻意加入挑選過的酵母菌，讓發酵方向比較好控制。常見的效果是甜感更乾淨、果香更明確，也比較不會出現失控的醋酸味或腐敗味。","t":"酵母發酵在做什麼"},{"p":"厭氧是把咖啡果或帶殼豆放進密封槽，隔絕氧氣發酵，容易產生乳酸感、熱帶水果與酒香。發酵完再用水洗掉果膠，杯子會保留發酵帶來的香氣，同時比日曬類更乾淨、酸質更清楚。","t":"厭氧發酵＋水洗收尾"},{"p":"近年哥倫比亞很多小農莊園投入特殊發酵，加入花果、酵母，並控制溫度與時間，做出辨識度很高的風味。這類豆子香氣強、價格也較高。咖啡圈對「加料發酵」算不算咖啡本身的風味還有討論，喝的時候把它當成一種風格來欣賞就好。","t":"哥倫比亞的實驗處理風潮"},{"p":"發酵豆可溶物多、很好萃，水溫太高或擾動太大，酒感和像香精的味道就會變重。這份配方用 90°C、稍粗的 54 響和 1:16，讓玫瑰香透亮、尾韻乾淨。放涼到大約 60°C 再喝，花香和甜感會更明顯。","t":"沖煮重點"}],"logs":[],"name":"哥倫比亞 小溪谷莊園 花艷玫瑰 酵母共同厭氧水洗","notes":"花艷玫瑰；酵母共同厭氧發酵、水洗","origin":"哥倫比亞 小溪谷莊園","process":"酵母共同厭氧水洗","purchases":[{"date":"2026-10-17","note":"","price":520,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":54,"dialIn":{"over":"酒感、發酵味太重或像香精：研磨調粗 2 響到 56 響、水溫降到 88–89°C，第 2 段擾動再放輕。","under":"香氣淡、偏酸、水感重：研磨調細 2 響到 52 響，或水溫升到 91°C。"},"flavor":{"acidity":"明亮的莓果與葡萄酸，柔和不尖銳","aftertaste":"花香悠長，尾端帶淡淡紅酒感","aroma":"玫瑰、荔枝、覆盆子、蜂蜜","body":"中等、絲滑，荔枝與玫瑰糖漿般的甜感","fragrance":"濃郁玫瑰花、紅色莓果、糖漬花瓣"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認粉層全部濕透。發酵豆排氣明顯，粉層會鼓起，靜置等它慢慢塌下。","name":"悶蒸","to":40,"total":70,"why":"排出二氧化碳；這類發酵豆可溶物多，悶蒸讓粉層先均勻吸水，後面才不會局部過萃。"},{"add":140,"from":40,"how":"中心小圈往外繞到中圈，細水流、低擾動，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"先帶出最外放的玫瑰花香與莓果酸甜，這一段香氣最濃。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，水位維持穩定，不要大力沖刷。","name":"第 2 段注水","to":125,"total":360,"why":"萃出荔枝、蜂蜜般的中段甜感；擾動太大容易把發酵酒感一起帶出來。"},{"add":120,"from":125,"how":"中心小圈輕柔補到 480g，水位快見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留乾淨的花香，避免末段的發酵悶味與澀感。"}],"ratio":16,"source":"claude","stdClicks":27,"temp":90,"totalTime":"2:50 - 3:10","water":480},"roast":"淺中焙","roaster":"","tip":"加入玫瑰與酵母一起厭氧發酵、再水洗的實驗處理豆，香氣外放、很好萃。","id":"colombia-xiaoxigu-rose"},{"createdAt":"2026-10-17T14:00:00.000Z","example":false,"knowledge":[{"p":"果利（Gori）是衣索比亞西南部的藝妓森林一帶，靠近藝妓（Gesha）地區的原始雨林。1930 年代，藝妓品種就是從這片森林附近的野生咖啡樹採集出來，後來才傳到肯亞、坦尚尼亞、哥斯大黎加，最後在巴拿馬一戰成名。所以這裡常被稱作藝妓的老家。","t":"果利藝妓森林在哪裡"},{"p":"「藝妓」是 Geisha 的中文譯名，來自產地名 Gesha，跟日本的藝伎沒有關係。市面上還有人用「瑰夏」這個譯名，指的是同一個品種。看到衣索比亞藝妓，通常是指產自這個原生地區的咖啡。","t":"為什麼叫藝妓"},{"p":"森林裡的咖啡樹環境接近野生，海拔高、雨量足、日夜溫差大，咖啡果成熟慢，豆子密度高。風味常見茉莉、佛手柑、柑橘、蜜桃和茶感，酸質明亮細緻，口感乾淨輕盈。每一批的海拔、處理法和風味差異不小，建議看包裝或問店家。","t":"原生森林咖啡的特色"},{"p":"這包的來源是阿忠叔叔，包裝沒有標示處理法與焙度。我先用淺中焙、清爽路線設定：92°C、51 響、1:16。第一杯喝完先記一下印象：如果果酸明顯偏水洗、莓果酒香偏日曬，再回來按「請 Claude 重新設計配方」，條件會更準。","t":"沒標處理法怎麼辦"},{"p":"藝妓的價值在香氣，萃取不足只剩酸，過度萃取又會蓋掉花香。建議用寬口杯，先聞濕香再喝，放涼到大約 60°C 左右，花香和甜感會更明顯。尾段水位快見粉層就移開濾杯，不要等到滴乾，才能留住乾淨的茶感尾韻。","t":"沖煮重點"}],"logs":[],"name":"衣索比亞 果利藝妓森林","notes":"藝妓原生森林產區；來源：阿忠叔叔；包裝未標示處理法與焙度，焙度暫以淺中焙設定","origin":"衣索比亞 果利藝妓森林","process":"未標示","purchases":[{"date":"2026-10-17","note":"","price":370,"roastDate":"","shop":"阿忠叔叔","weight":227}],"recipe":{"clicks":51,"dialIn":{"over":"乾澀、苦尾或花香被蓋住：研磨調粗 2–3 響到 53–54 響，或第 3 段提早 10–15g 移開濾杯。","under":"香氣出不來、偏酸寡淡：研磨調細 2 響到 49 響，或水溫升到 93°C。"},"flavor":{"acidity":"明亮細緻的柑橘與檸檬酸","aftertaste":"乾淨悠長的花香與紅茶回甘","aroma":"佛手柑、蜜桃、淡淡蜂蜜","body":"輕盈如茶、絲滑，中段蜜桃般的甜","fragrance":"茉莉花、白花、柑橘皮"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察膨脹。","name":"悶蒸","to":40,"total":70,"why":"藝妓豆質緊實，悶蒸給足時間，讓粉層均勻吸水、排出氣體。"},{"add":140,"from":40,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"帶出藝妓最珍貴的茉莉、佛手柑花香與明亮的柑橘酸質。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，讓粉層維持在理想水位，擾動不要太大。","name":"第 2 段注水","to":125,"total":360,"why":"萃出蜜桃、蜂蜜般的中段甜感，讓口感更有層次。"},{"add":120,"from":125,"how":"中心極小圈輕柔補到 480g，水位將見粉層時直接移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留清透的茶感與花香，截斷末段木質雜味。"}],"ratio":16,"source":"claude","stdClicks":26,"temp":92,"totalTime":"3:00 - 3:20","water":480},"roast":"淺中焙","roaster":"阿忠叔叔","tip":"果利藝妓森林（Gori Gesha）是藝妓品種的原生地，香氣以茉莉、佛手柑和茶感聞名。","id":"ethiopia-gori-gesha-forest"},{"createdAt":"2026-10-17T12:00:00.000Z","example":false,"knowledge":[{"p":"藝妓村位於衣索比亞西南部，靠近戈里藝妓森林，正是 1930 年代研究人員採集藝妓品種的地區。莊園就在原始森林旁，海拔約 1900–2100 公尺，雨量充沛、日夜溫差大，咖啡果熟成慢、風味細緻。","t":"藝妓村在哪裡"},{"p":"藝妓在巴拿馬出名後，大家回頭尋找它的原鄉。衣索比亞的藝妓保有原生森林品種的多樣性，花香、莓果與茶感往往更奔放，和巴拿馬藝妓細緻的柑橘白花風格可以對比著喝。","t":"衣索比亞是藝妓的老家"},{"p":"日曬是把整顆咖啡果直接攤在棚架上曬乾，大約 3–4 週。果肉的糖分與香氣慢慢滲進豆子，所以日曬豆常有莓果、熱帶水果、果醬般的甜，也比較容易帶一點酒香。乾燥不均勻就會有雜味，所以需要勤翻動。","t":"日曬處理"},{"p":"綠標通常是莊園或烘豆商用來區分批次、地塊或等級的標籤，不同顏色代表不同的批次或處理細節。實際意思可以看包裝或店家的說明。","t":"「綠標」是什麼"},{"p":"目前的配方是 91°C、54 響、1:15。日曬藝妓可溶物多，喝到酒感太重時，先把研磨調粗 2 響；花香出不來、偏酸的話，再往細調 2 響。","t":"沖煮重點"}],"logs":[],"name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","notes":"藝妓品種、日曬綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","process":"日曬","purchases":[{"date":"2026-10-17","note":"","price":520,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":54,"dialIn":{"over":"若出現苦澀、乾澀或悶重的尾韻，表示過度萃取：把研磨調粗 2 響（改為 56 響），水溫降至 89–90°C，並減少第 3 段的擾動，讓整體流速加快一些。","under":"若嚐起來偏酸、單薄或甜感不足，表示萃取不足：把研磨調細 2 響（改為 52 響），並把水溫提高到 92–93°C。也可以讓悶蒸多停留 5 秒。"},"flavor":{"acidity":"前段酸質明亮但圓潤，類似柑橘與莓果的清新酸，不尖銳。","aftertaste":"餘韻乾淨悠長，帶有花香與蜂蜜般的回甘，尾端有淡淡的茶感。","aroma":"濕香偏向蜜桃、白葡萄與淡淡的熱帶水果甜香，帶一點蜂蜜感。","body":"中段甜感明顯，有蜜桃、杏桃與花蜜般的風味，口感滑順，質地中等偏厚。","fragrance":"乾香帶有茉莉花、柑橘皮與熟成莓果的甜香，日曬處理的酒香感隱約浮現。"},"pours":[{"add":70,"from":0,"how":"以繞圈方式均勻濕潤所有粉層，水流細而穩，避免沖到濾紙邊緣。注水結束後輕輕晃動濾杯一圈，讓粉床平整，再靜置至 40 秒。","name":"悶蒸","to":40,"total":70,"why":"日曬淺中焙豆排氣量較大，約 70g 水（約 2.3 倍粉重）能讓二氧化碳充分釋放，避免後段通道效應。這一段也讓粉層均勻吸水，為後續萃取打好基礎。"},{"add":110,"from":40,"how":"從中心以小圈慢慢向外繞到約三分之二半徑，再繞回中心，水柱細而穩定。這一段不要大力擾動，保持粉床完整。","name":"第 1 段注水","to":70,"total":180,"why":"此階段主要萃取明亮的有機酸與花果香氣等高溶解度物質。藝妓品種豆質偏緊實，水溫 91°C 能穩定提取香氣，又不會過早帶出苦味。"},{"add":150,"from":70,"how":"待水位降至粉面略露出前再注水，以中等水流繞圈，中心與外圈交替。注水結束時，輕輕沿杯壁畫一圈水流，帶下附著在濾紙上的粉。","name":"第 2 段注水","to":105,"total":330,"why":"這是甜感與風味厚度的主要萃取段。日曬處理的糖分與果膠較豐富，適度水量與水流能把莓果、蜜桃般的甜感萃取出來，並維持圓潤質地。"},{"add":120,"from":105,"how":"以較低水位、柔和水流繞圈注入，注到 450g 後輕輕旋轉濾杯一次，讓粉床平整，使水流順暢下落，目標在 2:50–3:20 滴完。","name":"第 3 段注水","to":135,"total":450,"why":"最後一段用來調整濃度、補足整體萃取率，並平衡甜感與酸質。柔和注水可減少過度攪動帶出的雜味與澀感，讓風味乾淨清透。"}],"ratio":15,"source":"claude","stdClicks":27,"temp":91,"tip":"衣索比亞藝妓村（Gesha Village）位於西南部的蒂瑪地區，因藝妓品種的原生地在此一帶而聞名，高海拔與雨林環境讓風味格外細緻。","totalTime":"2:50 - 3:20","water":450},"roast":"淺中焙","roaster":"","tip":"衣索比亞藝妓村（Gesha Village）位於西南部的蒂瑪地區，因藝妓品種的原生地在此一帶而聞名，高海拔與雨林環境讓風味格外細緻。","id":"gesha-village-dima-natural"},{"createdAt":"2026-10-17T13:01:00.000Z","example":false,"knowledge":[{"p":"藝妓品種原生於衣索比亞，後來被帶到中美洲。2004 年巴拿馬的翡翠莊園拿它參加國家競賽，濃烈的花香與柑橘調驚艷評審，從此成為精品咖啡最受追捧、也最昂貴的品種之一，巴拿馬藝妓的拍賣價常常創下新高。","t":"巴拿馬藝妓為什麼這麼有名"},{"p":"巴拿馬藝妓多來自西部奇里基省的波奎特、沃爾坎一帶，圍繞著巴魯火山。火山土壤肥沃，海拔約 1500–2000 公尺，雲霧多、日夜溫差大，咖啡果熟成慢，豆子密度高，香氣也更細緻。","t":"巴拿馬的風土"},{"p":"藝妓的枝條細長、葉片稀疏、產量低，對海拔和氣候很挑剔，種在太低的地方風味就會變平淡。產量少、難照顧、香氣出眾，加上競賽光環，價格自然比一般品種高出好幾倍。","t":"藝妓好喝但難種"},{"p":"這支包裝沒有標示處理法，名字裡的百合花可以當作杯中白花香的提示。喝的時候試著分辨茉莉、橙花、百合這類白花香，它們通常在咖啡稍微放涼後最明顯。如果之後查到是水洗或日曬，可以按「請 Claude 重新設計配方」再調整。","t":"「百合花」這個名字"},{"p":"藝妓的價值在香氣：萃取不足只剩酸，過度萃取又會蓋掉花香。這份配方用 92°C、51 響和 1:16，讓香氣與甜感平衡。建議用寬口杯，先聞濕香再喝，溫度降一點後再喝一口比較看看。","t":"沖煮重點"}],"logs":[],"name":"巴拿馬 百合花藝妓","notes":"藝妓品種；包裝未標示處理法","origin":"巴拿馬","process":"未標示","purchases":[{"date":"2026-10-17","note":"","price":450,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":51,"dialIn":{"over":"乾澀、苦尾：研磨調粗 2–3 響到 53–54 響，或第 3 段提早 10–15g 移開濾杯。","under":"香氣出不來、偏酸寡淡：研磨調細 2 響到 49 響，或水溫升到 93°C。"},"flavor":{"acidity":"明亮細緻的柑橘與檸檬酸","aftertaste":"乾淨悠長的花香與紅茶回甘","aroma":"百合般的白花香、佛手柑、蜜桃","body":"輕盈如茶、絲滑，蜂蜜般的甜","fragrance":"白花、茉莉、柑橘皮"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察膨脹。","name":"悶蒸","to":40,"total":70,"why":"藝妓豆質緊實，悶蒸給足時間，讓粉層均勻吸水、排出氣體。"},{"add":140,"from":40,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"帶出藝妓最珍貴的白花香（茉莉、百合）與佛手柑般的明亮酸質。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，讓粉層維持在理想水位。","name":"第 2 段注水","to":125,"total":360,"why":"萃出蜜桃、蜂蜜般的中段甜感，讓口感更有層次。"},{"add":120,"from":125,"how":"中心極小圈輕柔補到 480g，水位將見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留清透的茶感與花香，截斷末段木質雜味。"}],"ratio":16,"source":"claude","stdClicks":26,"temp":92,"totalTime":"3:00 - 3:20","water":480},"roast":"淺中焙","roaster":"","tip":"巴拿馬藝妓以白花香與柑橘調聞名，是精品咖啡最受追捧的品種之一。","id":"panama-lily-geisha"}];
+const SEED_BEANS=[{"createdAt":"2026-10-17T13:02:00.000Z","example":false,"knowledge":[{"p":"蜜處理不是加蜂蜜。它是把咖啡果去皮後，保留部分或全部黏稠的果膠直接曬乾。果膠裡的糖分在乾燥時滲入豆子，讓咖啡甜感更重、口感更圓潤。依保留的果膠多寡與日曬方式，常分成白蜜、黃蜜、紅蜜、黑蜜，顏色越深通常越甜、發酵感也越重。","t":"蜜處理是什麼"},{"p":"「百香蜜」這類名稱，通常是在蜜處理的過程中加入百香果一起發酵，讓果香被豆子吸收，所以杯中的百香果酸甜特別明顯。不同莊園做法不太一樣，以包裝上的說明為準。","t":"「百香蜜」的由來"},{"p":"哥倫比亞咖啡沿著安地斯山脈種植，許多產區一年有兩次收成。產區以小農為主，近年很多莊園投入特殊發酵與處理法實驗，讓哥倫比亞從「平衡、好入口」的形象，變成實驗風味的重要產地。","t":"哥倫比亞咖啡"},{"p":"蜜處理加水果發酵的豆子甜度高、很好萃，水溫太高容易出現黏膩、焦糖過頭的苦尾。這份配方用 90°C、53 響，選 1:15 讓口感飽滿；如果覺得太濃，改成 1:16（480g）會更清爽。","t":"沖煮重點"},{"p":"水果發酵類的豆子香氣揮發得比較快，開封後建議 3–4 週內喝完。用有單向排氣閥的袋子密封、放在陰涼處，風味會比較穩定。","t":"保存小提醒"}],"logs":[],"name":"哥倫比亞 托雷斯莊園 百香蜜處理","notes":"百香果、蜜處理","origin":"哥倫比亞 托雷斯莊園","process":"百香蜜處理","purchases":[],"recipe":{"clicks":53,"dialIn":{"over":"黏膩、苦尾或發酵味太重：研磨調粗 2 響到 55 響、水溫降到 89°C，或第 3 段提早 10g 移開濾杯。","under":"偏酸、甜感不足：研磨調細 2 響到 51 響，或水溫升到 91°C。"},"flavor":{"acidity":"多汁的百香果酸，明亮但圓潤","aftertaste":"甜感持續，帶熱帶水果與焦糖回甘","aroma":"百香果、芒果、柑橘、蜂蜜","body":"中等偏厚、滑順，黑糖蜜般的甜","fragrance":"百香果、熱帶水果乾、紅糖"},"pours":[{"add":65,"from":0,"how":"由中心向外柔和繞圈注水，確認粉層全部濕透，靜置等它排氣。","name":"悶蒸","to":40,"total":65,"why":"蜜處理豆帶有果膠糖分，悶蒸讓粉層均勻吸水，避免後段水流走捷徑。"},{"add":135,"from":40,"how":"中心小圈往外繞，細水流、低擾動，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":200,"why":"帶出百香果的酸甜與熱帶水果香，是這支最搶眼的部分。"},{"add":140,"from":80,"how":"中等水流穩定繞圈，保持水位，不要大力攪動。","name":"第 2 段注水","to":125,"total":340,"why":"萃出黑糖蜜、芒果般厚實的甜感與滑順口感。"},{"add":110,"from":125,"how":"中心小圈輕柔補到 450g，水位快見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":450,"why":"收尾保留甜感，避免糖分焦化帶來的苦澀與黏膩感。"}],"ratio":15,"source":"claude","stdClicks":27,"temp":90,"totalTime":"2:50 - 3:10","water":450},"roast":"淺中焙","roaster":"","tip":"蜜處理加上百香果發酵，甜感厚實、熱帶果香明顯。","id":"colombia-torres-passionfruit-honey"},{"createdAt":"2026-10-17T13:00:00.000Z","example":false,"knowledge":[{"p":"共同發酵是在發酵槽裡，除了咖啡果之外，再放入其他材料一起發酵，例如花瓣、水果或特定菌種。發酵時產生的香氣分子會被生豆吸收，所以杯中會出現品種本身少見的強烈風味，像這支明顯的玫瑰花香。","t":"什麼是「共同發酵」？"},{"p":"傳統發酵靠環境裡的野生微生物，每一批結果都不太一樣。酵母發酵是刻意加入挑選過的酵母菌，讓發酵方向比較好控制。常見的效果是甜感更乾淨、果香更明確，也比較不會出現失控的醋酸味或腐敗味。","t":"酵母發酵在做什麼"},{"p":"厭氧是把咖啡果或帶殼豆放進密封槽，隔絕氧氣發酵，容易產生乳酸感、熱帶水果與酒香。發酵完再用水洗掉果膠，杯子會保留發酵帶來的香氣，同時比日曬類更乾淨、酸質更清楚。","t":"厭氧發酵＋水洗收尾"},{"p":"近年哥倫比亞很多小農莊園投入特殊發酵，加入花果、酵母，並控制溫度與時間，做出辨識度很高的風味。這類豆子香氣強、價格也較高。咖啡圈對「加料發酵」算不算咖啡本身的風味還有討論，喝的時候把它當成一種風格來欣賞就好。","t":"哥倫比亞的實驗處理風潮"},{"p":"發酵豆可溶物多、很好萃，水溫太高或擾動太大，酒感和像香精的味道就會變重。這份配方用 90°C、稍粗的 54 響和 1:16，讓玫瑰香透亮、尾韻乾淨。放涼到大約 60°C 再喝，花香和甜感會更明顯。","t":"沖煮重點"}],"logs":[],"name":"哥倫比亞 小溪谷莊園 花艷玫瑰 酵母共同厭氧水洗","notes":"花艷玫瑰；酵母共同厭氧發酵、水洗","origin":"哥倫比亞 小溪谷莊園","process":"酵母共同厭氧水洗","purchases":[],"recipe":{"clicks":54,"dialIn":{"over":"酒感、發酵味太重或像香精：研磨調粗 2 響到 56 響、水溫降到 88–89°C，第 2 段擾動再放輕。","under":"香氣淡、偏酸、水感重：研磨調細 2 響到 52 響，或水溫升到 91°C。"},"flavor":{"acidity":"明亮的莓果與葡萄酸，柔和不尖銳","aftertaste":"花香悠長，尾端帶淡淡紅酒感","aroma":"玫瑰、荔枝、覆盆子、蜂蜜","body":"中等、絲滑，荔枝與玫瑰糖漿般的甜感","fragrance":"濃郁玫瑰花、紅色莓果、糖漬花瓣"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認粉層全部濕透。發酵豆排氣明顯，粉層會鼓起，靜置等它慢慢塌下。","name":"悶蒸","to":40,"total":70,"why":"排出二氧化碳；這類發酵豆可溶物多，悶蒸讓粉層先均勻吸水，後面才不會局部過萃。"},{"add":140,"from":40,"how":"中心小圈往外繞到中圈，細水流、低擾動，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"先帶出最外放的玫瑰花香與莓果酸甜，這一段香氣最濃。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，水位維持穩定，不要大力沖刷。","name":"第 2 段注水","to":125,"total":360,"why":"萃出荔枝、蜂蜜般的中段甜感；擾動太大容易把發酵酒感一起帶出來。"},{"add":120,"from":125,"how":"中心小圈輕柔補到 480g，水位快見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留乾淨的花香，避免末段的發酵悶味與澀感。"}],"ratio":16,"source":"claude","stdClicks":27,"temp":90,"totalTime":"2:50 - 3:10","water":480},"roast":"淺中焙","roaster":"","tip":"加入玫瑰與酵母一起厭氧發酵、再水洗的實驗處理豆，香氣外放、很好萃。","id":"colombia-xiaoxigu-rose"},{"createdAt":"2026-10-17T14:00:00.000Z","example":false,"knowledge":[{"p":"果利（Gori）是衣索比亞西南部的藝妓森林一帶，靠近藝妓（Gesha）地區的原始雨林。1930 年代，藝妓品種就是從這片森林附近的野生咖啡樹採集出來，後來才傳到肯亞、坦尚尼亞、哥斯大黎加，最後在巴拿馬一戰成名。所以這裡常被稱作藝妓的老家。","t":"果利藝妓森林在哪裡"},{"p":"「藝妓」是 Geisha 的中文譯名，來自產地名 Gesha，跟日本的藝伎沒有關係。市面上還有人用「瑰夏」這個譯名，指的是同一個品種。看到衣索比亞藝妓，通常是指產自這個原生地區的咖啡。","t":"為什麼叫藝妓"},{"p":"森林裡的咖啡樹環境接近野生，海拔高、雨量足、日夜溫差大，咖啡果成熟慢，豆子密度高。風味常見茉莉、佛手柑、柑橘、蜜桃和茶感，酸質明亮細緻，口感乾淨輕盈。每一批的海拔、處理法和風味差異不小，建議看包裝或問店家。","t":"原生森林咖啡的特色"},{"p":"這包的來源是阿忠叔叔，包裝沒有標示處理法與焙度。我先用淺中焙、清爽路線設定：92°C、51 響、1:16。第一杯喝完先記一下印象：如果果酸明顯偏水洗、莓果酒香偏日曬，再回來按「請 Claude 重新設計配方」，條件會更準。","t":"沒標處理法怎麼辦"},{"p":"藝妓的價值在香氣，萃取不足只剩酸，過度萃取又會蓋掉花香。建議用寬口杯，先聞濕香再喝，放涼到大約 60°C 左右，花香和甜感會更明顯。尾段水位快見粉層就移開濾杯，不要等到滴乾，才能留住乾淨的茶感尾韻。","t":"沖煮重點"}],"logs":[],"name":"衣索比亞 果利藝妓森林","notes":"藝妓原生森林產區；來源：阿忠叔叔；包裝未標示處理法與焙度，焙度暫以淺中焙設定","origin":"衣索比亞 果利藝妓森林","process":"未標示","purchases":[],"recipe":{"clicks":51,"dialIn":{"over":"乾澀、苦尾或花香被蓋住：研磨調粗 2–3 響到 53–54 響，或第 3 段提早 10–15g 移開濾杯。","under":"香氣出不來、偏酸寡淡：研磨調細 2 響到 49 響，或水溫升到 93°C。"},"flavor":{"acidity":"明亮細緻的柑橘與檸檬酸","aftertaste":"乾淨悠長的花香與紅茶回甘","aroma":"佛手柑、蜜桃、淡淡蜂蜜","body":"輕盈如茶、絲滑，中段蜜桃般的甜","fragrance":"茉莉花、白花、柑橘皮"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察膨脹。","name":"悶蒸","to":40,"total":70,"why":"藝妓豆質緊實，悶蒸給足時間，讓粉層均勻吸水、排出氣體。"},{"add":140,"from":40,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"帶出藝妓最珍貴的茉莉、佛手柑花香與明亮的柑橘酸質。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，讓粉層維持在理想水位，擾動不要太大。","name":"第 2 段注水","to":125,"total":360,"why":"萃出蜜桃、蜂蜜般的中段甜感，讓口感更有層次。"},{"add":120,"from":125,"how":"中心極小圈輕柔補到 480g，水位將見粉層時直接移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留清透的茶感與花香，截斷末段木質雜味。"}],"ratio":16,"source":"claude","stdClicks":26,"temp":92,"totalTime":"3:00 - 3:20","water":480},"roast":"淺中焙","roaster":"阿忠叔叔","tip":"果利藝妓森林（Gori Gesha）是藝妓品種的原生地，香氣以茉莉、佛手柑和茶感聞名。","id":"ethiopia-gori-gesha-forest"},{"createdAt":"2026-10-17T12:00:00.000Z","example":false,"knowledge":[{"p":"藝妓村位於衣索比亞西南部，靠近戈里藝妓森林，正是 1930 年代研究人員採集藝妓品種的地區。莊園就在原始森林旁，海拔約 1900–2100 公尺，雨量充沛、日夜溫差大，咖啡果熟成慢、風味細緻。","t":"藝妓村在哪裡"},{"p":"藝妓在巴拿馬出名後，大家回頭尋找它的原鄉。衣索比亞的藝妓保有原生森林品種的多樣性，花香、莓果與茶感往往更奔放，和巴拿馬藝妓細緻的柑橘白花風格可以對比著喝。","t":"衣索比亞是藝妓的老家"},{"p":"日曬是把整顆咖啡果直接攤在棚架上曬乾，大約 3–4 週。果肉的糖分與香氣慢慢滲進豆子，所以日曬豆常有莓果、熱帶水果、果醬般的甜，也比較容易帶一點酒香。乾燥不均勻就會有雜味，所以需要勤翻動。","t":"日曬處理"},{"p":"綠標通常是莊園或烘豆商用來區分批次、地塊或等級的標籤，不同顏色代表不同的批次或處理細節。實際意思可以看包裝或店家的說明。","t":"「綠標」是什麼"},{"p":"目前的配方是 91°C、54 響、1:15。日曬藝妓可溶物多，喝到酒感太重時，先把研磨調粗 2 響；花香出不來、偏酸的話，再往細調 2 響。","t":"沖煮重點"}],"logs":[],"name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","notes":"藝妓品種、日曬綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","process":"日曬","purchases":[],"recipe":{"clicks":54,"dialIn":{"over":"若出現苦澀、乾澀或悶重的尾韻，表示過度萃取：把研磨調粗 2 響（改為 56 響），水溫降至 89–90°C，並減少第 3 段的擾動，讓整體流速加快一些。","under":"若嚐起來偏酸、單薄或甜感不足，表示萃取不足：把研磨調細 2 響（改為 52 響），並把水溫提高到 92–93°C。也可以讓悶蒸多停留 5 秒。"},"flavor":{"acidity":"前段酸質明亮但圓潤，類似柑橘與莓果的清新酸，不尖銳。","aftertaste":"餘韻乾淨悠長，帶有花香與蜂蜜般的回甘，尾端有淡淡的茶感。","aroma":"濕香偏向蜜桃、白葡萄與淡淡的熱帶水果甜香，帶一點蜂蜜感。","body":"中段甜感明顯，有蜜桃、杏桃與花蜜般的風味，口感滑順，質地中等偏厚。","fragrance":"乾香帶有茉莉花、柑橘皮與熟成莓果的甜香，日曬處理的酒香感隱約浮現。"},"pours":[{"add":70,"from":0,"how":"以繞圈方式均勻濕潤所有粉層，水流細而穩，避免沖到濾紙邊緣。注水結束後輕輕晃動濾杯一圈，讓粉床平整，再靜置至 40 秒。","name":"悶蒸","to":40,"total":70,"why":"日曬淺中焙豆排氣量較大，約 70g 水（約 2.3 倍粉重）能讓二氧化碳充分釋放，避免後段通道效應。這一段也讓粉層均勻吸水，為後續萃取打好基礎。"},{"add":110,"from":40,"how":"從中心以小圈慢慢向外繞到約三分之二半徑，再繞回中心，水柱細而穩定。這一段不要大力擾動，保持粉床完整。","name":"第 1 段注水","to":70,"total":180,"why":"此階段主要萃取明亮的有機酸與花果香氣等高溶解度物質。藝妓品種豆質偏緊實，水溫 91°C 能穩定提取香氣，又不會過早帶出苦味。"},{"add":150,"from":70,"how":"待水位降至粉面略露出前再注水，以中等水流繞圈，中心與外圈交替。注水結束時，輕輕沿杯壁畫一圈水流，帶下附著在濾紙上的粉。","name":"第 2 段注水","to":105,"total":330,"why":"這是甜感與風味厚度的主要萃取段。日曬處理的糖分與果膠較豐富，適度水量與水流能把莓果、蜜桃般的甜感萃取出來，並維持圓潤質地。"},{"add":120,"from":105,"how":"以較低水位、柔和水流繞圈注入，注到 450g 後輕輕旋轉濾杯一次，讓粉床平整，使水流順暢下落，目標在 2:50–3:20 滴完。","name":"第 3 段注水","to":135,"total":450,"why":"最後一段用來調整濃度、補足整體萃取率，並平衡甜感與酸質。柔和注水可減少過度攪動帶出的雜味與澀感，讓風味乾淨清透。"}],"ratio":15,"source":"claude","stdClicks":27,"temp":91,"tip":"衣索比亞藝妓村（Gesha Village）位於西南部的蒂瑪地區，因藝妓品種的原生地在此一帶而聞名，高海拔與雨林環境讓風味格外細緻。","totalTime":"2:50 - 3:20","water":450},"roast":"淺中焙","roaster":"","tip":"衣索比亞藝妓村（Gesha Village）位於西南部的蒂瑪地區，因藝妓品種的原生地在此一帶而聞名，高海拔與雨林環境讓風味格外細緻。","id":"gesha-village-dima-natural"},{"createdAt":"2026-10-17T13:01:00.000Z","example":false,"knowledge":[{"p":"藝妓品種原生於衣索比亞，後來被帶到中美洲。2004 年巴拿馬的翡翠莊園拿它參加國家競賽，濃烈的花香與柑橘調驚艷評審，從此成為精品咖啡最受追捧、也最昂貴的品種之一，巴拿馬藝妓的拍賣價常常創下新高。","t":"巴拿馬藝妓為什麼這麼有名"},{"p":"巴拿馬藝妓多來自西部奇里基省的波奎特、沃爾坎一帶，圍繞著巴魯火山。火山土壤肥沃，海拔約 1500–2000 公尺，雲霧多、日夜溫差大，咖啡果熟成慢，豆子密度高，香氣也更細緻。","t":"巴拿馬的風土"},{"p":"藝妓的枝條細長、葉片稀疏、產量低，對海拔和氣候很挑剔，種在太低的地方風味就會變平淡。產量少、難照顧、香氣出眾，加上競賽光環，價格自然比一般品種高出好幾倍。","t":"藝妓好喝但難種"},{"p":"這支包裝沒有標示處理法，名字裡的百合花可以當作杯中白花香的提示。喝的時候試著分辨茉莉、橙花、百合這類白花香，它們通常在咖啡稍微放涼後最明顯。如果之後查到是水洗或日曬，可以按「請 Claude 重新設計配方」再調整。","t":"「百合花」這個名字"},{"p":"藝妓的價值在香氣：萃取不足只剩酸，過度萃取又會蓋掉花香。這份配方用 92°C、51 響和 1:16，讓香氣與甜感平衡。建議用寬口杯，先聞濕香再喝，溫度降一點後再喝一口比較看看。","t":"沖煮重點"}],"logs":[],"name":"巴拿馬 百合花藝妓","notes":"藝妓品種；包裝未標示處理法","origin":"巴拿馬","process":"未標示","purchases":[],"recipe":{"clicks":51,"dialIn":{"over":"乾澀、苦尾：研磨調粗 2–3 響到 53–54 響，或第 3 段提早 10–15g 移開濾杯。","under":"香氣出不來、偏酸寡淡：研磨調細 2 響到 49 響，或水溫升到 93°C。"},"flavor":{"acidity":"明亮細緻的柑橘與檸檬酸","aftertaste":"乾淨悠長的花香與紅茶回甘","aroma":"百合般的白花香、佛手柑、蜜桃","body":"輕盈如茶、絲滑，蜂蜜般的甜","fragrance":"白花、茉莉、柑橘皮"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察膨脹。","name":"悶蒸","to":40,"total":70,"why":"藝妓豆質緊實，悶蒸給足時間，讓粉層均勻吸水、排出氣體。"},{"add":140,"from":40,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"帶出藝妓最珍貴的白花香（茉莉、百合）與佛手柑般的明亮酸質。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，讓粉層維持在理想水位。","name":"第 2 段注水","to":125,"total":360,"why":"萃出蜜桃、蜂蜜般的中段甜感，讓口感更有層次。"},{"add":120,"from":125,"how":"中心極小圈輕柔補到 480g，水位將見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留清透的茶感與花香，截斷末段木質雜味。"}],"ratio":16,"source":"claude","stdClicks":26,"temp":92,"totalTime":"3:00 - 3:20","water":480},"roast":"淺中焙","roaster":"","tip":"巴拿馬藝妓以白花香與柑橘調聞名，是精品咖啡最受追捧的品種之一。","id":"panama-lily-geisha"}];
 function readLocal(){ try{ const raw=localStorage.getItem("beanbook.beans"); if(raw===null) return JSON.parse(JSON.stringify(SEED_BEANS)); const v=JSON.parse(raw); return Array.isArray(v)?v:[]; }catch(e){ return JSON.parse(JSON.stringify(SEED_BEANS)); } }
 function writeLocal(){ try{ localStorage.setItem("beanbook.beans",JSON.stringify(beans)); }catch(e){} }
 
@@ -464,6 +616,7 @@ function render(){
     else if(ui.view==="form") app.innerHTML=viewForm();
     else { ui.view="list"; app.innerHTML=viewList(); }
   } else if(ui.tab==="timer") app.innerHTML=viewTimer();
+  else if(ui.tab==="buy") app.innerHTML=viewBuy();
   else app.innerHTML=viewKnow();
   if(ui.tab==="timer") paintTimer();
 }
@@ -492,7 +645,7 @@ function tipCard(){
 function beanCard(b){
   const r=b.recipe||{}; const n=(b.logs||[]).length; const av=avgRating(b);
   return `<button class="bean" data-act="open" data-id="${esc(b.id)}" id="bean-${esc(b.id)}">
-    <span class="pic">${beanSvg(b.roast,70,"happy","cup")}</span>
+    <span class="pic">${artThumb(b,104)}</span>
     <div class="info">
       <div class="name">${esc(b.name||"未命名的豆子")}${b.example?'<span class="example">範例</span>':''}</div>
       <div class="meta">${esc([b.origin,b.process,b.roast].filter(Boolean).join(" · "))}</div>
@@ -569,7 +722,7 @@ function viewDetail(b){
     .map(([k,e,v])=>`<div class="r"><div class="k">${k}<small>${e}</small></div><div>${esc(v||"—")}</div></div>`).join("");
   return `<button class="back" data-act="back" id="back">‹ 回豆櫃</button>
   <div class="stack">
-    <div class="hero">${beanSvg(b.roast,72)}<div class="t">
+    <div class="hero"><span class="pic">${artThumb(b,92)}</span><div class="t">
       <h1>${esc(b.name)}${b.example?'<span class="example">範例</span>':''}</h1>
       <div class="setup">${[b.roaster,b.origin,b.process,b.roast].filter(Boolean).map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>
     </div></div>
@@ -637,6 +790,7 @@ function viewForm(){
       <div class="field"><span>焙度</span><div class="pills" role="group" aria-label="焙度">
         ${ROASTS.map(p=>`<button type="button" class="pill" data-act="roast" data-v="${p}" aria-pressed="${f.roast===p}">${p}</button>`).join("")}</div></div>
       <label class="field"><span>風味描述 / 包裝上的資訊</span><textarea class="inp" id="f-notes" placeholder="例：茉莉花、水蜜桃、紅茶尾韻；海拔 2100m">${esc(f.notes)}</textarea></label>
+      <div class="field"><span>封面圖（自動會依豆名挑選）</span><div class="pills" role="group" aria-label="封面圖">${ART_NAMES.map(([k,n])=>`<button type="button" class="pill" data-act="art" data-v="${k}" aria-pressed="${(f.art||"auto")===k}">${n}</button>`).join("")}</div></div>
     </div>
 
     ${r?`<div class="card stack"><h2>配方微調</h2>
@@ -657,6 +811,40 @@ function viewForm(){
       ${sample&&!r?`<p class="muted small" style="margin:0">Claude 會依產區、處理法與焙度推算豆質硬度和排氣量，給出刻度、注水策略和風味預期。快速估算則只依焙度套用基本配方。</p>`:""}
     </div>
   </div>`;
+}
+
+function allPurchases(){
+  return beans.flatMap(b=>purchases(b).map(p=>Object.assign({},p,{bean:b})))
+    .sort((a,c)=>String(c.date).localeCompare(String(a.date)));
+}
+function viewBuy(){
+  const all=allPurchases();
+  const total=all.reduce((a,p)=>a+(Number(p.price)||0),0);
+  const grams=all.reduce((a,p)=>a+(Number(p.weight)||0),0);
+  const avgCup=grams>0?Math.round(total/grams*DOSE):0;
+  const mk=today().slice(0,7);
+  const mSpend=all.filter(p=>String(p.date).startsWith(mk)).reduce((a,p)=>a+(Number(p.price)||0),0);
+  const now=new Date(); const months=[];
+  for(let i=5;i>=0;i--){ const d=new Date(now.getFullYear(),now.getMonth()-i,1); const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+    months.push({key,label:(d.getMonth()+1)+" 月",sum:all.filter(p=>String(p.date).startsWith(key)).reduce((a,p)=>a+(Number(p.price)||0),0)}); }
+  const mx=Math.max(1,...months.map(m=>m.sum));
+  const rows=all.length? all.map(p=>`<button class="prow" data-act="open" data-id="${esc(p.bean.id)}">
+      <div class="ph"><span class="pn">${esc(p.bean.name)}</span><span class="price">${money(p.price)} 元</span></div>
+      <div class="small muted num">${esc(p.date)} · ${esc(wLabel(p.weight))} · 每杯約 ${cupCost(p)} 元${p.shop?" · "+esc(p.shop):""}${p.roastDate?" · 烘焙日 "+esc(p.roastDate):""}</div>
+      ${p.note?`<div class="small">${esc(p.note)}</div>`:""}</button>`).join("")
+    :`<div class="empty">${beanSvg("淺中焙",64,"happy","cup")}<h3 style="margin-top:6px">還沒有採購紀錄</h3><p class="muted small">按右下角「記一筆採購」，或到豆子頁面新增，就會幫你統計花費與每杯成本。</p></div>`;
+  return `${header()}<div class="stack" style="margin-top:10px">
+    <div class="sechead"><h2>${icoBean("#8A5232",24)}採購紀錄${sparks()}</h2><span class="muted small num">${all.length} 筆</span></div>
+    <div class="sumgrid">
+      <div class="sum hi"><div class="k">本月買豆</div><div class="v">${money(mSpend)}<small>元</small></div></div>
+      <div class="sum"><div class="k">累計花費</div><div class="v">${money(total)}<small>元</small></div></div>
+      <div class="sum"><div class="k">平均每杯（${DOSE}g）</div><div class="v">${avgCup||"—"}<small>元</small></div></div>
+    </div>
+    ${all.length?`<h3>近 6 個月</h3><div class="months">${months.map(m=>`<div class="mrow"><span class="muted">${m.label}</span><span class="bar2"><i style="width:${m.sum?Math.max(4,m.sum/mx*100):0}%"></i></span><span class="amt num">${m.sum?money(m.sum)+" 元":"—"}</span></div>`).join("")}</div>`:""}
+    <h3>全部紀錄</h3>
+    <div class="stack" style="gap:10px">${rows}</div>
+  </div>
+  ${canWrite&&beans.length?`<button class="fab" id="fab-buy" data-act="buy-any">${icoPlus}記一筆採購</button>`:""}`;
 }
 
 function viewKnow(){
@@ -751,8 +939,8 @@ const errMsg = e => ERR[e?.code] || "Claude 暫時沒有回應，請稍後再試
 
 /* ---------- form helpers ---------- */
 function newForm(b){
-  return b ? {id:b.id,name:b.name||"",origin:b.origin||"",roaster:b.roaster||"",process:b.process||"",roast:b.roast||"中焙",notes:b.notes||"",recipe:normalizeRecipe(b.recipe,b)}
-           : {id:null,name:"",origin:"",roaster:"",process:"水洗",roast:"淺中焙",notes:"",recipe:null};
+  return b ? {id:b.id,name:b.name||"",origin:b.origin||"",roaster:b.roaster||"",process:b.process||"",roast:b.roast||"中焙",notes:b.notes||"",art:b.art||"auto",recipe:normalizeRecipe(b.recipe,b)}
+           : {id:null,name:"",origin:"",roaster:"",process:"水洗",roast:"淺中焙",notes:"",art:"auto",recipe:null};
 }
 function readForm(){
   const f=ui.form; const v=id=>{const el=$("#"+id); return el?el.value.trim():"";};
@@ -772,7 +960,7 @@ function readForm(){
 function beanFromForm(f, recipe, tip){
   const old=f.id?beanById(f.id):null;
   return Object.assign({}, old||{}, {
-    id:f.id||uid(), name:f.name||"未命名的豆子", origin:f.origin, roaster:f.roaster, process:f.process, roast:f.roast, notes:f.notes,
+    id:f.id||uid(), name:f.name||"未命名的豆子", origin:f.origin, roaster:f.roaster, process:f.process, roast:f.roast, notes:f.notes, art:(f.art&&f.art!=="auto")?f.art:"",
     recipe, tip: tip!=null? tip : (old?.tip||""), createdAt: old?.createdAt||new Date().toISOString(), logs: old?.logs||[], example:false
   });
 }
@@ -816,10 +1004,12 @@ function openLog(b){
 }
 
 /* ---------- purchase sheet ---------- */
-function openPurchase(b){
+function openPurchase(b0){
+  let b=b0||sorted()[0]; if(!b) return;
   const layer=$("#layer");
   layer.innerHTML=`<div class="scrim" data-act="close-sheet"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="記一筆採購">
-    <div class="shd"><h2>記一筆採購 · ${esc(b.name)}</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
+    <div class="shd"><h2>記一筆採購${b0?" · "+esc(b.name):""}</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
+    ${b0?"":`<label class="field"><span>買的是哪一支？</span><select class="inp" id="p-bean">${sorted().map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join("")}</select></label>`}
     <div class="grid2">
       <label class="field"><span>購買日期</span><input class="inp num" id="p-date" type="date" value="${today()}"></label>
       <label class="field"><span>價錢（元）</span><input class="inp num" id="p-price" type="number" inputmode="numeric" min="0" placeholder="520"></label>
@@ -828,7 +1018,7 @@ function openPurchase(b){
       <input class="inp num" id="p-weight" type="number" inputmode="numeric" min="1" value="227" aria-label="重量（克）" style="margin-top:4px"></div>
     <div class="grid2">
       <label class="field"><span>店家 / 烘豆商</span><input class="inp" id="p-shop" value="${esc(b.roaster||"")}" placeholder="選填"></label>
-      <label class="field"><span>烘焙日期</span><input class="inp num" id="p-roast" type="date"></label>
+      <label class="field"><span>烘焙日期</span><input class="inp num" id="p-roast" type="date" value="${today()}"></label>
     </div>
     <label class="field"><span>備註</span><input class="inp" id="p-note" placeholder="例：週年慶 9 折、買兩包送濾紙"></label>
     <div class="costline" id="p-cost">填入價錢，就會算出每杯成本。</div>
@@ -838,7 +1028,7 @@ function openPurchase(b){
   const val=id=>$("#"+id).value.trim();
   const calc=()=>{ const w=Number(val("p-weight")), pr=Number(val("p-price"));
     $("#p-cost").innerHTML = w>0&&pr>0 ? `每杯（${DOSE}g）約 <b>${Math.round(pr/w*DOSE)}</b> 元 · 每 100g ${Math.round(pr/w*100)} 元 · 可沖約 ${Math.floor(w/DOSE)} 杯` : "填入價錢，就會算出每杯成本。"; };
-  layer.oninput=calc;
+  layer.oninput=ev=>{ if(ev.target.id==="p-bean"){ b=beanById(ev.target.value)||b; $("#p-shop").value=b.roaster||""; } calc(); };
   layer.onclick=async ev=>{
     const t=ev.target.closest("[data-act]"); if(!t) return;
     const a=t.dataset.act;
@@ -894,6 +1084,7 @@ document.addEventListener("click",async ev=>{
       ui.form=null; ui.busy=false; go("home", backId?"detail":"list", backId); break; }
     case "new": ui.form=newForm(null); go("home","form"); break;
     case "edit": ui.form=newForm(beanById(id)); ui.tab="home"; ui.view="form"; ui.msg=""; render(); window.scrollTo(0,0); break;
+    case "art": readForm(); ui.form.art=t.dataset.v; render(); break;
     case "proc": readForm(); ui.form.process=t.dataset.v; render(); break;
     case "roast": readForm(); ui.form.roast=t.dataset.v; if(ui.form.recipe && !ui.form.id){ui.form.recipe=null;} render(); break;
     case "quick-save": {
@@ -922,6 +1113,7 @@ document.addEventListener("click",async ev=>{
       break;
     case "log": openLog(beanById(id)); break;
     case "buy": openPurchase(beanById(id)); break;
+    case "buy-any": openPurchase(null); break;
     case "del-pur": {
       const key=id+":"+t.dataset.i, b=beanById(id); if(!b) break;
       if(ui.confirmPur===key){ ui.confirmPur=null; const i=Number(t.dataset.i);
