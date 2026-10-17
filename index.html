@@ -158,6 +158,14 @@ button{cursor:pointer}
 .log{background:var(--surface);border-radius:18px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
 .log .lh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .cups{letter-spacing:1px}
+.kbox{background:var(--olive);border-radius:24px;padding:14px 14px 14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 20px rgba(110,120,70,.22)}
+.kbox .khd{display:flex;align-items:center;gap:10px;color:#fff}
+.kbox .khd h2{color:#fff}
+.kbox .khd p{margin:0;font-size:12.5px;opacity:.92}
+.kitem{background:#FFFCF8;border-radius:18px;padding:12px 14px;display:grid;grid-template-columns:30px 1fr;gap:2px 10px}
+.kitem .kn-n{grid-row:1/span 2;width:28px;height:28px;border-radius:50%;background:var(--butter);color:#4A2C22;display:grid;place-items:center;font-family:var(--f-num);font-weight:700;font-size:14px}
+.kitem h3{font-size:16px;font-weight:900;grid-column:2}
+.kitem p{margin:0;font-size:14px;line-height:1.75;grid-column:2;min-width:0}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
 .buy .price{font-family:var(--f-num);font-weight:700;font-size:17px;color:var(--rasp)}
 .costline{font-size:14px;background:var(--butter-soft);border-radius:14px;padding:10px 12px}
@@ -393,7 +401,7 @@ let ready = false;
 let store = { mode:"local",
   async save(b){ const i=beans.findIndex(x=>x.id===b.id); if(i>=0) beans[i]=b; else beans.push(b); writeLocal(); render(); },
   async remove(id){ beans=beans.filter(x=>x.id!==id); writeLocal(); render(); } };
-const SEED_BEANS=[{"id":"gesha-village-dima-natural","name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","roaster":"","process":"日曬","roast":"淺中焙","notes":"藝妓品種、日曬綠標","purchases":[{"date":"2026-10-17","weight":227,"price":520,"shop":"","roastDate":"","note":""}],"example":false,"createdAt":"2026-10-17T12:00:00.000Z","logs":[],"tip":"藝妓村位於衣索比亞西南部、Gori Gesha 森林旁，就是 1930 年代藝妓品種被採集出來的原鄉。日曬會讓它的茉莉花香外，多一層莓果與熱帶水果的甜。","recipe":{"source":"claude","clicks":51,"stdClicks":26,"temp":91,"ratio":16,"water":480,"totalTime":"2:55 - 3:15","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉。日曬豆排氣旺盛，粉層會鼓得比較高，靜置等它慢慢塌下。","why":"排出二氧化碳；日曬豆果肉糖分多、排氣量大，悶蒸給足 40 秒，後段注水才不會被氣體推開。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，水流放輕，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出藝妓招牌的茉莉、佛手柑花香，以及日曬的莓果酸甜。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，擾動不要太大；日曬豆可溶物多，太猛容易萃出發酵酒感。","why":"層次擴展：釋放熱帶水果、蜂蜜般的中段甜感與滑順口感。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩穩補到 480g；水位快見粉層就移開濾杯，不要等到滴乾。","why":"甜感收尾、截斷雜味，保留乾淨的花香尾韻，避免日曬豆末段的悶味和澀感。"}],"flavor":{"fragrance":"茉莉花、白花、草莓乾","aroma":"佛手柑、水蜜桃、藍莓、熱帶水果","acidity":"明亮多汁的莓果與柑橘酸，比水洗藝妓圓潤","body":"中等偏輕、絲滑，蜂蜜與熟果甜感飽滿","aftertaste":"長而乾淨的花香與紅茶感回甘"},"dialIn":{"under":"尖酸、寡淡、水感重：研磨調細 2 響到 49 響，或水溫升到 92°C。","over":"有酒感、發酵味太重或乾澀：研磨調粗 2–3 響到 53–54 響、水溫降到 90°C，或第 3 段提早 10–15g 移開濾杯。"}}}];
+const SEED_BEANS=[{"createdAt":"2026-10-17T13:02:00.000Z","example":false,"knowledge":[{"p":"蜜處理不是加蜂蜜。它是把咖啡果去皮後，保留部分或全部黏稠的果膠直接曬乾。果膠裡的糖分在乾燥時滲入豆子，讓咖啡甜感更重、口感更圓潤。依保留的果膠多寡與日曬方式，常分成白蜜、黃蜜、紅蜜、黑蜜，顏色越深通常越甜、發酵感也越重。","t":"蜜處理是什麼"},{"p":"「百香蜜」這類名稱，通常是在蜜處理的過程中加入百香果一起發酵，讓果香被豆子吸收，所以杯中的百香果酸甜特別明顯。不同莊園做法不太一樣，以包裝上的說明為準。","t":"「百香蜜」的由來"},{"p":"哥倫比亞咖啡沿著安地斯山脈種植，許多產區一年有兩次收成。產區以小農為主，近年很多莊園投入特殊發酵與處理法實驗，讓哥倫比亞從「平衡、好入口」的形象，變成實驗風味的重要產地。","t":"哥倫比亞咖啡"},{"p":"蜜處理加水果發酵的豆子甜度高、很好萃，水溫太高容易出現黏膩、焦糖過頭的苦尾。這份配方用 90°C、53 響，選 1:15 讓口感飽滿；如果覺得太濃，改成 1:16（480g）會更清爽。","t":"沖煮重點"},{"p":"水果發酵類的豆子香氣揮發得比較快，開封後建議 3–4 週內喝完。用有單向排氣閥的袋子密封、放在陰涼處，風味會比較穩定。","t":"保存小提醒"}],"logs":[],"name":"哥倫比亞 托雷斯莊園 百香蜜處理","notes":"百香果、蜜處理","origin":"哥倫比亞 托雷斯莊園","process":"百香蜜處理","purchases":[{"date":"2026-10-17","note":"","price":360,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":53,"dialIn":{"over":"黏膩、苦尾或發酵味太重：研磨調粗 2 響到 55 響、水溫降到 89°C，或第 3 段提早 10g 移開濾杯。","under":"偏酸、甜感不足：研磨調細 2 響到 51 響，或水溫升到 91°C。"},"flavor":{"acidity":"多汁的百香果酸，明亮但圓潤","aftertaste":"甜感持續，帶熱帶水果與焦糖回甘","aroma":"百香果、芒果、柑橘、蜂蜜","body":"中等偏厚、滑順，黑糖蜜般的甜","fragrance":"百香果、熱帶水果乾、紅糖"},"pours":[{"add":65,"from":0,"how":"由中心向外柔和繞圈注水，確認粉層全部濕透，靜置等它排氣。","name":"悶蒸","to":40,"total":65,"why":"蜜處理豆帶有果膠糖分，悶蒸讓粉層均勻吸水，避免後段水流走捷徑。"},{"add":135,"from":40,"how":"中心小圈往外繞，細水流、低擾動，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":200,"why":"帶出百香果的酸甜與熱帶水果香，是這支最搶眼的部分。"},{"add":140,"from":80,"how":"中等水流穩定繞圈，保持水位，不要大力攪動。","name":"第 2 段注水","to":125,"total":340,"why":"萃出黑糖蜜、芒果般厚實的甜感與滑順口感。"},{"add":110,"from":125,"how":"中心小圈輕柔補到 450g，水位快見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":450,"why":"收尾保留甜感，避免糖分焦化帶來的苦澀與黏膩感。"}],"ratio":15,"source":"claude","stdClicks":27,"temp":90,"totalTime":"2:50 - 3:10","water":450},"roast":"淺中焙","roaster":"","tip":"蜜處理加上百香果發酵，甜感厚實、熱帶果香明顯。","id":"colombia-torres-passionfruit-honey"},{"createdAt":"2026-10-17T13:00:00.000Z","example":false,"knowledge":[{"p":"共同發酵是在發酵槽裡，除了咖啡果之外，再放入其他材料一起發酵，例如花瓣、水果或特定菌種。發酵時產生的香氣分子會被生豆吸收，所以杯中會出現品種本身少見的強烈風味，像這支明顯的玫瑰花香。","t":"什麼是「共同發酵」？"},{"p":"傳統發酵靠環境裡的野生微生物，每一批結果都不太一樣。酵母發酵是刻意加入挑選過的酵母菌，讓發酵方向比較好控制。常見的效果是甜感更乾淨、果香更明確，也比較不會出現失控的醋酸味或腐敗味。","t":"酵母發酵在做什麼"},{"p":"厭氧是把咖啡果或帶殼豆放進密封槽，隔絕氧氣發酵，容易產生乳酸感、熱帶水果與酒香。發酵完再用水洗掉果膠，杯子會保留發酵帶來的香氣，同時比日曬類更乾淨、酸質更清楚。","t":"厭氧發酵＋水洗收尾"},{"p":"近年哥倫比亞很多小農莊園投入特殊發酵，加入花果、酵母，並控制溫度與時間，做出辨識度很高的風味。這類豆子香氣強、價格也較高。咖啡圈對「加料發酵」算不算咖啡本身的風味還有討論，喝的時候把它當成一種風格來欣賞就好。","t":"哥倫比亞的實驗處理風潮"},{"p":"發酵豆可溶物多、很好萃，水溫太高或擾動太大，酒感和像香精的味道就會變重。這份配方用 90°C、稍粗的 54 響和 1:16，讓玫瑰香透亮、尾韻乾淨。放涼到大約 60°C 再喝，花香和甜感會更明顯。","t":"沖煮重點"}],"logs":[],"name":"哥倫比亞 小溪谷莊園 花艷玫瑰 酵母共同厭氧水洗","notes":"花艷玫瑰；酵母共同厭氧發酵、水洗","origin":"哥倫比亞 小溪谷莊園","process":"酵母共同厭氧水洗","purchases":[{"date":"2026-10-17","note":"","price":520,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":54,"dialIn":{"over":"酒感、發酵味太重或像香精：研磨調粗 2 響到 56 響、水溫降到 88–89°C，第 2 段擾動再放輕。","under":"香氣淡、偏酸、水感重：研磨調細 2 響到 52 響，或水溫升到 91°C。"},"flavor":{"acidity":"明亮的莓果與葡萄酸，柔和不尖銳","aftertaste":"花香悠長，尾端帶淡淡紅酒感","aroma":"玫瑰、荔枝、覆盆子、蜂蜜","body":"中等、絲滑，荔枝與玫瑰糖漿般的甜感","fragrance":"濃郁玫瑰花、紅色莓果、糖漬花瓣"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認粉層全部濕透。發酵豆排氣明顯，粉層會鼓起，靜置等它慢慢塌下。","name":"悶蒸","to":40,"total":70,"why":"排出二氧化碳；這類發酵豆可溶物多，悶蒸讓粉層先均勻吸水，後面才不會局部過萃。"},{"add":140,"from":40,"how":"中心小圈往外繞到中圈，細水流、低擾動，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"先帶出最外放的玫瑰花香與莓果酸甜，這一段香氣最濃。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，水位維持穩定，不要大力沖刷。","name":"第 2 段注水","to":125,"total":360,"why":"萃出荔枝、蜂蜜般的中段甜感；擾動太大容易把發酵酒感一起帶出來。"},{"add":120,"from":125,"how":"中心小圈輕柔補到 480g，水位快見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留乾淨的花香，避免末段的發酵悶味與澀感。"}],"ratio":16,"source":"claude","stdClicks":27,"temp":90,"totalTime":"2:50 - 3:10","water":480},"roast":"淺中焙","roaster":"","tip":"加入玫瑰與酵母一起厭氧發酵、再水洗的實驗處理豆，香氣外放、很好萃。","id":"colombia-xiaoxigu-rose"},{"createdAt":"2026-10-17T12:00:00.000Z","example":false,"knowledge":[{"p":"藝妓村位於衣索比亞西南部，靠近戈里藝妓森林，正是 1930 年代研究人員採集藝妓品種的地區。莊園就在原始森林旁，海拔約 1900–2100 公尺，雨量充沛、日夜溫差大，咖啡果熟成慢、風味細緻。","t":"藝妓村在哪裡"},{"p":"藝妓在巴拿馬出名後，大家回頭尋找它的原鄉。衣索比亞的藝妓保有原生森林品種的多樣性，花香、莓果與茶感往往更奔放，和巴拿馬藝妓細緻的柑橘白花風格可以對比著喝。","t":"衣索比亞是藝妓的老家"},{"p":"日曬是把整顆咖啡果直接攤在棚架上曬乾，大約 3–4 週。果肉的糖分與香氣慢慢滲進豆子，所以日曬豆常有莓果、熱帶水果、果醬般的甜，也比較容易帶一點酒香。乾燥不均勻就會有雜味，所以需要勤翻動。","t":"日曬處理"},{"p":"綠標通常是莊園或烘豆商用來區分批次、地塊或等級的標籤，不同顏色代表不同的批次或處理細節。實際意思可以看包裝或店家的說明。","t":"「綠標」是什麼"},{"p":"目前的配方是 91°C、54 響、1:15。日曬藝妓可溶物多，喝到酒感太重時，先把研磨調粗 2 響；花香出不來、偏酸的話，再往細調 2 響。","t":"沖煮重點"}],"logs":[],"name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","notes":"藝妓品種、日曬綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","process":"日曬","purchases":[{"date":"2026-10-17","note":"","price":520,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":54,"dialIn":{"over":"若出現苦澀、乾澀或悶重的尾韻，表示過度萃取：把研磨調粗 2 響（改為 56 響），水溫降至 89–90°C，並減少第 3 段的擾動，讓整體流速加快一些。","under":"若嚐起來偏酸、單薄或甜感不足，表示萃取不足：把研磨調細 2 響（改為 52 響），並把水溫提高到 92–93°C。也可以讓悶蒸多停留 5 秒。"},"flavor":{"acidity":"前段酸質明亮但圓潤，類似柑橘與莓果的清新酸，不尖銳。","aftertaste":"餘韻乾淨悠長，帶有花香與蜂蜜般的回甘，尾端有淡淡的茶感。","aroma":"濕香偏向蜜桃、白葡萄與淡淡的熱帶水果甜香，帶一點蜂蜜感。","body":"中段甜感明顯，有蜜桃、杏桃與花蜜般的風味，口感滑順，質地中等偏厚。","fragrance":"乾香帶有茉莉花、柑橘皮與熟成莓果的甜香，日曬處理的酒香感隱約浮現。"},"pours":[{"add":70,"from":0,"how":"以繞圈方式均勻濕潤所有粉層，水流細而穩，避免沖到濾紙邊緣。注水結束後輕輕晃動濾杯一圈，讓粉床平整，再靜置至 40 秒。","name":"悶蒸","to":40,"total":70,"why":"日曬淺中焙豆排氣量較大，約 70g 水（約 2.3 倍粉重）能讓二氧化碳充分釋放，避免後段通道效應。這一段也讓粉層均勻吸水，為後續萃取打好基礎。"},{"add":110,"from":40,"how":"從中心以小圈慢慢向外繞到約三分之二半徑，再繞回中心，水柱細而穩定。這一段不要大力擾動，保持粉床完整。","name":"第 1 段注水","to":70,"total":180,"why":"此階段主要萃取明亮的有機酸與花果香氣等高溶解度物質。藝妓品種豆質偏緊實，水溫 91°C 能穩定提取香氣，又不會過早帶出苦味。"},{"add":150,"from":70,"how":"待水位降至粉面略露出前再注水，以中等水流繞圈，中心與外圈交替。注水結束時，輕輕沿杯壁畫一圈水流，帶下附著在濾紙上的粉。","name":"第 2 段注水","to":105,"total":330,"why":"這是甜感與風味厚度的主要萃取段。日曬處理的糖分與果膠較豐富，適度水量與水流能把莓果、蜜桃般的甜感萃取出來，並維持圓潤質地。"},{"add":120,"from":105,"how":"以較低水位、柔和水流繞圈注入，注到 450g 後輕輕旋轉濾杯一次，讓粉床平整，使水流順暢下落，目標在 2:50–3:20 滴完。","name":"第 3 段注水","to":135,"total":450,"why":"最後一段用來調整濃度、補足整體萃取率，並平衡甜感與酸質。柔和注水可減少過度攪動帶出的雜味與澀感，讓風味乾淨清透。"}],"ratio":15,"source":"claude","stdClicks":27,"temp":91,"tip":"衣索比亞藝妓村（Gesha Village）位於西南部的蒂瑪地區，因藝妓品種的原生地在此一帶而聞名，高海拔與雨林環境讓風味格外細緻。","totalTime":"2:50 - 3:20","water":450},"roast":"淺中焙","roaster":"","tip":"衣索比亞藝妓村（Gesha Village）位於西南部的蒂瑪地區，因藝妓品種的原生地在此一帶而聞名，高海拔與雨林環境讓風味格外細緻。","id":"gesha-village-dima-natural"},{"createdAt":"2026-10-17T13:01:00.000Z","example":false,"knowledge":[{"p":"藝妓品種原生於衣索比亞，後來被帶到中美洲。2004 年巴拿馬的翡翠莊園拿它參加國家競賽，濃烈的花香與柑橘調驚艷評審，從此成為精品咖啡最受追捧、也最昂貴的品種之一，巴拿馬藝妓的拍賣價常常創下新高。","t":"巴拿馬藝妓為什麼這麼有名"},{"p":"巴拿馬藝妓多來自西部奇里基省的波奎特、沃爾坎一帶，圍繞著巴魯火山。火山土壤肥沃，海拔約 1500–2000 公尺，雲霧多、日夜溫差大，咖啡果熟成慢，豆子密度高，香氣也更細緻。","t":"巴拿馬的風土"},{"p":"藝妓的枝條細長、葉片稀疏、產量低，對海拔和氣候很挑剔，種在太低的地方風味就會變平淡。產量少、難照顧、香氣出眾，加上競賽光環，價格自然比一般品種高出好幾倍。","t":"藝妓好喝但難種"},{"p":"這支包裝沒有標示處理法，名字裡的百合花可以當作杯中白花香的提示。喝的時候試著分辨茉莉、橙花、百合這類白花香，它們通常在咖啡稍微放涼後最明顯。如果之後查到是水洗或日曬，可以按「請 Claude 重新設計配方」再調整。","t":"「百合花」這個名字"},{"p":"藝妓的價值在香氣：萃取不足只剩酸，過度萃取又會蓋掉花香。這份配方用 92°C、51 響和 1:16，讓香氣與甜感平衡。建議用寬口杯，先聞濕香再喝，溫度降一點後再喝一口比較看看。","t":"沖煮重點"}],"logs":[],"name":"巴拿馬 百合花藝妓","notes":"藝妓品種；包裝未標示處理法","origin":"巴拿馬","process":"未標示","purchases":[{"date":"2026-10-17","note":"","price":450,"roastDate":"","shop":"","weight":227}],"recipe":{"clicks":51,"dialIn":{"over":"乾澀、苦尾：研磨調粗 2–3 響到 53–54 響，或第 3 段提早 10–15g 移開濾杯。","under":"香氣出不來、偏酸寡淡：研磨調細 2 響到 49 響，或水溫升到 93°C。"},"flavor":{"acidity":"明亮細緻的柑橘與檸檬酸","aftertaste":"乾淨悠長的花香與紅茶回甘","aroma":"百合般的白花香、佛手柑、蜜桃","body":"輕盈如茶、絲滑，蜂蜜般的甜","fragrance":"白花、茉莉、柑橘皮"},"pours":[{"add":70,"from":0,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察膨脹。","name":"悶蒸","to":40,"total":70,"why":"藝妓豆質緊實，悶蒸給足時間，讓粉層均勻吸水、排出氣體。"},{"add":140,"from":40,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","name":"第 1 段注水","to":80,"total":210,"why":"帶出藝妓最珍貴的白花香（茉莉、百合）與佛手柑般的明亮酸質。"},{"add":150,"from":80,"how":"中等水流穩定繞圈，讓粉層維持在理想水位。","name":"第 2 段注水","to":125,"total":360,"why":"萃出蜜桃、蜂蜜般的中段甜感，讓口感更有層次。"},{"add":120,"from":125,"how":"中心極小圈輕柔補到 480g，水位將見粉層就移開濾杯。","name":"第 3 段注水","to":160,"total":480,"why":"收尾保留清透的茶感與花香，截斷末段木質雜味。"}],"ratio":16,"source":"claude","stdClicks":26,"temp":92,"totalTime":"3:00 - 3:20","water":480},"roast":"淺中焙","roaster":"","tip":"巴拿馬藝妓以白花香與柑橘調聞名，是精品咖啡最受追捧的品種之一。","id":"panama-lily-geisha"}];
 function readLocal(){ try{ const raw=localStorage.getItem("beanbook.beans"); if(raw===null) return JSON.parse(JSON.stringify(SEED_BEANS)); const v=JSON.parse(raw); return Array.isArray(v)?v:[]; }catch(e){ return JSON.parse(JSON.stringify(SEED_BEANS)); } }
 function writeLocal(){ try{ localStorage.setItem("beanbook.beans",JSON.stringify(beans)); }catch(e){} }
 
@@ -519,6 +527,16 @@ function viewList(){
   ${canWrite?`<button class="fab" id="fab-add" data-act="new">${icoPlus}新豆子</button>`:""}`;
 }
 
+function knowledgeList(b){ return Array.isArray(b.knowledge) ? b.knowledge.filter(k=>k&&typeof k.t==="string"&&typeof k.p==="string"&&k.p.trim()) : []; }
+function knowledgeSection(b){
+  const ks=knowledgeList(b);
+  if(!ks.length) return b.tip?`<section class="tip"><div class="lab">${icoSun}豆小子知識</div><p class="small">${esc(b.tip)}</p>${cupSvg}</section>`:"";
+  return `<section class="kbox" aria-label="豆小子知識">
+    <div class="khd">${beanSvg(b.roast,52,"happy","sprout")}<div><h2>豆小子知識</h2><p>關於這支豆子的產區、品種、處理法和沖煮</p></div></div>
+    ${ks.map((k,i)=>`<article class="kitem"><span class="kn-n">${i+1}</span><h3>${esc(k.t)}</h3><p>${esc(k.p)}</p></article>`).join("")}
+  </section>`;
+}
+
 function purchaseSection(b){
   const pl=purchases(b); const total=pl.reduce((a,p)=>a+(Number(p.price)||0),0);
   const latest=pl[0]; const age=latest?daysSince(latest.roastDate):null;
@@ -582,7 +600,7 @@ function viewDetail(b){
     <section class="section"><h2>滋味微調</h2><div class="dial">
       <div class="d u"><b>喝起來太酸、太淡</b>${esc(r.dialIn.under)}</div>
       <div class="d o"><b>喝起來太苦、太澀</b>${esc(r.dialIn.over)}</div></div></section>
-    ${b.tip?`<section class="tip"><div class="lab">這支豆子的小知識</div><p class="small">${esc(b.tip)}</p>${cupSvg}</section>`:""}
+    ${knowledgeSection(b)}
 
     <section class="section"><div class="row" style="justify-content:space-between"><h2>沖煮紀錄</h2><span class="muted small">${logs.length} 杯</span></div>
       ${logs.length?logs.map(l=>`<div class="log"><div class="lh"><span class="num">${esc(l.date)}</span><span class="cups" aria-label="評分 ${esc(l.rating)} 分">${"☕".repeat(Number(l.rating)||0)}</span></div>
@@ -718,12 +736,15 @@ function aiPrompt(b){
 "pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"操作要點與擾動手法","why":"萃取目標與物理意義"},{"name":"第 1 段注水",...},{"name":"第 2 段注水",...},{"name":"第 3 段注水",...}],
 "flavor":{"fragrance":"乾香","aroma":"濕香","acidity":"前段酸質","body":"中段風味、甜感與質地","aftertaste":"餘韻"},
 "dialIn":{"under":"萃取不足時的調整（含具體幾響與水溫）","over":"過度萃取時的調整"},
-"tip":"一則與這支豆子的產區、品種或處理法有關的咖啡小知識，60 字內"}`;
+"tip":"一句話介紹這支豆子，40 字內",
+"knowledge":[{"t":"短標題","p":"80–150 字的詳細說明"}]}
+knowledge 請寫 4–5 則，依序涵蓋：產區或莊園的風土、品種特色、處理法原理（如何影響風味）、沖煮重點（對應你給的配方數字），可再加一則保存或品飲小技巧。內容要正確、具體；不確定的事（例如包裝上的名稱代表什麼）請用「通常」「可留意包裝說明」等保留說法，不要編造莊園歷史或得獎紀錄。`;
 }
 async function aiRecipe(b){
   const j = await sample.json(aiPrompt(b), {modelTier:"default"});
   const r = normalizeRecipe(j,b); r.source="claude";
-  return {recipe:r, tip: typeof j?.tip==="string"? j.tip : ""};
+  const knowledge = Array.isArray(j?.knowledge) ? j.knowledge.filter(k=>k&&typeof k.t==="string"&&typeof k.p==="string").slice(0,6).map(k=>({t:k.t,p:k.p})) : [];
+  return {recipe:r, tip: typeof j?.tip==="string"? j.tip : "", knowledge};
 }
 const ERR = {not_granted:"沒有取得使用 Claude 的許可，先用快速估算吧。",rate_limited:"Claude 有點忙，稍後再試一次。",invalid_json:"Claude 的回覆格式不對，再試一次看看。",sampling_disabled:"這個帳號無法使用 Claude。",session_expired:"請重新登入 Claude 後再試。"};
 const errMsg = e => ERR[e?.code] || "Claude 暫時沒有回應，請稍後再試。";
@@ -884,15 +905,15 @@ document.addEventListener("click",async ev=>{
     case "ai-save": {
       const f=readForm(); if(!f.name){ ui.msg="先幫豆子取個名字吧！"; ui.msgErr=true; render(); return; }
       ui.busy=true; ui.msg="Claude 正在依豆況推算刻度與注水策略，大約需要半分鐘…"; ui.msgErr=false; render();
-      try{ const {recipe,tip}=await aiRecipe(f); const b=beanFromForm(f,recipe,tip); ui.busy=false; ui.msg="";
+      try{ const {recipe,tip,knowledge}=await aiRecipe(f); const b=beanFromForm(f,recipe,tip); if(knowledge.length) b.knowledge=knowledge; ui.busy=false; ui.msg="";
         if(await persist(b)){ ui.form=null; toast("配方完成！"); go("home","detail",b.id); } }
       catch(e){ ui.busy=false; ui.msg=errMsg(e); ui.msgErr=true; render(); }
       break; }
     case "regen": {
       const b=beanById(id); if(!b||ui.busy) return;
       ui.busy=true; ui.msg="Claude 正在重新設計配方…"; ui.msgErr=false; render();
-      try{ const {recipe,tip}=await aiRecipe(b); ui.busy=false; ui.msg="";
-        if(await persist(Object.assign({},b,{recipe,tip:tip||b.tip,example:false}))) toast("配方更新了！"); render(); }
+      try{ const {recipe,tip,knowledge}=await aiRecipe(b); ui.busy=false; ui.msg="";
+        if(await persist(Object.assign({},b,{recipe,tip:tip||b.tip,knowledge:knowledge.length?knowledge:(b.knowledge||[]),example:false}))) toast("配方更新了！"); render(); }
       catch(e){ ui.busy=false; ui.msg=errMsg(e); ui.msgErr=true; render(); }
       break; }
     case "del":
@@ -919,5 +940,6 @@ document.addEventListener("click",async ev=>{
 boot();
 })();
 </script>
+
 </body>
 </html>
