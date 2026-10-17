@@ -120,7 +120,8 @@ button{cursor:pointer}
 .note li+li{margin-top:4px}
 
 .step{background:var(--surface);border-radius:20px;padding:14px;display:grid;grid-template-columns:40px 1fr;gap:4px 12px;box-shadow:var(--shadow)}
-.step .n{grid-row:1/span 3;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-num);font-weight:700;font-size:17px;background:var(--butter);color:#4A2C22}
+.step > :not(.n){grid-column:2;min-width:0}
+.step .n{grid-row:1/span 4;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-num);font-weight:700;font-size:17px;background:var(--butter);color:#4A2C22}
 .step:nth-child(2) .n{background:var(--mint);color:#fff}
 .step:nth-child(n+3) .n{background:var(--accent);color:var(--accent-ink)}
 .step .hd{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
@@ -210,11 +211,11 @@ const ROAST_COLOR = {"淺焙":"#D19A66","淺中焙":"#B47546","中焙":"#8F5635"
 const PROCESSES = ["水洗","日曬","蜜處理","厭氧","濕剝","其他"];
 
 const KNOW = [
-  {tag:"器具",t:"紅軸每響只有 15 微米",p:"Red Clix 每響約 15μm，是原廠軸心（約 30μm）的一半。原廠 26 格 ≈ 紅軸 52 響，對照時把格數乘 2 就好。"},
+  {tag:"器具",t:"紅軸每響只有 15 微米",p:"紅軸每響約 15 微米，是原廠軸心（約 30 微米）的一半。原廠 26 格 ≈ 紅軸 52 響，對照時把格數乘 2 就好。"},
   {tag:"器具",t:"玻璃濾杯一定要預熱",p:"玻璃比熱容高、吸熱快，沒預熱的話水溫一進杯就掉 3–5°C，酸質會變尖、萃取不足。熱水沖燙 15–20 秒再倒掉。"},
   {tag:"萃取",t:"悶蒸在做什麼？",p:"新鮮咖啡粉裡有大量二氧化碳，會把水推開。悶蒸讓氣體先排出，後面的水才進得去。粉量約 2–2.5 倍的水最剛好。"},
   {tag:"萃取",t:"酸、甜、苦的出場順序",p:"萃取時酸先出來、甜居中、苦澀最後。所以第三段要「截斷」：水位快見粉層就移開濾杯，把木質澀味留在濾杯裡。"},
-  {tag:"萃取",t:"SCA 金杯標準",p:"理想萃取率約 18–22%，濃度 TDS 約 1.15–1.35%。太低偏酸寡淡，太高就苦澀乾口。"},
+  {tag:"萃取",t:"金杯萃取標準",p:"理想萃取率約 18–22%，濃度約 1.15–1.35%。太低偏酸寡淡，太高就苦澀乾口。"},
   {tag:"萃取",t:"先動研磨，再動水溫",p:"味道不對時一次只改一個變數。研磨影響最大，先調 2–3 響；還不夠再動水溫 1–2°C。"},
   {tag:"焙度",t:"淺焙用熱一點的水",p:"淺焙豆密度高、細胞壁硬，比較難萃取，常用 92–94°C。深焙豆多孔易溶，降到 86–89°C 可以少一點焦苦。"},
   {tag:"處理法",t:"水洗 vs 日曬 vs 蜜處理",p:"水洗：乾淨明亮的酸。日曬：果醬、莓果與發酵甜感。蜜處理：保留部分果膠曬乾，甜感與酸質介於兩者之間。"},
@@ -222,8 +223,8 @@ const KNOW = [
   {tag:"比例",t:"1:15 和 1:16 差在哪？",p:"30g 粉配 450g 水（1:15）口感較濃郁厚實；配 480g（1:16）比較清爽透亮，適合花香調的淺焙。"},
   {tag:"保存",t:"咖啡豆怕的四件事",p:"光、熱、氧氣、濕氣。用有單向排氣閥的袋子或密封罐放陰涼處。冰箱進進出出會反潮，反而更容易走味。"},
   {tag:"保存",t:"養豆期",p:"剛烘好的豆子排氣旺盛，悶蒸會冒很多泡、味道不穩。淺焙通常養 7–14 天、深焙 3–7 天後比較好沖。"},
-  {tag:"水",t:"水也是配方的一部分",p:"建議用 TDS 約 75–150 ppm 的軟水。RO 純水萃不出味道，太硬的水會讓酸質變鈍。"},
-  {tag:"豆種",t:"藝伎（Geisha）",p:"源自衣索比亞 Gesha 村，2004 年在巴拿馬翡翠莊園的比賽一戰成名，以茉莉花與佛手柑香氣聞名。"},
+  {tag:"水",t:"水也是配方的一部分",p:"建議用總溶解固體約 75–150 ppm 的軟水。逆滲透純水萃不出味道，太硬的水會讓酸質變鈍。"},
+  {tag:"豆種",t:"藝伎（瑰夏）",p:"源自衣索比亞藝妓村，2004 年在巴拿馬翡翠莊園的比賽一戰成名，以茉莉花與佛手柑香氣聞名。"},
   {tag:"豆種",t:"SL28 / SL34",p:"肯亞代表品種，由 Scott Laboratories 選育。常見黑醋栗、番茄般的鮮明酸質與多汁口感。"},
   {tag:"萃取",t:"粉床中心的小凹槽",p:"30g 大粉量粉層深，中心最厚、最難濕透。倒粉後在中心輕壓一個淺凹，悶蒸時水更容易均勻擴散。"},
 ];
@@ -260,20 +261,20 @@ const cupSvg = `<svg class="deco" width="84" height="84" viewBox="0 0 84 84" ari
 /* ---------- recipe estimator (no AI needed) ---------- */
 function estimateRecipe(b){
   const i = Math.max(0, ROASTS.indexOf(b.roast)); // 0 light .. 4 dark
-  let clicks = [49,51,53,55,56][i];
+  let響 = [49,51,53,55,56][i];
   let temp = [93,92,91,89,87][i];
   const ratio = i<=1 ? 16 : 15;
   const water = DOSE*ratio;
   const proc = String(b.process||"");
-  if(/厭氧|日曬|酒|發酵/.test(proc)){ temp-=1; clicks+=1; }
+  if(/厭氧|日曬|酒|發酵/.test(proc)){ temp-=1;響+=1; }
   const bloom = i>=3 ? 60 : 70;
   const p1 = Math.round(water*0.44/10)*10;  // ~200 / 210
   const p2 = Math.round(water*0.75/10)*10;  // ~340 / 360
   return {
-    clicks, stdClicks:Math.round(clicks/2), temp, ratio, water,
+   響, stdClicks:Math.round(clicks/2), temp, ratio, water,
     totalTime: i<=1 ? "3:00 - 3:20" : "2:50 - 3:10",
     pours:[
-      {name:"悶蒸 (Bloom)",add:bloom,total:bloom,from:0,to:40,how:"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察排氣膨脹。",why:"徹底排出二氧化碳，打開咖啡粉微孔以利後續萃取。"},
+      {name:"悶蒸",add:bloom,total:bloom,from:0,to:40,how:"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察排氣膨脹。",why:"徹底排出二氧化碳，打開咖啡粉微孔以利後續萃取。"},
       {name:"第 1 段注水",add:p1-bloom,total:p1,from:40,to:80,how:"中心小圈至中圈穩定細水流注入，維持柔和對流，不沖刷濾紙邊緣。",why:"酸甜核心萃取：帶出主要花果芳香與明亮酸質。"},
       {name:"第 2 段注水",add:p2-p1,total:p2,from:80,to:125,how:"中等水流穩定繞圈，適度增加擾動，把粉層維持在理想水位。",why:"層次與主體擴展：釋放中段甜感、焦糖化物質與厚實體脂感。"},
       {name:"第 3 段注水",add:water-p2,total:water,from:125,to:160,how:"中心定點或極小圈穩健注水補足；水位將露出粉層時直接移開濾杯。",why:"甜感收尾與雜味截斷：避免末段萃出木質澀味與苦雜味。"}
@@ -317,7 +318,7 @@ let ready = false;
 let store = { mode:"local",
   async save(b){ const i=beans.findIndex(x=>x.id===b.id); if(i>=0) beans[i]=b; else beans.push(b); writeLocal(); render(); },
   async remove(id){ beans=beans.filter(x=>x.id!==id); writeLocal(); render(); } };
-const SEED_BEANS=[{"id":"gesha-village-dima-natural","name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","roaster":"","process":"日曬","roast":"淺中焙","notes":"藝妓品種、日曬綠標；半磅 520 元","example":false,"createdAt":"2026-10-17T12:00:00.000Z","logs":[],"tip":"藝妓村位於衣索比亞西南部、Gori Gesha 森林旁，就是 1930 年代藝妓品種被採集出來的原鄉。日曬會讓它的茉莉花香外，多一層莓果與熱帶水果的甜。","recipe":{"source":"claude","clicks":51,"stdClicks":26,"temp":91,"ratio":16,"water":480,"totalTime":"2:55 - 3:15","pours":[{"name":"悶蒸 (Bloom)","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉。日曬豆排氣旺盛，粉層會鼓得比較高，靜置等它慢慢塌下。","why":"排出二氧化碳；日曬豆果肉糖分多、排氣量大，悶蒸給足 40 秒，後段注水才不會被氣體推開。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，水流放輕，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出藝妓招牌的茉莉、佛手柑花香，以及日曬的莓果酸甜。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，擾動不要太大；日曬豆可溶物多，太猛容易萃出發酵酒感。","why":"層次擴展：釋放熱帶水果、蜂蜜般的中段甜感與滑順口感。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩穩補到 480g；水位快見粉層就移開濾杯，不要等到滴乾。","why":"甜感收尾、截斷雜味，保留乾淨的花香尾韻，避免日曬豆末段的悶味和澀感。"}],"flavor":{"fragrance":"茉莉花、白花、草莓乾","aroma":"佛手柑、水蜜桃、藍莓、熱帶水果","acidity":"明亮多汁的莓果與柑橘酸，比水洗藝妓圓潤","body":"中等偏輕、絲滑，蜂蜜與熟果甜感飽滿","aftertaste":"長而乾淨的花香與紅茶感回甘"},"dialIn":{"under":"尖酸、寡淡、水感重：研磨調細 2 響到 49 clicks，或水溫升到 92°C。","over":"有酒感、發酵味太重或乾澀：研磨調粗 2–3 響到 53–54 clicks、水溫降到 90°C，或第 3 段提早 10–15g 移開濾杯。"}}},{"id":"example-guji","name":"衣索比亞 古吉 罕貝拉 G1","origin":"衣索比亞 古吉","roaster":"","process":"水洗","roast":"淺焙","notes":"茉莉花、水蜜桃、佛手柑、紅茶尾韻；海拔 2000–2200m","example":true,"createdAt":"2026-10-17T08:00:00.000Z","logs":[],"tip":"古吉位於衣索比亞南部高海拔地區，晝夜溫差大讓咖啡果熟成慢、豆質緊密，所以淺焙時要用較高水溫與稍細研磨才萃得出花香。","recipe":{"source":"claude","clicks":49,"stdClicks":25,"temp":93,"ratio":16,"water":480,"totalTime":"3:00 - 3:20","pours":[{"name":"悶蒸 (Bloom)","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察排氣膨脹。","why":"高海拔硬豆排氣較慢，悶蒸給足 40 秒，打開粉體微孔。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出茉莉花香與水蜜桃般的明亮果酸。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，適度擾動讓粉層保持在理想水位。","why":"層次擴展：釋放蜂蜜般甜感與紅茶感的中段結構。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩健補水；水位將見粉層時直接移開濾杯。","why":"甜感收尾與雜味截斷，保留乾淨的佛手柑尾韻。"}],"flavor":{"fragrance":"茉莉花、白花與柑橘皮","aroma":"水蜜桃、佛手柑、蜂蜜","acidity":"明亮細緻的檸檬、桃子果酸","body":"輕盈如茶，中段蜂蜜甜感","aftertaste":"乾淨持久的紅茶與花香回甘"},"dialIn":{"under":"尖酸、寡淡：研磨調細 2 響到 47 clicks，或水溫升到 94°C。","over":"乾澀、苦雜：研磨調粗 2–3 響到 51–52 clicks，或第 3 段提早 10–15g 移開濾杯。"}}}];
+const SEED_BEANS=[{"id":"gesha-village-dima-natural","name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","roaster":"","process":"日曬","roast":"淺中焙","notes":"藝妓品種、日曬綠標；半磅 520 元","example":false,"createdAt":"2026-10-17T12:00:00.000Z","logs":[],"tip":"藝妓村位於衣索比亞西南部、Gori Gesha 森林旁，就是 1930 年代藝妓品種被採集出來的原鄉。日曬會讓它的茉莉花香外，多一層莓果與熱帶水果的甜。","recipe":{"source":"claude","clicks":51,"stdClicks":26,"temp":91,"ratio":16,"water":480,"totalTime":"2:55 - 3:15","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉。日曬豆排氣旺盛，粉層會鼓得比較高，靜置等它慢慢塌下。","why":"排出二氧化碳；日曬豆果肉糖分多、排氣量大，悶蒸給足 40 秒，後段注水才不會被氣體推開。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，水流放輕，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出藝妓招牌的茉莉、佛手柑花香，以及日曬的莓果酸甜。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，擾動不要太大；日曬豆可溶物多，太猛容易萃出發酵酒感。","why":"層次擴展：釋放熱帶水果、蜂蜜般的中段甜感與滑順口感。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩穩補到 480g；水位快見粉層就移開濾杯，不要等到滴乾。","why":"甜感收尾、截斷雜味，保留乾淨的花香尾韻，避免日曬豆末段的悶味和澀感。"}],"flavor":{"fragrance":"茉莉花、白花、草莓乾","aroma":"佛手柑、水蜜桃、藍莓、熱帶水果","acidity":"明亮多汁的莓果與柑橘酸，比水洗藝妓圓潤","body":"中等偏輕、絲滑，蜂蜜與熟果甜感飽滿","aftertaste":"長而乾淨的花香與紅茶感回甘"},"dialIn":{"under":"尖酸、寡淡、水感重：研磨調細 2 響到 49 響，或水溫升到 92°C。","over":"有酒感、發酵味太重或乾澀：研磨調粗 2–3 響到 53–54 響、水溫降到 90°C，或第 3 段提早 10–15g 移開濾杯。"}}},{"id":"example-guji","name":"衣索比亞 古吉 罕貝拉 G1","origin":"衣索比亞 古吉","roaster":"","process":"水洗","roast":"淺焙","notes":"茉莉花、水蜜桃、佛手柑、紅茶尾韻；海拔 2000–2200m","example":true,"createdAt":"2026-10-17T08:00:00.000Z","logs":[],"tip":"古吉位於衣索比亞南部高海拔地區，晝夜溫差大讓咖啡果熟成慢、豆質緊密，所以淺焙時要用較高水溫與稍細研磨才萃得出花香。","recipe":{"source":"claude","clicks":49,"stdClicks":25,"temp":93,"ratio":16,"water":480,"totalTime":"3:00 - 3:20","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察排氣膨脹。","why":"高海拔硬豆排氣較慢，悶蒸給足 40 秒，打開粉體微孔。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出茉莉花香與水蜜桃般的明亮果酸。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，適度擾動讓粉層保持在理想水位。","why":"層次擴展：釋放蜂蜜般甜感與紅茶感的中段結構。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩健補水；水位將見粉層時直接移開濾杯。","why":"甜感收尾與雜味截斷，保留乾淨的佛手柑尾韻。"}],"flavor":{"fragrance":"茉莉花、白花與柑橘皮","aroma":"水蜜桃、佛手柑、蜂蜜","acidity":"明亮細緻的檸檬、桃子果酸","body":"輕盈如茶，中段蜂蜜甜感","aftertaste":"乾淨持久的紅茶與花香回甘"},"dialIn":{"under":"尖酸、寡淡：研磨調細 2 響到 47 響，或水溫升到 94°C。","over":"乾澀、苦雜：研磨調粗 2–3 響到 51–52 響，或第 3 段提早 10–15g 移開濾杯。"}}}];
 function readLocal(){ try{ const raw=localStorage.getItem("beanbook.beans"); if(raw===null) return JSON.parse(JSON.stringify(SEED_BEANS)); const v=JSON.parse(raw); return Array.isArray(v)?v:[]; }catch(e){ return JSON.parse(JSON.stringify(SEED_BEANS)); } }
 function writeLocal(){ try{ localStorage.setItem("beanbook.beans",JSON.stringify(beans)); }catch(e){} }
 
@@ -381,7 +382,7 @@ function header(){
   return `<header class="top">
     <div class="wob">${beanSvg("中焙",54)}</div>
     <div class="t"><h1>豆豆手沖帳</h1>
-      <div class="setup"><span class="chip">${DOSE}g 豆量</span><span class="chip">C40 · Red Clix</span><span class="chip">V60 玻璃</span></div></div>
+      <div class="setup"><span class="chip">${DOSE}g 豆量</span><span class="chip">C40 紅軸</span><span class="chip">V60 玻璃</span></div></div>
   </header>`;
 }
 
@@ -404,7 +405,7 @@ function beanCard(b){
       <div class="name">${esc(b.name||"未命名的豆子")}${b.example?'<span class="example">範例</span>':''}</div>
       <div class="meta">${esc([b.origin,b.process,b.roast].filter(Boolean).join(" · "))}</div>
       <div class="chips">
-        ${r.clicks?`<span class="chip pink num">${esc(r.clicks)} clicks</span>`:""}
+        ${r.clicks?`<span class="chip pink num">${esc(r.clicks)}響</span>`:""}
         ${r.temp?`<span class="chip butter num">${esc(r.temp)}°C</span>`:""}
         ${r.ratio?`<span class="chip mint num">1:${esc(r.ratio)}</span>`:""}
         ${n?`<span class="chip">沖過 ${n} 次${av?` · ${"☕".repeat(Math.round(av))}`:""}</span>`:""}
@@ -436,7 +437,7 @@ function viewDetail(b){
   const logs=(b.logs||[]).slice().reverse();
   const steps=[
     `<div class="step"><div class="n">1</div><div class="hd"><h3>磨粉</h3><span class="tm">沖煮前完成</span></div>
-      <div class="w">粉量 <b>${DOSE}.0g</b> · C40 紅軸 <b>${esc(r.clicks)} clicks</b>（約原廠 ${esc(r.stdClicks)} 格）</div>
+      <div class="w">粉量 <b>${DOSE}.0g</b> · C40 紅軸 <b>${esc(r.clicks)}響</b>（約原廠 ${esc(r.stdClicks)} 格）</div>
       <p class="how">輕拍粉杯整平，倒入濾杯後在中心輕壓淺凹槽。</p>
       <div class="why">控制粉層水阻，避免 30g 大粉量的微粉堆疊堵塞。</div></div>`,
     ...r.pours.map((p,k)=>`<div class="step"><div class="n">${k+2}</div>
@@ -445,7 +446,7 @@ function viewDetail(b){
       <p class="how">${esc(p.how)}</p><div class="why">${esc(p.why)}</div></div>`)
   ].join("");
   const F=r.flavor;
-  const fl=[["乾香","Fragrance",F.fragrance],["濕香","Aroma",F.aroma],["前段","Acidity",F.acidity],["中段","Body & Flavor",F.body],["餘韻","Aftertaste",F.aftertaste]]
+  const fl=[["乾香","粉香",F.fragrance],["濕香","注水後香氣",F.aroma],["前段","酸質",F.acidity],["中段","口感與風味",F.body],["餘韻","尾韻",F.aftertaste]]
     .map(([k,e,v])=>`<div class="r"><div class="k">${k}<small>${e}</small></div><div>${esc(v||"—")}</div></div>`).join("");
   return `<button class="back" data-act="back" id="back">‹ 回豆櫃</button>
   <div class="stack">
@@ -456,7 +457,7 @@ function viewDetail(b){
     ${b.notes?`<div class="note small"><span class="muted">風味描述：</span>${esc(b.notes)}</div>`:""}
 
     <div class="params">
-      <div class="param big"><div class="k">C40 Red Clix 研磨刻度</div><div class="v">${esc(r.clicks)}<small>clicks</small></div><div class="s">約原廠 ${esc(r.stdClicks)} 格</div></div>
+      <div class="param big"><div class="k">C40 紅軸研磨刻度</div><div class="v">${esc(r.clicks)}<small>響</small></div><div class="s">約原廠 ${esc(r.stdClicks)} 格</div></div>
       <div class="param"><div class="k">水溫</div><div class="v">${esc(r.temp)}<small>°C</small></div></div>
       <div class="param"><div class="k">粉水比</div><div class="v">1:${esc(r.ratio)}</div><div class="s">${DOSE}g → ${esc(r.water)}g</div></div>
       <div class="param"><div class="k">目標總時間</div><div class="v" style="font-size:20px">${esc(r.totalTime)}</div></div>
@@ -484,7 +485,7 @@ function viewDetail(b){
 
     <section class="section"><div class="row" style="justify-content:space-between"><h2>沖煮紀錄</h2><span class="muted small">${logs.length} 杯</span></div>
       ${logs.length?logs.map(l=>`<div class="log"><div class="lh"><span class="num">${esc(l.date)}</span><span class="cups" aria-label="評分 ${esc(l.rating)} 分">${"☕".repeat(Number(l.rating)||0)}</span></div>
-        <div class="small muted num">${[l.clicks?l.clicks+" clicks":"",l.temp?l.temp+"°C":"",l.time?"總時間 "+l.time:""].filter(Boolean).join(" · ")}</div>
+        <div class="small muted num">${[l.clicks?l.clicks+"響":"",l.temp?l.temp+"°C":"",l.time?"總時間 "+l.time:""].filter(Boolean).join(" · ")}</div>
         ${l.note?`<div class="small">${esc(l.note)}</div>`:""}</div>`).join(""):`<div class="note small muted">還沒有紀錄。沖完按「記一杯」，寫下實際刻度、時間和喝起來的感覺。</div>`}
     </section>
 
@@ -519,7 +520,7 @@ function viewForm(){
 
     ${r?`<div class="card stack"><h2>配方微調</h2>
       <div class="grid2">
-        <label class="field"><span>研磨 clicks</span><input class="inp num" id="r-clicks" type="number" inputmode="numeric" value="${esc(r.clicks)}"></label>
+        <label class="field"><span>研磨幾響</span><input class="inp num" id="r-clicks" type="number" inputmode="numeric" value="${esc(r.clicks)}"></label>
         <label class="field"><span>水溫 °C</span><input class="inp num" id="r-temp" type="number" inputmode="numeric" value="${esc(r.temp)}"></label>
         <label class="field"><span>粉水比 1:</span><select class="inp num" id="r-ratio"><option value="15" ${r.ratio==15?"selected":""}>15（450g）</option><option value="16" ${r.ratio==16?"selected":""}>16（480g）</option></select></label>
         <label class="field"><span>目標總時間</span><input class="inp num" id="r-time" value="${esc(r.totalTime)}"></label>
@@ -554,7 +555,7 @@ function viewTimer(){
   const r=normalizeRecipe(b.recipe,b);
   return `${header()}<div class="stack" style="margin-top:10px">
     <label class="field"><span>沖哪一支？</span><select class="inp" id="t-bean">${sorted().map(x=>`<option value="${esc(x.id)}" ${x.id===b.id?"selected":""}>${esc(x.name)}</option>`).join("")}</select></label>
-    <div class="row small muted num"><span class="chip pink">${esc(r.clicks)} clicks</span><span class="chip butter">${esc(r.temp)}°C</span><span class="chip mint">${DOSE}g → ${esc(r.water)}g</span><span class="chip">目標 ${esc(r.totalTime)}</span></div>
+    <div class="row small muted num"><span class="chip pink">${esc(r.clicks)}響</span><span class="chip butter">${esc(r.temp)}°C</span><span class="chip mint">${DOSE}g → ${esc(r.water)}g</span><span class="chip">目標 ${esc(r.totalTime)}</span></div>
     <div class="clock">
       <div class="big num" id="t-clock">0:00</div>
       <div class="cur" id="t-cur">準備好就按開始</div>
@@ -599,7 +600,7 @@ async function lockWake(on){ try{ if(on && navigator.wakeLock){ T.wake=await nav
 
 /* ---------- AI recipe ---------- */
 function aiPrompt(b){
-  return `你是一位具備 SCA 萃取理論標準的專業手沖咖啡師。使用者固定使用 30g 咖啡豆大粉量沖煮，器具為 Comandante C40 手搖磨豆機（已裝 Red Clix 紅軸，每響 15 微米，格數是原廠的兩倍；30g 大粉量一般落在 48–56 clicks，依焙度微調）與 HARIO V60 玻璃濾杯（需預熱 15–20 秒）。
+  return `你是一位具備 SCA 萃取理論標準的專業手沖咖啡師。使用者固定使用 30g 咖啡豆大粉量沖煮，器具為 Comandante C40 手搖磨豆機（已裝 Red Clix 紅軸，每響 15 微米，格數是原廠的兩倍；30g 大粉量一般落在 48–56響，依焙度微調）與 HARIO V60 玻璃濾杯（需預熱 15–20 秒）。
 請依這支豆子的物理特性（豆質硬度、密度、脫水度、排氣量）設計配方：
 豆名：${b.name||""}
 產區：${b.origin||"未提供"}
@@ -611,9 +612,9 @@ function aiPrompt(b){
 規則：粉水比 15 或 16（總水量 450 或 480g）。pours 固定 4 段：悶蒸（60–80g，0 秒開始，停留 35–45 秒）、第1段、第2段、第3段注水至總水量；from/to 為秒數，total 為累計克數，add 為該段注水量。用繁體中文、口吻親切。
 只回覆一個 JSON 物件，格式：
 {"clicks":52,"stdClicks":26,"temp":91,"ratio":15,"water":450,"totalTime":"2:50 - 3:20",
-"pours":[{"name":"悶蒸 (Bloom)","add":70,"total":70,"from":0,"to":40,"how":"操作要點與擾動手法","why":"萃取目標與物理意義"},{"name":"第 1 段注水",...},{"name":"第 2 段注水",...},{"name":"第 3 段注水",...}],
+"pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"操作要點與擾動手法","why":"萃取目標與物理意義"},{"name":"第 1 段注水",...},{"name":"第 2 段注水",...},{"name":"第 3 段注水",...}],
 "flavor":{"fragrance":"乾香","aroma":"濕香","acidity":"前段酸質","body":"中段風味、甜感與質地","aftertaste":"餘韻"},
-"dialIn":{"under":"萃取不足時的調整（含具體 clicks 與水溫）","over":"過度萃取時的調整"},
+"dialIn":{"under":"萃取不足時的調整（含具體響與水溫）","over":"過度萃取時的調整"},
 "tip":"一則與這支豆子的產區、品種或處理法有關的咖啡小知識，60 字內"}`;
 }
 async function aiRecipe(b){
@@ -665,7 +666,7 @@ function openLog(b){
     <div class="row" style="justify-content:space-between"><h2>記一杯 · ${esc(b.name)}</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
     <div class="field"><span>好喝程度</span><div class="cupsel">${[1,2,3,4,5].map(n=>`<button type="button" data-act="rate" data-v="${n}" aria-pressed="${n<=L.rating}" aria-label="${n} 分">☕</button>`).join("")}</div></div>
     <div class="grid2">
-      <label class="field"><span>實際 clicks</span><input class="inp num" id="l-clicks" type="number" inputmode="numeric" value="${esc(r.clicks)}"></label>
+      <label class="field"><span>實際幾響</span><input class="inp num" id="l-clicks" type="number" inputmode="numeric" value="${esc(r.clicks)}"></label>
       <label class="field"><span>水溫 °C</span><input class="inp num" id="l-temp" type="number" inputmode="numeric" value="${esc(r.temp)}"></label>
       <label class="field"><span>總時間</span><input class="inp num" id="l-time" placeholder="3:05" value="${T.beanId===b.id&&T.elapsed?fmt(T.elapsed):""}"></label>
       <label class="field"><span>日期</span><input class="inp num" id="l-date" type="date" value="${today()}"></label>
