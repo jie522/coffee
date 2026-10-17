@@ -261,17 +261,17 @@ const cupSvg = `<svg class="deco" width="84" height="84" viewBox="0 0 84 84" ari
 /* ---------- recipe estimator (no AI needed) ---------- */
 function estimateRecipe(b){
   const i = Math.max(0, ROASTS.indexOf(b.roast)); // 0 light .. 4 dark
-  let響 = [49,51,53,55,56][i];
+  let clicks = [49,51,53,55,56][i];
   let temp = [93,92,91,89,87][i];
   const ratio = i<=1 ? 16 : 15;
   const water = DOSE*ratio;
   const proc = String(b.process||"");
-  if(/厭氧|日曬|酒|發酵/.test(proc)){ temp-=1;響+=1; }
+  if(/厭氧|日曬|酒|發酵/.test(proc)){ temp-=1; clicks+=1; }
   const bloom = i>=3 ? 60 : 70;
   const p1 = Math.round(water*0.44/10)*10;  // ~200 / 210
   const p2 = Math.round(water*0.75/10)*10;  // ~340 / 360
   return {
-   響, stdClicks:Math.round(clicks/2), temp, ratio, water,
+    clicks, stdClicks:Math.round(clicks/2), temp, ratio, water,
     totalTime: i<=1 ? "3:00 - 3:20" : "2:50 - 3:10",
     pours:[
       {name:"悶蒸",add:bloom,total:bloom,from:0,to:40,how:"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察排氣膨脹。",why:"徹底排出二氧化碳，打開咖啡粉微孔以利後續萃取。"},
@@ -318,7 +318,7 @@ let ready = false;
 let store = { mode:"local",
   async save(b){ const i=beans.findIndex(x=>x.id===b.id); if(i>=0) beans[i]=b; else beans.push(b); writeLocal(); render(); },
   async remove(id){ beans=beans.filter(x=>x.id!==id); writeLocal(); render(); } };
-const SEED_BEANS=[{"id":"gesha-village-dima-natural","name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","roaster":"","process":"日曬","roast":"淺中焙","notes":"藝妓品種、日曬綠標；半磅 520 元","example":false,"createdAt":"2026-10-17T12:00:00.000Z","logs":[],"tip":"藝妓村位於衣索比亞西南部、Gori Gesha 森林旁，就是 1930 年代藝妓品種被採集出來的原鄉。日曬會讓它的茉莉花香外，多一層莓果與熱帶水果的甜。","recipe":{"source":"claude","clicks":51,"stdClicks":26,"temp":91,"ratio":16,"water":480,"totalTime":"2:55 - 3:15","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉。日曬豆排氣旺盛，粉層會鼓得比較高，靜置等它慢慢塌下。","why":"排出二氧化碳；日曬豆果肉糖分多、排氣量大，悶蒸給足 40 秒，後段注水才不會被氣體推開。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，水流放輕，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出藝妓招牌的茉莉、佛手柑花香，以及日曬的莓果酸甜。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，擾動不要太大；日曬豆可溶物多，太猛容易萃出發酵酒感。","why":"層次擴展：釋放熱帶水果、蜂蜜般的中段甜感與滑順口感。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩穩補到 480g；水位快見粉層就移開濾杯，不要等到滴乾。","why":"甜感收尾、截斷雜味，保留乾淨的花香尾韻，避免日曬豆末段的悶味和澀感。"}],"flavor":{"fragrance":"茉莉花、白花、草莓乾","aroma":"佛手柑、水蜜桃、藍莓、熱帶水果","acidity":"明亮多汁的莓果與柑橘酸，比水洗藝妓圓潤","body":"中等偏輕、絲滑，蜂蜜與熟果甜感飽滿","aftertaste":"長而乾淨的花香與紅茶感回甘"},"dialIn":{"under":"尖酸、寡淡、水感重：研磨調細 2 響到 49 響，或水溫升到 92°C。","over":"有酒感、發酵味太重或乾澀：研磨調粗 2–3 響到 53–54 響、水溫降到 90°C，或第 3 段提早 10–15g 移開濾杯。"}}},{"id":"example-guji","name":"衣索比亞 古吉 罕貝拉 G1","origin":"衣索比亞 古吉","roaster":"","process":"水洗","roast":"淺焙","notes":"茉莉花、水蜜桃、佛手柑、紅茶尾韻；海拔 2000–2200m","example":true,"createdAt":"2026-10-17T08:00:00.000Z","logs":[],"tip":"古吉位於衣索比亞南部高海拔地區，晝夜溫差大讓咖啡果熟成慢、豆質緊密，所以淺焙時要用較高水溫與稍細研磨才萃得出花香。","recipe":{"source":"claude","clicks":49,"stdClicks":25,"temp":93,"ratio":16,"water":480,"totalTime":"3:00 - 3:20","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉，靜置觀察排氣膨脹。","why":"高海拔硬豆排氣較慢，悶蒸給足 40 秒，打開粉體微孔。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，維持柔和對流，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出茉莉花香與水蜜桃般的明亮果酸。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，適度擾動讓粉層保持在理想水位。","why":"層次擴展：釋放蜂蜜般甜感與紅茶感的中段結構。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩健補水；水位將見粉層時直接移開濾杯。","why":"甜感收尾與雜味截斷，保留乾淨的佛手柑尾韻。"}],"flavor":{"fragrance":"茉莉花、白花與柑橘皮","aroma":"水蜜桃、佛手柑、蜂蜜","acidity":"明亮細緻的檸檬、桃子果酸","body":"輕盈如茶，中段蜂蜜甜感","aftertaste":"乾淨持久的紅茶與花香回甘"},"dialIn":{"under":"尖酸、寡淡：研磨調細 2 響到 47 響，或水溫升到 94°C。","over":"乾澀、苦雜：研磨調粗 2–3 響到 51–52 響，或第 3 段提早 10–15g 移開濾杯。"}}}];
+const SEED_BEANS=[{"id":"gesha-village-dima-natural","name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","roaster":"","process":"日曬","roast":"淺中焙","notes":"藝妓品種、日曬綠標；半磅 520 元","example":false,"createdAt":"2026-10-17T12:00:00.000Z","logs":[],"tip":"藝妓村位於衣索比亞西南部、Gori Gesha 森林旁，就是 1930 年代藝妓品種被採集出來的原鄉。日曬會讓它的茉莉花香外，多一層莓果與熱帶水果的甜。","recipe":{"source":"claude","clicks":51,"stdClicks":26,"temp":91,"ratio":16,"water":480,"totalTime":"2:55 - 3:15","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉。日曬豆排氣旺盛，粉層會鼓得比較高，靜置等它慢慢塌下。","why":"排出二氧化碳；日曬豆果肉糖分多、排氣量大，悶蒸給足 40 秒，後段注水才不會被氣體推開。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，水流放輕，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出藝妓招牌的茉莉、佛手柑花香，以及日曬的莓果酸甜。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，擾動不要太大；日曬豆可溶物多，太猛容易萃出發酵酒感。","why":"層次擴展：釋放熱帶水果、蜂蜜般的中段甜感與滑順口感。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩穩補到 480g；水位快見粉層就移開濾杯，不要等到滴乾。","why":"甜感收尾、截斷雜味，保留乾淨的花香尾韻，避免日曬豆末段的悶味和澀感。"}],"flavor":{"fragrance":"茉莉花、白花、草莓乾","aroma":"佛手柑、水蜜桃、藍莓、熱帶水果","acidity":"明亮多汁的莓果與柑橘酸，比水洗藝妓圓潤","body":"中等偏輕、絲滑，蜂蜜與熟果甜感飽滿","aftertaste":"長而乾淨的花香與紅茶感回甘"},"dialIn":{"under":"尖酸、寡淡、水感重：研磨調細 2 響到 49 響，或水溫升到 92°C。","over":"有酒感、發酵味太重或乾澀：研磨調粗 2–3 響到 53–54 響、水溫降到 90°C，或第 3 段提早 10–15g 移開濾杯。"}}}];
 function readLocal(){ try{ const raw=localStorage.getItem("beanbook.beans"); if(raw===null) return JSON.parse(JSON.stringify(SEED_BEANS)); const v=JSON.parse(raw); return Array.isArray(v)?v:[]; }catch(e){ return JSON.parse(JSON.stringify(SEED_BEANS)); } }
 function writeLocal(){ try{ localStorage.setItem("beanbook.beans",JSON.stringify(beans)); }catch(e){} }
 
@@ -614,7 +614,7 @@ function aiPrompt(b){
 {"clicks":52,"stdClicks":26,"temp":91,"ratio":15,"water":450,"totalTime":"2:50 - 3:20",
 "pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"操作要點與擾動手法","why":"萃取目標與物理意義"},{"name":"第 1 段注水",...},{"name":"第 2 段注水",...},{"name":"第 3 段注水",...}],
 "flavor":{"fragrance":"乾香","aroma":"濕香","acidity":"前段酸質","body":"中段風味、甜感與質地","aftertaste":"餘韻"},
-"dialIn":{"under":"萃取不足時的調整（含具體響與水溫）","over":"過度萃取時的調整"},
+"dialIn":{"under":"萃取不足時的調整（含具體幾響與水溫）","over":"過度萃取時的調整"},
 "tip":"一則與這支豆子的產區、品種或處理法有關的咖啡小知識，60 字內"}`;
 }
 async function aiRecipe(b){
