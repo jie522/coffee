@@ -83,6 +83,11 @@ button{cursor:pointer}
 .search:focus{border-color:var(--accent)}
 
 /* bean card */
+.bean.out{opacity:.5;filter:saturate(.45);box-shadow:none;background:var(--surface-2)}
+.bean.out .name{font-weight:700}
+.chip.outchip{background:var(--ink-soft);color:#fff}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg .pill{padding:5px 14px}
 .bean{display:flex;gap:14px;align-items:center;background:var(--surface);border-radius:24px;padding:10px 14px 10px 10px;box-shadow:var(--shadow);border:0;text-align:left;width:100%}
 .bean .pic,.hero .pic{flex:none;width:104px;height:104px;overflow:hidden;border-radius:34px 46px 40px 44px / 40px 36px 46px 40px;background:#FBE9DC;display:block;line-height:0}
 .bean .pic svg,.hero .pic svg{width:100%;height:100%;display:block}
@@ -585,7 +590,7 @@ async function boot(){
 }
 
 /* ---------- ui state ---------- */
-const ui = { tab:"home", view:"list", beanId:null, q:"", tipIdx: Math.floor(Math.random()*KNOW.length), form:null, busy:false, msg:"" };
+const ui = { tab:"home", view:"list", beanId:null, q:"", stock:"all", tipIdx: Math.floor(Math.random()*KNOW.length), form:null, busy:false, msg:"" };
 try{ const t=localStorage.getItem("beanbook.tab"); if(t) ui.tab=t; }catch(e){}
 
 function go(tab, view="list", beanId=null){
@@ -594,7 +599,7 @@ function go(tab, view="list", beanId=null){
   render(); window.scrollTo(0,0);
 }
 function beanById(id){ return beans.find(b=>b.id===id); }
-function sorted(){ return beans.slice().sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||""))); }
+function sorted(){ return beans.slice().sort((a,b)=>(!!a.outOfStock-!!b.outOfStock)||String(b.createdAt||"").localeCompare(String(a.createdAt||""))); }
 const WEIGHTS=[["100g",100],["200g",200],["半磅",227],["1 磅",454]];
 const money=n=>Math.round(Number(n)||0).toLocaleString("zh-TW");
 const wLabel=w=>{ w=Number(w); const f=WEIGHTS.find(x=>x[1]===w); return f&&f[0]!==w+"g" ? f[0]+"（"+w+"g）" : w+"g"; };
@@ -644,12 +649,13 @@ function tipCard(){
 
 function beanCard(b){
   const r=b.recipe||{}; const n=(b.logs||[]).length; const av=avgRating(b);
-  return `<button class="bean" data-act="open" data-id="${esc(b.id)}" id="bean-${esc(b.id)}">
+  return `<button class="bean${b.outOfStock?" out":""}" data-act="open" data-id="${esc(b.id)}" id="bean-${esc(b.id)}">
     <span class="pic">${artThumb(b,104)}</span>
     <div class="info">
       <div class="name">${esc(b.name||"未命名的豆子")}${b.example?'<span class="example">範例</span>':''}</div>
       <div class="meta">${esc([b.origin,b.process,b.roast].filter(Boolean).join(" · "))}</div>
       <div class="chips">
+        ${b.outOfStock?`<span class="chip outchip">已用完</span>`:""}
         ${r.clicks?`<span class="chip pink num">${esc(r.clicks)}響</span>`:""}
         ${r.temp?`<span class="chip butter num">${esc(r.temp)}°C</span>`:""}
         ${r.ratio?`<span class="chip mint num">1:${esc(r.ratio)}</span>`:""}
@@ -663,17 +669,19 @@ function monthSpend(){ const m=today().slice(0,7); return beans.reduce((s,b)=>s+
 
 function viewList(){
   const q=ui.q.trim().toLowerCase();
-  const list=sorted().filter(b=>!q || [b.name,b.origin,b.process,b.roast,b.notes,b.roaster].join(" ").toLowerCase().includes(q));
+  const list=sorted().filter(b=>(ui.stock==="all"||(ui.stock==="out")===!!b.outOfStock) && (!q || [b.name,b.origin,b.process,b.roast,b.notes,b.roaster].join(" ").toLowerCase().includes(q)));
+  const nIn=beans.filter(b=>!b.outOfStock).length, nOut=beans.length-nIn;
   let body;
   if(!ready) body=`<div class="empty">${beanSvg("淺中焙",64,"sleep")}<p class="muted">正在打開豆櫃…</p></div>`;
   else if(!beans.length) body=`<div class="empty">${beanSvg("淺焙",64)}<h3 style="margin-top:6px">豆櫃還是空的</h3>
       <p class="muted small">按右下角「＋ 新豆子」輸入產區、處理法和焙度，就會幫你算出研磨刻度和注水步驟。</p></div>`;
-  else if(!list.length) body=`<div class="empty"><p class="muted">找不到「${esc(ui.q)}」相關的豆子</p></div>`;
+  else if(!list.length) body=`<div class="empty"><p class="muted">${ui.q.trim()?"找不到「"+esc(ui.q)+"」相關的豆子":"這個分類目前沒有豆子"}</p></div>`;
   else body=list.map(beanCard).join("");
   return `${header()}<div class="stack" style="margin-top:10px">
     ${tipCard()}
     ${beans.length>2?`<input class="search" id="q" type="search" placeholder="搜尋豆名、產區、風味…" value="${esc(ui.q)}" aria-label="搜尋豆子">`:""}
-    <div class="sechead"><h2>${icoBean("#8A5232",24)}我的豆櫃${sparks()}</h2><span class="muted small num">${beans.length} 支${monthSpend()?` · 本月買豆 ${money(monthSpend())} 元`:""}</span></div>
+    ${beans.length&&nOut?`<div class="seg" role="group" aria-label="庫存篩選">${[["all","全部",beans.length],["in","有庫存",nIn],["out","無庫存",nOut]].map(([k,l,n])=>`<button type="button" class="pill" data-act="stock-filter" data-v="${k}" aria-pressed="${ui.stock===k}">${l} ${n}</button>`).join("")}</div>`:""}
+    <div class="sechead"><h2>${icoBean("#8A5232",24)}我的豆櫃${sparks()}</h2><span class="muted small num">有庫存 ${nIn} 支${nOut?` · 已用完 ${nOut} 支`:""}${monthSpend()?` · 本月買豆 ${money(monthSpend())} 元`:""}</span></div>
     ${store.mode==="local"&&ready?`<div class="status small">目前存在這台裝置的瀏覽器裡。登入 Claude 開啟這頁，豆子就會同步，也能請 Claude 幫你新增。</div>`:""}
     <div class="stack" style="gap:10px">${body}</div>
   </div>
@@ -724,7 +732,7 @@ function viewDetail(b){
   <div class="stack">
     <div class="hero"><span class="pic">${artThumb(b,92)}</span><div class="t">
       <h1>${esc(b.name)}${b.example?'<span class="example">範例</span>':''}</h1>
-      <div class="setup">${[b.roaster,b.origin,b.process,b.roast].filter(Boolean).map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>
+      <div class="setup">${b.outOfStock?`<span class="chip outchip">已用完</span>`:""}${[b.roaster,b.origin,b.process,b.roast].filter(Boolean).map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>
     </div></div>
     ${b.notes?`<div class="note small"><span class="muted">風味描述：</span>${esc(b.notes)}</div>`:""}
 
@@ -766,6 +774,7 @@ function viewDetail(b){
     ${canWrite?`<section class="section"><h2>管理</h2><div class="row">
       <button class="btn ghost" data-act="edit" data-id="${esc(b.id)}" id="edit-btn">編輯豆子與配方</button>
       ${sample?`<button class="btn ghost" data-act="regen" data-id="${esc(b.id)}" id="regen-btn">${ui.busy?"Claude 思考中…":"請 Claude 重新設計配方"}</button>`:""}
+      <button class="btn ghost" data-act="toggle-stock" data-id="${esc(b.id)}" id="stock-btn">${b.outOfStock?"補貨了，改回有庫存":"這包用完了"}</button>
       <button class="btn danger" data-act="del" data-id="${esc(b.id)}" id="del-btn">${ui.confirmDel===b.id?"再按一次確認刪除":"刪除"}</button>
     </div>${ui.msg?`<div class="status ${ui.msgErr?"err":""}">${esc(ui.msg)}</div>`:""}
     <p class="muted small">配方來源：${r.source==="claude"?"Claude 依豆況設計":r.source==="manual"?"手動調整":"依焙度與處理法估算"}</p></section>`:""}
@@ -790,6 +799,7 @@ function viewForm(){
       <div class="field"><span>焙度</span><div class="pills" role="group" aria-label="焙度">
         ${ROASTS.map(p=>`<button type="button" class="pill" data-act="roast" data-v="${p}" aria-pressed="${f.roast===p}">${p}</button>`).join("")}</div></div>
       <label class="field"><span>風味描述 / 包裝上的資訊</span><textarea class="inp" id="f-notes" placeholder="例：茉莉花、水蜜桃、紅茶尾韻；海拔 2100m">${esc(f.notes)}</textarea></label>
+      <div class="field"><span>庫存</span><div class="seg" role="group" aria-label="庫存">${[["in","有庫存"],["out","無庫存"]].map(([k,l])=>`<button type="button" class="pill" data-act="stock" data-v="${k}" aria-pressed="${(f.outOfStock?"out":"in")===k}">${l}</button>`).join("")}</div></div>
       <div class="field"><span>封面圖（自動會依豆名挑選）</span><div class="pills" role="group" aria-label="封面圖">${ART_NAMES.map(([k,n])=>`<button type="button" class="pill" data-act="art" data-v="${k}" aria-pressed="${(f.art||"auto")===k}">${n}</button>`).join("")}</div></div>
     </div>
 
@@ -939,8 +949,8 @@ const errMsg = e => ERR[e?.code] || "Claude 暫時沒有回應，請稍後再試
 
 /* ---------- form helpers ---------- */
 function newForm(b){
-  return b ? {id:b.id,name:b.name||"",origin:b.origin||"",roaster:b.roaster||"",process:b.process||"",roast:b.roast||"中焙",notes:b.notes||"",art:b.art||"auto",recipe:normalizeRecipe(b.recipe,b)}
-           : {id:null,name:"",origin:"",roaster:"",process:"水洗",roast:"淺中焙",notes:"",art:"auto",recipe:null};
+  return b ? {id:b.id,name:b.name||"",origin:b.origin||"",roaster:b.roaster||"",process:b.process||"",roast:b.roast||"中焙",notes:b.notes||"",art:b.art||"auto",outOfStock:!!b.outOfStock,recipe:normalizeRecipe(b.recipe,b)}
+           : {id:null,name:"",origin:"",roaster:"",process:"水洗",roast:"淺中焙",notes:"",art:"auto",outOfStock:false,recipe:null};
 }
 function readForm(){
   const f=ui.form; const v=id=>{const el=$("#"+id); return el?el.value.trim():"";};
@@ -960,7 +970,7 @@ function readForm(){
 function beanFromForm(f, recipe, tip){
   const old=f.id?beanById(f.id):null;
   return Object.assign({}, old||{}, {
-    id:f.id||uid(), name:f.name||"未命名的豆子", origin:f.origin, roaster:f.roaster, process:f.process, roast:f.roast, notes:f.notes, art:(f.art&&f.art!=="auto")?f.art:"",
+    id:f.id||uid(), name:f.name||"未命名的豆子", origin:f.origin, roaster:f.roaster, process:f.process, roast:f.roast, notes:f.notes, art:(f.art&&f.art!=="auto")?f.art:"", outOfStock:!!f.outOfStock,
     recipe, tip: tip!=null? tip : (old?.tip||""), createdAt: old?.createdAt||new Date().toISOString(), logs: old?.logs||[], example:false
   });
 }
@@ -1041,7 +1051,7 @@ function openPurchase(b0){
       const cur=beanById(b.id)||b;
       const entry={date:val("p-date")||today(),weight:w,price:pr,shop:val("p-shop"),roastDate:val("p-roast"),note:val("p-note")};
       t.disabled=true;
-      if(await persist(Object.assign({},cur,{purchases:[...(cur.purchases||[]),entry]}))){ layer.innerHTML=""; layer.onclick=null; layer.oninput=null; toast("採購記下來了！"); }
+      if(await persist(Object.assign({},cur,{outOfStock:false,purchases:[...(cur.purchases||[]),entry]}))){ layer.innerHTML=""; layer.onclick=null; layer.oninput=null; toast("採購記下來了！"); }
       else t.disabled=false;
     }
   };
@@ -1084,6 +1094,11 @@ document.addEventListener("click",async ev=>{
       ui.form=null; ui.busy=false; go("home", backId?"detail":"list", backId); break; }
     case "new": ui.form=newForm(null); go("home","form"); break;
     case "edit": ui.form=newForm(beanById(id)); ui.tab="home"; ui.view="form"; ui.msg=""; render(); window.scrollTo(0,0); break;
+    case "stock-filter": ui.stock=t.dataset.v; render(); break;
+    case "stock": readForm(); ui.form.outOfStock=t.dataset.v==="out"; render(); break;
+    case "toggle-stock": { const b=beanById(id); if(!b) break;
+      const nb=Object.assign({},b,{outOfStock:!b.outOfStock});
+      if(await persist(nb)) toast(nb.outOfStock?"標記為已用完，會排在豆櫃最後面":"補貨囉，已改回有庫存"); render(); break; }
     case "art": readForm(); ui.form.art=t.dataset.v; render(); break;
     case "proc": readForm(); ui.form.process=t.dataset.v; render(); break;
     case "roast": readForm(); ui.form.roast=t.dataset.v; if(ui.form.recipe && !ui.form.id){ui.form.recipe=null;} render(); break;
