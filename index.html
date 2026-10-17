@@ -158,6 +158,10 @@ button{cursor:pointer}
 .log{background:var(--surface);border-radius:18px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
 .log .lh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .cups{letter-spacing:1px}
+.linkbtn{border:0;background:transparent;padding:0;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+.buy .price{font-family:var(--f-num);font-weight:700;font-size:17px;color:var(--rasp)}
+.costline{font-size:14px;background:var(--butter-soft);border-radius:14px;padding:10px 12px}
+.costline b{font-family:var(--f-num);font-size:18px;color:var(--rasp)}
 
 /* forms */
 .field{display:flex;flex-direction:column;gap:5px}
@@ -187,6 +191,9 @@ textarea.inp{min-height:76px;resize:vertical}
 
 /* sheet */
 .scrim{position:fixed;inset:0;background:rgba(60,30,18,.40);z-index:10;display:flex;align-items:flex-end;justify-content:center}
+.sheet .shd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.sheet .shd h2{flex:1;min-width:0;font-size:19px;overflow-wrap:anywhere}
+.sheet .shd .iconbtn{flex:none}
 .sheet{background:var(--bg);width:100%;max-width:560px;border-radius:26px 26px 0 0;max-height:88%;overflow:auto;
   padding:18px max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
 .cupsel{display:flex;gap:6px}
@@ -386,7 +393,7 @@ let ready = false;
 let store = { mode:"local",
   async save(b){ const i=beans.findIndex(x=>x.id===b.id); if(i>=0) beans[i]=b; else beans.push(b); writeLocal(); render(); },
   async remove(id){ beans=beans.filter(x=>x.id!==id); writeLocal(); render(); } };
-const SEED_BEANS=[{"id":"gesha-village-dima-natural","name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","roaster":"","process":"日曬","roast":"淺中焙","notes":"藝妓品種、日曬綠標；半磅 520 元","example":false,"createdAt":"2026-10-17T12:00:00.000Z","logs":[],"tip":"藝妓村位於衣索比亞西南部、Gori Gesha 森林旁，就是 1930 年代藝妓品種被採集出來的原鄉。日曬會讓它的茉莉花香外，多一層莓果與熱帶水果的甜。","recipe":{"source":"claude","clicks":51,"stdClicks":26,"temp":91,"ratio":16,"water":480,"totalTime":"2:55 - 3:15","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉。日曬豆排氣旺盛，粉層會鼓得比較高，靜置等它慢慢塌下。","why":"排出二氧化碳；日曬豆果肉糖分多、排氣量大，悶蒸給足 40 秒，後段注水才不會被氣體推開。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，水流放輕，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出藝妓招牌的茉莉、佛手柑花香，以及日曬的莓果酸甜。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，擾動不要太大；日曬豆可溶物多，太猛容易萃出發酵酒感。","why":"層次擴展：釋放熱帶水果、蜂蜜般的中段甜感與滑順口感。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩穩補到 480g；水位快見粉層就移開濾杯，不要等到滴乾。","why":"甜感收尾、截斷雜味，保留乾淨的花香尾韻，避免日曬豆末段的悶味和澀感。"}],"flavor":{"fragrance":"茉莉花、白花、草莓乾","aroma":"佛手柑、水蜜桃、藍莓、熱帶水果","acidity":"明亮多汁的莓果與柑橘酸，比水洗藝妓圓潤","body":"中等偏輕、絲滑，蜂蜜與熟果甜感飽滿","aftertaste":"長而乾淨的花香與紅茶感回甘"},"dialIn":{"under":"尖酸、寡淡、水感重：研磨調細 2 響到 49 響，或水溫升到 92°C。","over":"有酒感、發酵味太重或乾澀：研磨調粗 2–3 響到 53–54 響、水溫降到 90°C，或第 3 段提早 10–15g 移開濾杯。"}}}];
+const SEED_BEANS=[{"id":"gesha-village-dima-natural","name":"衣索比亞 藝妓村 蒂瑪區伊魯森林 日曬 綠標","origin":"衣索比亞 藝妓村 蒂瑪區 伊魯森林","roaster":"","process":"日曬","roast":"淺中焙","notes":"藝妓品種、日曬綠標","purchases":[{"date":"2026-10-17","weight":227,"price":520,"shop":"","roastDate":"","note":""}],"example":false,"createdAt":"2026-10-17T12:00:00.000Z","logs":[],"tip":"藝妓村位於衣索比亞西南部、Gori Gesha 森林旁，就是 1930 年代藝妓品種被採集出來的原鄉。日曬會讓它的茉莉花香外，多一層莓果與熱帶水果的甜。","recipe":{"source":"claude","clicks":51,"stdClicks":26,"temp":91,"ratio":16,"water":480,"totalTime":"2:55 - 3:15","pours":[{"name":"悶蒸","add":70,"total":70,"from":0,"to":40,"how":"由中心向外柔和繞圈注水，確認底層完全濕潤無乾粉。日曬豆排氣旺盛，粉層會鼓得比較高，靜置等它慢慢塌下。","why":"排出二氧化碳；日曬豆果肉糖分多、排氣量大，悶蒸給足 40 秒，後段注水才不會被氣體推開。"},{"name":"第 1 段注水","add":140,"total":210,"from":40,"to":80,"how":"中心小圈至中圈細水流，水流放輕，不沖刷濾紙邊緣。","why":"酸甜核心萃取：帶出藝妓招牌的茉莉、佛手柑花香，以及日曬的莓果酸甜。"},{"name":"第 2 段注水","add":150,"total":360,"from":80,"to":125,"how":"中等水流穩定繞圈，擾動不要太大；日曬豆可溶物多，太猛容易萃出發酵酒感。","why":"層次擴展：釋放熱帶水果、蜂蜜般的中段甜感與滑順口感。"},{"name":"第 3 段注水","add":120,"total":480,"from":125,"to":160,"how":"中心極小圈穩穩補到 480g；水位快見粉層就移開濾杯，不要等到滴乾。","why":"甜感收尾、截斷雜味，保留乾淨的花香尾韻，避免日曬豆末段的悶味和澀感。"}],"flavor":{"fragrance":"茉莉花、白花、草莓乾","aroma":"佛手柑、水蜜桃、藍莓、熱帶水果","acidity":"明亮多汁的莓果與柑橘酸，比水洗藝妓圓潤","body":"中等偏輕、絲滑，蜂蜜與熟果甜感飽滿","aftertaste":"長而乾淨的花香與紅茶感回甘"},"dialIn":{"under":"尖酸、寡淡、水感重：研磨調細 2 響到 49 響，或水溫升到 92°C。","over":"有酒感、發酵味太重或乾澀：研磨調粗 2–3 響到 53–54 響、水溫降到 90°C，或第 3 段提早 10–15g 移開濾杯。"}}}];
 function readLocal(){ try{ const raw=localStorage.getItem("beanbook.beans"); if(raw===null) return JSON.parse(JSON.stringify(SEED_BEANS)); const v=JSON.parse(raw); return Array.isArray(v)?v:[]; }catch(e){ return JSON.parse(JSON.stringify(SEED_BEANS)); } }
 function writeLocal(){ try{ localStorage.setItem("beanbook.beans",JSON.stringify(beans)); }catch(e){} }
 
@@ -428,6 +435,13 @@ function go(tab, view="list", beanId=null){
 }
 function beanById(id){ return beans.find(b=>b.id===id); }
 function sorted(){ return beans.slice().sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||""))); }
+const WEIGHTS=[["100g",100],["200g",200],["半磅",227],["1 磅",454]];
+const money=n=>Math.round(Number(n)||0).toLocaleString("zh-TW");
+const wLabel=w=>{ w=Number(w); const f=WEIGHTS.find(x=>x[1]===w); return f&&f[0]!==w+"g" ? f[0]+"（"+w+"g）" : w+"g"; };
+const cupCost=p=>Math.round(Number(p.price)/Number(p.weight)*DOSE);
+const per100=p=>Math.round(Number(p.price)/Number(p.weight)*100);
+function purchases(b){ return (b.purchases||[]).map((p,i)=>Object.assign({_i:i},p)).filter(p=>Number(p.weight)>0).sort((a,c)=>String(c.date).localeCompare(String(a.date))||c._i-a._i); }
+function daysSince(d){ if(!d) return null; const t=Date.parse(d+"T00:00:00"); if(isNaN(t)) return null; return Math.floor((Date.now()-t)/86400000); }
 function avgRating(b){ const l=(b.logs||[]).filter(x=>x.rating); return l.length? (l.reduce((s,x)=>s+Number(x.rating),0)/l.length):0; }
 
 let tt=null;
@@ -478,10 +492,13 @@ function beanCard(b){
         ${r.clicks?`<span class="chip pink num">${esc(r.clicks)}響</span>`:""}
         ${r.temp?`<span class="chip butter num">${esc(r.temp)}°C</span>`:""}
         ${r.ratio?`<span class="chip mint num">1:${esc(r.ratio)}</span>`:""}
+        ${purchases(b)[0]?`<span class="chip num">每杯約 ${cupCost(purchases(b)[0])} 元</span>`:""}
         ${n?`<span class="chip">沖過 ${n} 次${av?` · ${"☕".repeat(Math.round(av))}`:""}</span>`:""}
       </div>
     </div><span class="go" aria-hidden="true">›</span></button>`;
 }
+
+function monthSpend(){ const m=today().slice(0,7); return beans.reduce((s,b)=>s+purchases(b).filter(p=>String(p.date).startsWith(m)).reduce((a,p)=>a+(Number(p.price)||0),0),0); }
 
 function viewList(){
   const q=ui.q.trim().toLowerCase();
@@ -495,11 +512,25 @@ function viewList(){
   return `${header()}<div class="stack" style="margin-top:10px">
     ${tipCard()}
     ${beans.length>2?`<input class="search" id="q" type="search" placeholder="搜尋豆名、產區、風味…" value="${esc(ui.q)}" aria-label="搜尋豆子">`:""}
-    <div class="sechead"><h2>${icoBean("#8A5232",24)}我的豆櫃${sparks()}</h2><span class="muted small num">${beans.length} 支</span></div>
+    <div class="sechead"><h2>${icoBean("#8A5232",24)}我的豆櫃${sparks()}</h2><span class="muted small num">${beans.length} 支${monthSpend()?` · 本月買豆 ${money(monthSpend())} 元`:""}</span></div>
     ${store.mode==="local"&&ready?`<div class="status small">目前存在這台裝置的瀏覽器裡。登入 Claude 開啟這頁，豆子就會同步，也能請 Claude 幫你新增。</div>`:""}
     <div class="stack" style="gap:10px">${body}</div>
   </div>
   ${canWrite?`<button class="fab" id="fab-add" data-act="new">${icoPlus}新豆子</button>`:""}`;
+}
+
+function purchaseSection(b){
+  const pl=purchases(b); const total=pl.reduce((a,p)=>a+(Number(p.price)||0),0);
+  const latest=pl[0]; const age=latest?daysSince(latest.roastDate):null;
+  return `<section class="section"><div class="row" style="justify-content:space-between"><h2>採購紀錄</h2><span class="muted small num">${pl.length} 筆 · 共 ${money(total)} 元</span></div>
+    ${latest?`<div class="costline">最近一包每杯（${DOSE}g）約 <b>${cupCost(latest)}</b> 元 · 每 100g ${per100(latest)} 元${age!=null&&age>=0?` · 烘焙後第 ${age} 天`:""}</div>`:""}
+    ${pl.length?pl.map(p=>`<div class="log buy"><div class="lh"><span class="num">${esc(p.date)}</span><span class="price">${money(p.price)} 元</span></div>
+      <div class="small muted num">${esc(wLabel(p.weight))} · 每杯約 ${cupCost(p)} 元${p.shop?" · "+esc(p.shop):""}${p.roastDate?" · 烘焙日 "+esc(p.roastDate):""}</div>
+      ${p.note?`<div class="small">${esc(p.note)}</div>`:""}
+      ${canWrite?`<button class="linkbtn" data-act="del-pur" data-id="${esc(b.id)}" data-i="${p._i}">${ui.confirmPur===b.id+":"+p._i?"再按一次確認刪除":"刪除這筆"}</button>`:""}</div>`).join("")
+      :`<div class="note small muted">還沒有採購紀錄。買豆時記下重量、價錢和店家，就會幫你算每杯成本。</div>`}
+    ${canWrite?`<button class="btn ghost" data-act="buy" data-id="${esc(b.id)}" id="buy-btn">＋ 記一筆採購</button>`:""}
+  </section>`;
 }
 
 function viewDetail(b){
@@ -558,6 +589,8 @@ function viewDetail(b){
         <div class="small muted num">${[l.clicks?l.clicks+"響":"",l.temp?l.temp+"°C":"",l.time?"總時間 "+l.time:""].filter(Boolean).join(" · ")}</div>
         ${l.note?`<div class="small">${esc(l.note)}</div>`:""}</div>`).join(""):`<div class="note small muted">還沒有紀錄。沖完按「記一杯」，寫下實際刻度、時間和喝起來的感覺。</div>`}
     </section>
+
+    ${purchaseSection(b)}
 
     ${canWrite?`<section class="section"><h2>管理</h2><div class="row">
       <button class="btn ghost" data-act="edit" data-id="${esc(b.id)}" id="edit-btn">編輯豆子與配方</button>
@@ -733,7 +766,7 @@ function openLog(b){
   const L={rating:4};
   const layer=$("#layer");
   const draw=()=>{ layer.innerHTML=`<div class="scrim" data-act="close-sheet"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="記一杯">
-    <div class="row" style="justify-content:space-between"><h2>記一杯 · ${esc(b.name)}</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
+    <div class="shd"><h2>記一杯 · ${esc(b.name)}</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
     <div class="field"><span>好喝程度</span><div class="cupsel">${[1,2,3,4,5].map(n=>`<button type="button" data-act="rate" data-v="${n}" aria-pressed="${n<=L.rating}" aria-label="${n} 分">☕</button>`).join("")}</div></div>
     <div class="grid2">
       <label class="field"><span>實際幾響</span><input class="inp num" id="l-clicks" type="number" inputmode="numeric" value="${esc(r.clicks)}"></label>
@@ -761,11 +794,53 @@ function openLog(b){
   };
 }
 
+/* ---------- purchase sheet ---------- */
+function openPurchase(b){
+  const layer=$("#layer");
+  layer.innerHTML=`<div class="scrim" data-act="close-sheet"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="記一筆採購">
+    <div class="shd"><h2>記一筆採購 · ${esc(b.name)}</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
+    <div class="grid2">
+      <label class="field"><span>購買日期</span><input class="inp num" id="p-date" type="date" value="${today()}"></label>
+      <label class="field"><span>價錢（元）</span><input class="inp num" id="p-price" type="number" inputmode="numeric" min="0" placeholder="520"></label>
+    </div>
+    <div class="field"><span>重量</span><div class="pills" role="group" aria-label="重量">${WEIGHTS.map(([l,w])=>`<button type="button" class="pill" data-act="p-w" data-v="${w}" aria-pressed="${w===227}">${l}</button>`).join("")}</div>
+      <input class="inp num" id="p-weight" type="number" inputmode="numeric" min="1" value="227" aria-label="重量（克）" style="margin-top:4px"></div>
+    <div class="grid2">
+      <label class="field"><span>店家 / 烘豆商</span><input class="inp" id="p-shop" value="${esc(b.roaster||"")}" placeholder="選填"></label>
+      <label class="field"><span>烘焙日期</span><input class="inp num" id="p-roast" type="date"></label>
+    </div>
+    <label class="field"><span>備註</span><input class="inp" id="p-note" placeholder="例：週年慶 9 折、買兩包送濾紙"></label>
+    <div class="costline" id="p-cost">填入價錢，就會算出每杯成本。</div>
+    <div class="status err small" id="p-err" hidden></div>
+    <button class="btn primary block" data-act="save-pur" id="save-pur">存下這筆採購</button>
+  </div></div>`;
+  const val=id=>$("#"+id).value.trim();
+  const calc=()=>{ const w=Number(val("p-weight")), pr=Number(val("p-price"));
+    $("#p-cost").innerHTML = w>0&&pr>0 ? `每杯（${DOSE}g）約 <b>${Math.round(pr/w*DOSE)}</b> 元 · 每 100g ${Math.round(pr/w*100)} 元 · 可沖約 ${Math.floor(w/DOSE)} 杯` : "填入價錢，就會算出每杯成本。"; };
+  layer.oninput=calc;
+  layer.onclick=async ev=>{
+    const t=ev.target.closest("[data-act]"); if(!t) return;
+    const a=t.dataset.act;
+    if(a==="close-sheet" && (t===ev.target || t.classList.contains("iconbtn"))){ layer.innerHTML=""; layer.onclick=null; layer.oninput=null; }
+    else if(a==="p-w"){ $("#p-weight").value=t.dataset.v; layer.querySelectorAll('[data-act="p-w"]').forEach(x=>x.setAttribute("aria-pressed", x===t)); calc(); }
+    else if(a==="save-pur"){
+      const w=Number(val("p-weight")), pr=Number(val("p-price")); const err=$("#p-err");
+      if(!(w>0)){ err.textContent="請填重量（克）。"; err.hidden=false; return; }
+      if(!(pr>=0) || val("p-price")===""){ err.textContent="請填價錢。"; err.hidden=false; return; }
+      const cur=beanById(b.id)||b;
+      const entry={date:val("p-date")||today(),weight:w,price:pr,shop:val("p-shop"),roastDate:val("p-roast"),note:val("p-note")};
+      t.disabled=true;
+      if(await persist(Object.assign({},cur,{purchases:[...(cur.purchases||[]),entry]}))){ layer.innerHTML=""; layer.onclick=null; layer.oninput=null; toast("採購記下來了！"); }
+      else t.disabled=false;
+    }
+  };
+}
+
 /* ---------- settings sheet ---------- */
 function openSettings(){
   const layer=$("#layer");
   layer.innerHTML=`<div class="scrim" data-act="close-sheet"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="器具設定">
-    <div class="row" style="justify-content:space-between"><h2>器具設定</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
+    <div class="shd"><h2>器具設定</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
     <div class="card"><dl class="kv">
       <dt>豆量</dt><dd class="num">${DOSE}g（固定）</dd>
       <dt>磨豆機</dt><dd>Comandante C40 · 紅軸（每響約 15 微米）</dd>
@@ -789,6 +864,7 @@ document.addEventListener("click",async ev=>{
   if(t.dataset.tab){ go(t.dataset.tab); return; }
   const a=t.dataset.act, id=t.dataset.id;
   if(a!=="del") ui.confirmDel=null;
+  if(a!=="del-pur") ui.confirmPur=null;
   switch(a){
     case "settings": openSettings(); break;
     case "tip-next": ui.tipIdx=(ui.tipIdx+1)%KNOW.length; render(); break;
@@ -824,6 +900,13 @@ document.addEventListener("click",async ev=>{
       else { ui.confirmDel=id; render(); }
       break;
     case "log": openLog(beanById(id)); break;
+    case "buy": openPurchase(beanById(id)); break;
+    case "del-pur": {
+      const key=id+":"+t.dataset.i, b=beanById(id); if(!b) break;
+      if(ui.confirmPur===key){ ui.confirmPur=null; const i=Number(t.dataset.i);
+        if(await persist(Object.assign({},b,{purchases:(b.purchases||[]).filter((_,k)=>k!==i)}))) toast("已刪除這筆採購"); render(); }
+      else { ui.confirmPur=key; render(); }
+      break; }
     case "brew": T.beanId=id; T.running=false; T.elapsed=0; T.lastStep=-1; go("timer"); break;
     case "t-toggle":
       if(T.running){ T.elapsed=curElapsed(); T.running=false; cancelAnimationFrame(T.raf); lockWake(false); }
