@@ -237,6 +237,7 @@ textarea.inp{min-height:76px;resize:vertical}
 .music .mt{flex:1;min-width:120px}
 .music .mn{font-family:var(--f-display);font-weight:900;font-size:15px}
 .music .iconbtn{width:40px;height:40px;color:var(--rasp)}
+.music .mtrack{width:100%;border:0;background:transparent;font-family:var(--f-display);font-weight:900;font-size:15px;color:var(--ink);padding:2px 0;outline:none}
 .music .mvol{flex-basis:100%;accent-color:var(--rasp)}
 .eq{display:flex;align-items:flex-end;gap:3px;height:22px;width:26px}
 .eq i{flex:1;background:var(--rasp);border-radius:2px;height:30%}
@@ -1028,29 +1029,33 @@ function cueHtml(r,key){
     ${p.how?`<div class="cue-how">${esc(p.how)}</div>`:""}`;
 }
 
-/* ---------- brewing music (synthesized in the page, no audio files; no piano) ---------- */
+/* ---------- brewing music: café lounge, synthesized in the page (no piano) ---------- */
 const Music=(()=>{
-  // instruments: pad = warm string pad, flute = soft flute lead, guitar = nylon-string pluck
+  // instruments: guitar (nylon pluck), vibes (vibraphone), flute, pad (soft strings), upright bass, brushes
   const TRACKS=[
-    {name:"晨光手沖",bpm:72,swing:.1,wet:.38,bars:24,cb:1,compInst:"pad",
-      chords:[[55,59,60,64],[55,57,60,64],[53,57,60,62],[53,55,59,62]],roots:[48,45,50,43],
-      comp:[[0,16]],bass:[[0,0,8],[8,7,6]],mel:{steps:[2,6,9,12],p:.5,inst:"flute",len:3,lo:67,hi:84},drums:{brush:[0,8]}},
-    {name:"午後拿鐵",bpm:78,swing:.18,wet:.3,bars:24,cb:1,compInst:"pad",
-      chords:[[53,57,60,64],[52,55,59,62],[53,57,60,62],[52,55,59,60]],roots:[41,40,38,48],
-      comp:[[0,16]],bass:[[0,0,6],[10,7,4]],mel:{steps:[0,3,6,8,11,14],p:.7,inst:"guitar",lo:60,hi:76},drums:{kick:[0,10],shaker:[2,6,10,14]}},
-    {name:"雨天窗邊",bpm:60,swing:0,wet:.55,bars:16,cb:2,compInst:"pad",
-      chords:[[57,60,64,67,71],[53,57,60,64],[55,60,62,64],[55,59,62,64]],roots:[45,41,48,43],
-      comp:[[0,32]],bass:[[0,0,14],[16,7,12]],mel:{steps:[0,2,4,6,8,10,12,14],p:.85,inst:"guitar",lo:57,hi:76,arp:true},drums:{}},
-    {name:"巴黎小館",bpm:88,swing:0,wet:.26,bars:24,cb:1,compInst:"guitar",
-      chords:[[53,57,60,62],[53,55,59,62],[52,55,59,60],[52,55,57,61]],roots:[38,43,48,45],
-      comp:[[0,2],[3,2],[6,2],[10,2],[12,2]],bass:[[0,0,5],[6,7,2],[8,0,5],[14,7,2]],mel:{steps:[2,7,10,14],p:.5,inst:"flute",len:4,lo:69,hi:84},drums:{rim:[3,10],shaker:[0,4,8,12]}},
-    {name:"森林小憩",bpm:66,swing:.08,wet:.48,bars:16,cb:1,compInst:"pad",
-      chords:[[55,58,62,63],[53,57,58,62],[55,58,60,63],[55,56,60,63]],roots:[39,46,48,44],
-      comp:[[0,16]],bass:[[0,0,10]],mel:{steps:[0,4,8,12],p:.65,inst:"flute",len:4,lo:70,hi:87,scale:[63,65,67,70,72]},drums:{shaker:[2,6,10,14]}}
+    {name:"沙發午茶",bpm:84,swing:.16,wet:.3,bars:16,cb:1,compInst:"guitar",
+      chords:[[55,59,62,64],[57,60,64,67],[57,60,62,65],[55,59,62,65]],roots:[48,45,50,43],
+      comp:[[0,2],[6,2],[10,2]],bass:[[0,0,5],[8,7,5]],mel:{steps:[2,6,10,14],p:.6,inst:"vibes",lo:67,hi:84},drums:{brush:[0,8],shaker:[2,6,10,14]}},
+    {name:"爵士拿鐵",bpm:96,swing:.32,wet:.26,bars:16,cb:1,compInst:"guitar",
+      chords:[[53,57,60,64],[55,58,62,65],[52,58,60,64],[52,57,60,64]],roots:[38,43,36,41],
+      comp:[[3,2],[10,2]],bass:[[0,0,3],[4,4,3],[8,7,3],[12,9,3]],mel:{steps:[0,6,8,14],p:.55,inst:"flute",len:3,lo:69,hi:86},drums:{brush:[0,4,8,12],rim:[6,14]}},
+    {name:"慵懶週日",bpm:66,swing:.1,wet:.45,bars:8,cb:2,compInst:"pad",
+      chords:[[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]],roots:[41,40,38,36],
+      comp:[[0,32]],bass:[[0,0,14],[16,7,12]],mel:{steps:[0,2,4,6,8,10,12,14],p:.85,inst:"guitar",lo:57,hi:76,arp:true},drums:{brush:[0,8]}},
+    {name:"巴薩諾瓦咖啡館",bpm:92,swing:0,wet:.24,bars:16,cb:1,compInst:"guitar",
+      chords:[[53,57,60,64],[55,59,62,65],[52,55,59,64],[57,61,64,67]],roots:[38,43,36,45],
+      comp:[[0,2],[3,2],[6,2],[10,2],[13,2]],bass:[[0,0,5],[6,7,3],[8,0,5],[14,7,2]],mel:{steps:[2,7,10,14],p:.5,inst:"flute",len:3,lo:69,hi:86},drums:{rim:[3,6,10,13],shaker:[0,2,4,6,8,10,12,14]}},
+    {name:"午夜吧台",bpm:58,swing:.22,wet:.5,bars:8,cb:2,compInst:"pad",
+      chords:[[57,60,64,67,71],[50,57,60,64,67],[55,59,62,66,69],[48,55,59,62,64]],roots:[45,38,43,36],
+      comp:[[0,32]],bass:[[0,0,16],[16,7,14]],mel:{steps:[0,6,12],p:.75,inst:"vibes",lo:69,hi:88},drums:{brush:[0]}},
+    {name:"微風露台",bpm:100,swing:0,wet:.28,bars:16,cb:1,compInst:"guitar",
+      chords:[[55,59,62,64],[55,59,62,66],[57,60,64,67],[53,57,60,64]],roots:[48,47,45,41],
+      comp:[[0,2],[4,2],[8,2],[12,2]],bass:[[0,0,6],[8,7,6]],mel:{steps:[2,5,10,13],p:.55,inst:"vibes",lo:67,hi:86},drums:{kick:[0,8],shaker:[2,6,10,14]}}
   ];
-  let ac=null,master=null,bus=null,send=null,noise=null,timer=null,playing=false,ti=0,bar=0,step=0,next=0,vol=.6;
+  let ac=null,master=null,bus=null,send=null,noise=null,timer=null,playing=false,ti=0,bar=0,step=0,next=0,rep=0,vol=.6;
   const subs=[], ksCache={};
   try{ const v=parseFloat(localStorage.getItem("beanbook.vol")); if(v>=0&&v<=1) vol=v; }catch(e){}
+  try{ const k=parseInt(localStorage.getItem("beanbook.track"),10); if(k>=0&&k<TRACKS.length) ti=k; }catch(e){}
   const mtof=m=>440*Math.pow(2,(m-69)/12);
   const rnd=seed=>{ let t=(seed+0x6D2B79F5)|0; t=Math.imul(t^(t>>>15),1|t); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; };
   function init(){
@@ -1062,23 +1067,21 @@ const Music=(()=>{
     const comp=ac.createDynamicsCompressor(); comp.threshold.value=-20; comp.ratio.value=3;
     master.connect(tone); tone.connect(comp); comp.connect(ac.destination);
     bus=ac.createGain(); bus.connect(master);
-    const verb=ac.createConvolver(); const len=Math.floor(ac.sampleRate*3.2), ib=ac.createBuffer(2,len,ac.sampleRate);
-    for(let c=0;c<2;c++){ const d=ib.getChannelData(c); for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2); }
-    verb.buffer=ib; send=ac.createGain(); send.gain.value=.35; bus.connect(send); send.connect(verb); verb.connect(master);
+    const verb=ac.createConvolver(); const len=Math.floor(ac.sampleRate*2.8), ib=ac.createBuffer(2,len,ac.sampleRate);
+    for(let c=0;c<2;c++){ const d=ib.getChannelData(c); for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.3); }
+    verb.buffer=ib; send=ac.createGain(); send.gain.value=.3; bus.connect(send); send.connect(verb); verb.connect(master);
     noise=ac.createBuffer(1,ac.sampleRate,ac.sampleRate); const nd=noise.getChannelData(0); for(let i=0;i<nd.length;i++) nd[i]=Math.random()*2-1;
     return true;
   }
-  // warm string pad: two detuned saws, soft lowpass, slow swell
   function pad(m,t,d,v){
-    const f=mtof(m), g=ac.createGain(), lp=ac.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=950; lp.Q.value=.4;
+    const f=mtof(m), g=ac.createGain(), lp=ac.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=900; lp.Q.value=.4;
     const o1=ac.createOscillator(), o2=ac.createOscillator();
     o1.type="sawtooth"; o2.type="sawtooth"; o1.frequency.value=f; o2.frequency.value=f; o1.detune.value=-7; o2.detune.value=7;
     o1.connect(lp); o2.connect(lp); lp.connect(g); g.connect(bus);
     const hold=Math.max(d,.8);
-    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(v,t+.7); g.gain.setValueAtTime(v,t+hold); g.gain.setTargetAtTime(.0001,t+hold,.5);
+    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(v,t+.8); g.gain.setValueAtTime(v,t+hold); g.gain.setTargetAtTime(.0001,t+hold,.5);
     o1.start(t); o2.start(t); o1.stop(t+hold+3); o2.stop(t+hold+3);
   }
-  // soft flute: sine + a little 2nd harmonic, gentle vibrato and breath
   function flute(m,t,d,v){
     const f=mtof(m), g=ac.createGain(), o=ac.createOscillator(), o2=ac.createOscillator(), g2=ac.createGain();
     o.type="sine"; o2.type="sine"; o.frequency.value=f; o2.frequency.value=f*2; g2.gain.value=.1;
@@ -1092,13 +1095,24 @@ const Music=(()=>{
     o.start(t); o2.start(t); lfo.start(t); b.start(t,Math.random()*.5);
     o.stop(end); o2.stop(end); lfo.stop(end); b.stop(t+.6);
   }
-  // nylon guitar: Karplus-Strong pluck, cached per note
+  // vibraphone: soft mallet attack, metal-bar partials, gentle motor tremolo
+  function vibes(m,t,v){
+    const f=mtof(m), g=ac.createGain(); g.connect(bus);
+    const trem=ac.createOscillator(), tg=ac.createGain(), tb=ac.createGain(); trem.frequency.value=5; tg.gain.value=.3; tb.gain.value=.7;
+    trem.connect(tg); tg.connect(g.gain);
+    [[1,1,2.6],[3.98,.28,1.1],[9.2,.06,.4]].forEach(([r,gn,dec])=>{
+      const o=ac.createOscillator(), og=ac.createGain(); o.type="sine"; o.frequency.value=f*r; o.connect(og); og.connect(g);
+      og.gain.setValueAtTime(.0001,t); og.gain.linearRampToValueAtTime(v*gn,t+.008); og.gain.exponentialRampToValueAtTime(.0001,t+dec);
+      o.start(t); o.stop(t+dec+.05);
+    });
+    g.gain.value=1; trem.start(t); trem.stop(t+2.7);
+  }
   function ksBuf(m){
     if(ksCache[m]) return ksCache[m];
     const sr=ac.sampleRate, f=mtof(m), N=Math.max(2,Math.round(sr/f)), len=Math.floor(sr*2.2);
     const buf=ac.createBuffer(1,len,sr), d=buf.getChannelData(0), line=new Float32Array(N);
     for(let i=0;i<N;i++) line[i]=(Math.random()*2-1);
-    for(let i=0;i<N;i++) line[i]=(line[i]+line[(i+1)%N])*.5; // soften the attack
+    for(let i=0;i<N;i++) line[i]=(line[i]+line[(i+1)%N])*.5;
     const decay=.994-Math.min(.006,f/60000);
     for(let i=0,p=0;i<len;i++){ const a=line[p], nb=line[(p+1)%N]; d[i]=a; line[p]=(a+nb)*.5*decay; p=(p+1)%N; }
     ksCache[m]=buf; return buf;
@@ -1108,10 +1122,11 @@ const Music=(()=>{
     s.buffer=ksBuf(m); lp.type="lowpass"; lp.frequency.value=2600; g.gain.value=v;
     s.connect(lp); lp.connect(g); g.connect(bus); s.start(t); s.stop(t+2.2);
   }
+  // upright bass: warm triangle with a short pluck envelope
   function bass(m,t,d,v){
-    const g=ac.createGain(), o=ac.createOscillator(), lp=ac.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=380;
+    const g=ac.createGain(), o=ac.createOscillator(), lp=ac.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=330;
     o.type="triangle"; o.frequency.value=mtof(m); o.connect(lp); lp.connect(g); g.connect(bus);
-    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(v,t+.03); g.gain.setTargetAtTime(.0001,t+Math.max(d,.15),.15);
+    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(v,t+.02); g.gain.exponentialRampToValueAtTime(v*.35,t+.25); g.gain.setTargetAtTime(.0001,t+Math.max(d,.2),.13);
     o.start(t); o.stop(t+d+1);
   }
   function kick(t,v){
@@ -1131,23 +1146,25 @@ const Music=(()=>{
     const T0=TRACKS[ti], cb=T0.cb||1, ci=Math.floor(bar/cb)%T0.chords.length, sic=(bar%cb)*16+s, sd=60/T0.bpm/4;
     const ch=T0.chords[ci], root=T0.roots[ci];
     T0.comp.forEach(([st,du])=>{ if(st!==sic) return;
-      if(T0.compInst==="guitar") ch.forEach((m,i)=>guitar(m,time+i*.02,.11));
-      else ch.forEach(m=>pad(m,time,du*sd,.022)); });
-    T0.bass.forEach(([st,iv,du])=>{ if(st===sic) bass(root+iv,time,du*sd,.14); });
+      if(T0.compInst==="guitar") ch.forEach((m,i)=>guitar(m,time+i*.018,.1));
+      else ch.forEach(m=>pad(m,time,du*sd,.02)); });
+    T0.bass.forEach(([st,iv,du])=>{ if(st===sic) bass(root+iv,time,du*sd,.17); });
     const dr=T0.drums||{};
-    if((dr.kick||[]).includes(s)) kick(time,.16);
-    if((dr.brush||[]).includes(s)) noiseHit(time,.025,"bandpass",3200,.7,.03,.25);
-    if((dr.shaker||[]).includes(s)) noiseHit(time,.018,"highpass",5200,.7,.02,.09);
+    if((dr.kick||[]).includes(s)) kick(time,.15);
+    if((dr.brush||[]).includes(s)) noiseHit(time,.03,"bandpass",3200,.7,.03,.22);
+    if((dr.shaker||[]).includes(s)) noiseHit(time,.017,"highpass",5200,.7,.02,.09);
     if((dr.rim||[]).includes(s)) noiseHit(time,.03,"bandpass",1900,4,.002,.035);
     const M=T0.mel;
-    if(M.steps.includes(s) && rnd(ti*7919+(bar%8)*131+s*17)<M.p){
-      let pool=M.scale?M.scale.flatMap(n=>[n,n+12]):ch.flatMap(n=>[n,n+12,n+24]);
-      pool=[...new Set(pool.filter(n=>n>=M.lo&&n<=M.hi))].sort((a,b)=>a-b);
+    if(M.steps.includes(s) && rnd(ti*7919+((bar+rep*5)%16)*131+s*17)<M.p){
+      let pool=ch.flatMap(n=>[n,n+12,n+24]).filter(n=>n>=M.lo&&n<=M.hi);
+      pool=[...new Set(pool)].sort((a,b)=>a-b);
       if(pool.length){
         let note;
         if(M.arp){ const L=Math.max(1,pool.length*2-2), k=Math.floor(sic/2)%L; note=pool[k<pool.length?k:L-k]; }
-        else note=pool[Math.floor(rnd(ti*31+bar*7+s*3)*pool.length)];
-        if(M.inst==="flute") flute(note,time,sd*(M.len||3),.06); else guitar(note,time,.16);
+        else note=pool[Math.floor(rnd(ti*31+(bar+rep*3)*7+s*3)*pool.length)];
+        if(M.inst==="flute") flute(note,time,sd*(M.len||3),.06);
+        else if(M.inst==="vibes") vibes(note,time,.075);
+        else guitar(note,time,.15);
       }
     }
   }
@@ -1157,25 +1174,29 @@ const Music=(()=>{
     while(next<ac.currentTime+.3){
       schedule(step,next+((step%2)?T0.swing*sd:0));
       next+=sd; step++;
-      if(step>=16){ step=0; bar++;
-        if(bar>=T0.bars){ bar=0; ti=(ti+1)%TRACKS.length; send.gain.setTargetAtTime(TRACKS[ti].wet,next,.5); emit(); break; } }
+      if(step>=16){ step=0; bar++; if(bar>=T0.bars){ bar=0; rep++; } }
     }
   }
   function emit(){ subs.forEach(f=>{ try{ f(); }catch(e){} }); }
   function fadeTo(v,secs){ const n=ac.currentTime; master.gain.cancelScheduledValues(n); master.gain.setValueAtTime(master.gain.value,n); master.gain.linearRampToValueAtTime(v,n+secs); }
+  function switchTo(i){
+    ti=((i%TRACKS.length)+TRACKS.length)%TRACKS.length; bar=0; step=0; rep=0;
+    try{ localStorage.setItem("beanbook.track",String(ti)); }catch(e){}
+    if(playing&&ac){ const n=ac.currentTime; master.gain.cancelScheduledValues(n); master.gain.setValueAtTime(master.gain.value,n);
+      master.gain.linearRampToValueAtTime(0,n+.25); master.gain.linearRampToValueAtTime(vol*.8,n+1.6); next=n+.4; send.gain.value=TRACKS[ti].wet; }
+    emit();
+  }
   return {
     tracks:TRACKS,
     playing:()=>playing, vol:()=>vol, index:()=>ti,
-    label:()=>TRACKS[ti].name+"（"+(ti+1)+"/"+TRACKS.length+"）",
+    label:()=>TRACKS[ti].name,
     onChange:f=>subs.push(f),
     start(){ if(!init()) return false; try{ ac.resume&&ac.resume(); }catch(e){}
-      if(playing) return true; playing=true; bar=0; step=0; next=ac.currentTime+.12; send.gain.value=TRACKS[ti].wet;
-      fadeTo(vol*.8,2); timer=setInterval(tick,60); tick(); emit(); return true; },
-    stop(){ if(!ac||!playing) return; playing=false; clearInterval(timer); timer=null; fadeTo(0,1); emit(); },
-    next(){ ti=(ti+1)%TRACKS.length; bar=0; step=0;
-      if(playing&&ac){ const n=ac.currentTime; master.gain.cancelScheduledValues(n); master.gain.setValueAtTime(master.gain.value,n);
-        master.gain.linearRampToValueAtTime(0,n+.2); master.gain.linearRampToValueAtTime(vol*.8,n+1.6); next=n+.35; send.gain.value=TRACKS[ti].wet; }
-      emit(); },
+      if(playing) return true; playing=true; bar=0; step=0; rep=0; next=ac.currentTime+.12; send.gain.value=TRACKS[ti].wet;
+      fadeTo(vol*.8,1.5); timer=setInterval(tick,60); tick(); emit(); return true; },
+    stop(){ if(!ac||!playing) return; playing=false; clearInterval(timer); timer=null; fadeTo(0,.9); emit(); },
+    select(i){ switchTo(i); },
+    next(){ switchTo(ti+1); },
     setVol(v){ vol=v; try{ localStorage.setItem("beanbook.vol",String(v)); }catch(e){} if(playing&&ac) master.gain.setTargetAtTime(vol*.8,ac.currentTime,.1); }
   };
 })();
@@ -1188,14 +1209,15 @@ function musicCard(){
   const on=Music.playing();
   return `<div class="music${on?" on":""}" id="t-music">
     <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="mt"><div class="small muted">沖煮輕音樂</div><div class="mn" id="m-name">${esc(Music.label())}${on?"":" · 已暫停"}</div></div>
+    <div class="mt"><div class="small muted">咖啡沙發音樂 · 6 首可選</div>
+      <select class="mtrack" id="m-track" aria-label="選擇音樂">${Music.tracks.map((t,i)=>`<option value="${i}" ${i===Music.index()?"selected":""}>${i+1}. ${esc(t.name)}</option>`).join("")}</select></div>
     <button class="iconbtn" data-act="m-toggle" id="m-toggle" aria-label="${on?"暫停音樂":"播放音樂"}">${on?icoPause:icoPlay}</button>
     <button class="iconbtn" data-act="m-next" id="m-next" aria-label="下一首">${icoNext}</button>
     <input class="mvol" type="range" id="m-vol" min="0" max="1" step="0.05" value="${Music.vol()}" aria-label="音樂音量">
   </div>`;
 }
 Music.onChange(()=>{ const box=$("#t-music"); if(!box) return; const on=Music.playing();
-  box.classList.toggle("on",on); $("#m-name").textContent=Music.label()+(on?"":" · 已暫停");
+  box.classList.toggle("on",on); const sel=$("#m-track"); if(sel) sel.value=String(Music.index());
   const tb=$("#m-toggle"); tb.innerHTML=on?icoPause:icoPlay; tb.setAttribute("aria-label",on?"暫停音樂":"播放音樂"); });
 
 /* ---------- AI recipe ---------- */
@@ -1360,6 +1382,7 @@ document.addEventListener("input",ev=>{
   if(ev.target.id==="q"){ ui.q=ev.target.value; const pos=ev.target.selectionStart; render(); const q=$("#q"); if(q){ q.focus(); try{q.setSelectionRange(pos,pos);}catch(e){} } }
 });
 document.addEventListener("change",ev=>{
+  if(ev.target.id==="m-track"){ Music.select(Number(ev.target.value)); if(!Music.playing()&&Music.start()) setMusicPref(true); return; }
   if(ev.target.id==="t-bean"){ cancelAnimationFrame(T.raf); tickOn(false); T.beanId=ev.target.value; T.running=false; T.elapsed=0; T.lastStep=-1; render(); }
 });
 document.addEventListener("click",async ev=>{
@@ -1424,8 +1447,8 @@ document.addEventListener("click",async ev=>{
       else { T.start=performance.now(); T.running=true; lockWake(true); beep(); T.lastStep=-2; tickOn(true); if(musicPref()&&!Music.playing()) Music.start(); }
       t.textContent=T.running?"暫停":"繼續"; paintTimer(); break;
     case "t-reset": cancelAnimationFrame(T.raf); tickOn(false); T.running=false; T.elapsed=0; T.lastStep=-1; lockWake(false); Music.stop(); render(); break;
-    case "m-toggle": if(Music.playing()){ Music.stop(); setMusicPref(false); } else { if(Music.start()) setMusicPref(true); else toast("這個瀏覽器無法播放音樂"); } break;
     case "m-next": Music.next(); if(!Music.playing()&&Music.start()) setMusicPref(true); break;
+    case "m-toggle": if(Music.playing()){ Music.stop(); setMusicPref(false); } else { if(Music.start()) setMusicPref(true); else toast("這個瀏覽器無法播放音樂"); } break;
   }
 });
 
