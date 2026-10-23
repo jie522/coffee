@@ -188,6 +188,21 @@ button{cursor:pointer}
 .prow .ph{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
 .prow .pn{font-family:var(--f-display);font-weight:900;font-size:16px;line-height:1.35;overflow-wrap:anywhere;min-width:0}
 .prow .price{font-family:var(--f-num);font-weight:700;font-size:18px;color:var(--rasp);white-space:nowrap}
+.chip.stk{background:#E7EEDC;border:1.5px solid #D2DFC2;font-weight:600}
+.chip.stk.low{background:#FBE0E4;border-color:#F3C6CE;color:#C8394F}
+.stockbox{background:var(--surface);border-radius:22px;padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.stockbox.low{background:#FFF1F3}
+.sb-top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.sb-k{font-size:12px;color:var(--ink-soft)}
+.sb-v{font-family:var(--f-num);font-weight:700;font-size:34px;line-height:1.1;color:var(--teal)}
+.sb-v small{font-size:15px;font-weight:500;color:var(--ink-soft);margin-left:3px}
+.stockbox.low .sb-v{color:#C8394F}
+.sb-c{text-align:right;font-size:15px}
+.sb-c b{font-family:var(--f-num);font-size:26px;color:var(--rasp)}
+.sb-bar{height:12px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+.sb-bar i{display:block;height:100%;border-radius:6px;background:var(--teal)}
+.stockbox.low .sb-bar i{background:#E5566F}
+.use{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--surface);border-radius:14px;padding:8px 12px;font-size:13px}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
 .buy .price{font-family:var(--f-num);font-weight:700;font-size:17px;color:var(--rasp)}
 .costline{font-size:14px;background:var(--butter-soft);border-radius:14px;padding:10px 12px}
@@ -723,6 +738,7 @@ function beanCard(b){
         ${r.clicks?`<span class="chip pink num">${esc(r.clicks)}響</span>`:""}
         ${r.temp?`<span class="chip butter num">${esc(r.temp)}°C</span>`:""}
         ${r.ratio?`<span class="chip mint num">1:${esc(r.ratio)}</span>`:""}
+        ${tracked(b)&&!b.outOfStock?`<span class="chip stk num${remainG(b)<=DOSE*2?" low":""}">剩 ${cupsOf(remainG(b))} 杯 · ${money(remainG(b))}g</span>`:""}
         ${purchases(b)[0]?`<span class="chip num">每杯約 ${cupCost(purchases(b)[0])} 元</span>`:""}
         ${n?`<span class="chip">沖過 ${n} 次${av?` · ${"☕".repeat(Math.round(av))}`:""}</span>`:""}
       </div>
@@ -745,7 +761,7 @@ function viewList(){
     ${tipCard()}
     ${beans.length>2?`<input class="search" id="q" type="search" placeholder="搜尋豆名、產區、風味…" value="${esc(ui.q)}" aria-label="搜尋豆子">`:""}
     ${beans.length&&nOut?`<div class="seg" role="group" aria-label="庫存篩選">${[["all","全部",beans.length],["in","有庫存",nIn],["out","無庫存",nOut]].map(([k,l,n])=>`<button type="button" class="pill" data-act="stock-filter" data-v="${k}" aria-pressed="${ui.stock===k}">${l} ${n}</button>`).join("")}</div>`:""}
-    <div class="sechead"><h2>${icoBean("#8A5232",24)}我的豆櫃${sparks()}</h2><span class="muted small num">有庫存 ${nIn} 支${nOut?` · 已用完 ${nOut} 支`:""}${monthSpend()?` · 本月買豆 ${money(monthSpend())} 元`:""}</span></div>
+    <div class="sechead"><h2>${icoBean("#8A5232",24)}我的豆櫃${sparks()}</h2><span class="muted small num">有庫存 ${nIn} 支${stockTotalText()}${nOut?` · 已用完 ${nOut} 支`:""}${monthSpend()?` · 本月買豆 ${money(monthSpend())} 元`:""}</span></div>
     ${store.mode==="local"&&ready?`<div class="status small">目前存在這台裝置的瀏覽器裡。登入 Claude 開啟這頁，豆子就會同步，也能請 Claude 幫你新增。</div>`:""}
     <div class="stack" style="gap:10px">${body}</div>
   </div>
@@ -759,6 +775,43 @@ function knowledgeSection(b){
   return `<section class="kbox" aria-label="豆小子知識">
     <div class="khd">${beanSvg(b.roast,52,"happy","sprout")}<div><h2>豆小子知識</h2><p>關於這支豆子的產區、品種、處理法和沖煮</p></div></div>
     ${ks.map((k,i)=>`<article class="kitem"><span class="kn-n">${i+1}</span><h3>${esc(k.t)}</h3><p>${esc(k.p)}</p></article>`).join("")}
+  </section>`;
+}
+
+/* ---------- stock (庫存): start amount + purchases - cups brewed ---------- */
+const sumW=b=>(b.purchases||[]).reduce((a,p)=>a+(Number(p.weight)||0),0);
+const usedG=b=>(b.usage||[]).reduce((a,u)=>a+(Number(u.g)||0),0);
+const tracked=b=>b.initialGrams!=null||b.adjustGrams!=null||(b.purchases||[]).some(p=>Number(p.weight)>0)||(b.usage||[]).length>0;
+const adjG=b=>Number(b.adjustGrams)||0;
+const remainRaw=b=>(Number(b.initialGrams)||0)+sumW(b)+adjG(b)-usedG(b);
+const remainG=b=>Math.max(0,Math.round(remainRaw(b)));
+const cupsOf=g=>Math.floor(g/DOSE);
+const fmtT=iso=>{ const d=new Date(iso); if(isNaN(d)) return String(iso||""); const p=n=>String(n).padStart(2,"0"); return (d.getMonth()+1)+"/"+d.getDate()+" "+p(d.getHours())+":"+p(d.getMinutes()); };
+function stockTotalText(){
+  const t=beans.filter(b=>!b.outOfStock&&tracked(b)).reduce((a,b)=>a+remainG(b),0);
+  return t>0?` · 庫存共 ${money(t)}g（約 ${cupsOf(t)} 杯）`:"";
+}
+function stockLine(b){
+  if(!tracked(b)) return '這支豆子還沒設定庫存，開始計時不會扣庫存。到豆子頁面設定期初數量，或記一筆採購。';
+  const g=remainG(b); return `庫存剩 <b>${money(g)}</b>g（約 ${cupsOf(g)} 杯）· 按「開始」會扣 ${DOSE}g`;
+}
+function stockSection(b){
+  const edit=canWrite?`<button class="btn ghost" data-act="stock-adjust" data-id="${esc(b.id)}" id="stock-adjust-btn">${tracked(b)?"調整期初數量 / 校正剩餘":"設定期初數量"}</button>`:"";
+  if(!tracked(b)) return `<section class="section"><div class="sechead"><h2>庫存</h2></div>
+    <div class="note small muted">還沒有庫存紀錄。記一筆採購（要填重量），或設定期初數量，就會開始追蹤；每次按「開始」計時會自動扣 ${DOSE}g。</div>${edit}</section>`;
+  const init=Number(b.initialGrams)||0, bought=sumW(b), used=usedG(b), adj=adjG(b), raw=remainRaw(b), rem=remainG(b), total=init+bought+Math.max(0,adj);
+  const pct=total>0?Math.min(100,rem/total*100):0, low=rem<=DOSE*2;
+  const use=(b.usage||[]).map((u,i)=>Object.assign({_i:i},u)).slice(-5).reverse();
+  return `<section class="section"><div class="sechead"><h2>庫存</h2><span class="muted small num">已沖 ${(b.usage||[]).length} 杯</span></div>
+    <div class="stockbox${low?" low":""}">
+      <div class="sb-top"><div><div class="sb-k">目前剩餘</div><div class="sb-v num">${money(rem)}<small>g</small></div></div>
+        <div class="sb-c">約 <b class="num">${cupsOf(rem)}</b> 杯<div class="small muted">每杯 ${DOSE}g</div></div></div>
+      <div class="sb-bar"><i style="width:${pct}%"></i></div>
+      <div class="small muted num">期初 ${money(init)}g ＋ 採購 ${money(bought)}g${adj?` ${adj>0?"＋":"－"} 校正 ${money(Math.abs(adj))}g`:""} － 已沖 ${money(used)}g</div>
+      ${raw<0?`<div class="small" style="color:#C8394F">紀錄的用量比庫存多 ${money(-raw)}g，請調整期初數量或補記採購。</div>`:""}
+      ${low&&rem>0?`<div class="small" style="color:#C8394F">快用完了，記得補貨。</div>`:""}
+    </div>${edit}
+    ${use.length?`<div class="small muted">最近沖煮扣庫存</div>${use.map(u=>`<div class="use"><span class="num">${esc(fmtT(u.t))} · −${esc(u.g)}g</span>${canWrite?`<button class="linkbtn" data-act="del-use" data-id="${esc(b.id)}" data-i="${u._i}">${ui.confirmUse===b.id+":"+u._i?"再按一次確認退回":"退回這杯"}</button>`:""}</div>`).join("")}`:""}
   </section>`;
 }
 
@@ -814,6 +867,8 @@ function viewDetail(b){
       ${canWrite?`<button class="btn ghost" data-act="toggle-stock" data-id="${esc(b.id)}" id="stock-btn">${b.outOfStock?"補貨了，改回有庫存":"這包用完了"}</button>`:""}
     </div>
 
+    ${stockSection(b)}
+
     <section class="section"><h2>預備作業</h2>
       <div class="note"><ul>
         <li>熱水均勻沖燙玻璃濾杯與下壺 <span class="num">15–20</span> 秒，倒掉預熱水再倒粉。</li>
@@ -864,6 +919,7 @@ function viewForm(){
         ${ROASTS.map(p=>`<button type="button" class="pill" data-act="roast" data-v="${p}" aria-pressed="${f.roast===p}">${p}</button>`).join("")}</div></div>
       <label class="field"><span>風味描述 / 包裝上的資訊</span><textarea class="inp" id="f-notes" placeholder="例：茉莉花、水蜜桃、紅茶尾韻；海拔 2100m">${esc(f.notes)}</textarea></label>
       <div class="field"><span>庫存</span><div class="seg" role="group" aria-label="庫存">${[["in","有庫存"],["out","無庫存"]].map(([k,l])=>`<button type="button" class="pill" data-act="stock" data-v="${k}" aria-pressed="${(f.outOfStock?"out":"in")===k}">${l}</button>`).join("")}</div></div>
+      <label class="field"><span>期初庫存（克，選填）</span><input class="inp num" id="f-initial" type="number" inputmode="numeric" min="0" value="${esc(f.initial==null?"":f.initial)}" placeholder="例：227（半磅）"></label>
       <div class="field"><span>封面圖（自動會依豆名挑選）</span><div class="pills" role="group" aria-label="封面圖">${ART_NAMES.map(([k,n])=>`<button type="button" class="pill" data-act="art" data-v="${k}" aria-pressed="${(f.art||"auto")===k}">${n}</button>`).join("")}</div></div>
     </div>
 
@@ -930,7 +986,7 @@ function viewKnow(){
 }
 
 /* ---------- timer ---------- */
-const T={beanId:null,start:0,elapsed:0,running:false,raf:0,lastStep:-1,wake:null,ac:null,cueKey:null};
+const T={beanId:null,start:0,elapsed:0,running:false,raf:0,lastStep:-1,wake:null,ac:null,cueKey:null,counted:null};
 function timerBean(){ return beanById(T.beanId) || (sorted()[0]||null); }
 function viewTimer(){
   const b=timerBean();
@@ -940,6 +996,7 @@ function viewTimer(){
   return `${header()}<div class="stack" style="margin-top:10px">
     <label class="field"><span>沖哪一支？</span><select class="inp" id="t-bean">${sorted().map(x=>`<option value="${esc(x.id)}" ${x.id===b.id?"selected":""}>${esc(x.name)}</option>`).join("")}</select></label>
     <div class="row small muted num"><span class="chip pink">${esc(r.clicks)}響</span><span class="chip butter">${esc(r.temp)}°C</span><span class="chip mint">${DOSE}g → ${esc(r.water)}g</span><span class="chip">目標 ${esc(r.totalTime)}</span></div>
+    <div class="costline" id="t-stock">${stockLine(b)}</div>
     <div class="clock">
       <div class="big num" id="t-clock">0:00</div>
       <div class="cur" id="t-cur">準備好就按開始</div>
@@ -1252,12 +1309,12 @@ const errMsg = e => ERR[e?.code] || "Claude 暫時沒有回應，請稍後再試
 
 /* ---------- form helpers ---------- */
 function newForm(b){
-  return b ? {id:b.id,name:b.name||"",origin:b.origin||"",roaster:b.roaster||"",process:b.process||"",roast:b.roast||"中焙",notes:b.notes||"",art:b.art||"auto",outOfStock:!!b.outOfStock,recipe:normalizeRecipe(b.recipe,b)}
-           : {id:null,name:"",origin:"",roaster:"",process:"水洗",roast:"淺中焙",notes:"",art:"auto",outOfStock:false,recipe:null};
+  return b ? {id:b.id,name:b.name||"",origin:b.origin||"",roaster:b.roaster||"",process:b.process||"",roast:b.roast||"中焙",notes:b.notes||"",art:b.art||"auto",outOfStock:!!b.outOfStock,initial:b.initialGrams!=null?String(b.initialGrams):"",recipe:normalizeRecipe(b.recipe,b)}
+           : {id:null,name:"",origin:"",roaster:"",process:"水洗",roast:"淺中焙",notes:"",art:"auto",outOfStock:false,initial:"",recipe:null};
 }
 function readForm(){
   const f=ui.form; const v=id=>{const el=$("#"+id); return el?el.value.trim():"";};
-  f.name=v("f-name"); f.origin=v("f-origin"); f.roaster=v("f-roaster"); f.process=v("f-process"); f.notes=v("f-notes");
+  f.name=v("f-name"); f.initial=v("f-initial"); f.origin=v("f-origin"); f.roaster=v("f-roaster"); f.process=v("f-process"); f.notes=v("f-notes");
   if(f.recipe && $("#r-clicks")){
     const r=f.recipe;
     const nc=Number(v("r-clicks"))||r.clicks, nt=Number(v("r-temp"))||r.temp, nr=Number(v("r-ratio"))||r.ratio, ntime=v("r-time")||r.totalTime;
@@ -1272,10 +1329,12 @@ function readForm(){
 }
 function beanFromForm(f, recipe, tip){
   const old=f.id?beanById(f.id):null;
-  return Object.assign({}, old||{}, {
+  const nb=Object.assign({}, old||{}, {
     id:f.id||uid(), name:f.name||"未命名的豆子", origin:f.origin, roaster:f.roaster, process:f.process, roast:f.roast, notes:f.notes, art:(f.art&&f.art!=="auto")?f.art:"", outOfStock:!!f.outOfStock,
     recipe, tip: tip!=null? tip : (old?.tip||""), createdAt: old?.createdAt||new Date().toISOString(), logs: old?.logs||[], example:false
   });
+  if(f.initial!=null && String(f.initial).trim()!=="" && !isNaN(Number(f.initial))) nb.initialGrams=Math.max(0,Math.round(Number(f.initial)));
+  return nb;
 }
 async function persist(b){
   try{ await store.save(b); return true; }
@@ -1340,7 +1399,7 @@ function openPurchase(b0){
   </div></div>`;
   const val=id=>$("#"+id).value.trim();
   const calc=()=>{ const w=Number(val("p-weight")), pr=Number(val("p-price"));
-    $("#p-cost").innerHTML = w>0&&pr>0 ? `每杯（${DOSE}g）約 <b>${Math.round(pr/w*DOSE)}</b> 元 · 每 100g ${Math.round(pr/w*100)} 元 · 可沖約 ${Math.floor(w/DOSE)} 杯` : "填入價錢，就會算出每杯成本。"; };
+    $("#p-cost").innerHTML = w>0&&pr>0 ? `每杯（${DOSE}g）約 <b>${Math.round(pr/w*DOSE)}</b> 元 · 每 100g ${Math.round(pr/w*100)} 元 · 可沖約 ${Math.floor(w/DOSE)} 杯，入庫 +${w}g` : "填入價錢，就會算出每杯成本。"; };
   layer.oninput=ev=>{ if(ev.target.id==="p-bean"){ b=beanById(ev.target.value)||b; $("#p-shop").value=b.roaster||""; } calc(); };
   layer.onclick=async ev=>{
     const t=ev.target.closest("[data-act]"); if(!t) return;
@@ -1356,6 +1415,64 @@ function openPurchase(b0){
       t.disabled=true;
       if(await persist(Object.assign({},cur,{outOfStock:false,purchases:[...(cur.purchases||[]),entry]}))){ layer.innerHTML=""; layer.onclick=null; layer.oninput=null; toast("採購記下來了！"); }
       else t.disabled=false;
+    }
+  };
+}
+
+async function consumeCup(){
+  const b=timerBean(); if(!b) return;
+  if(!tracked(b)){ toast("這支豆子還沒設定庫存，這杯沒有扣庫存"); return; }
+  const entry={t:new Date().toISOString(),g:DOSE};
+  const nb=Object.assign({},b,{usage:[...(b.usage||[]),entry]});
+  const rem=remainRaw(nb); if(rem<=0) nb.outOfStock=true;
+  T.counted={id:b.id,t:entry.t};
+  if(await persist(nb)){ const g=Math.max(0,Math.round(rem)); toast(rem<=0?"這包用完了，已標記為無庫存":"已計一杯，扣 "+DOSE+"g，剩 "+g+"g（約 "+cupsOf(g)+" 杯）"); }
+  else T.counted=null;
+}
+async function refundCup(){
+  const c=T.counted; T.counted=null; if(!c) return;
+  const b=beanById(c.id); if(!b) return;
+  const nb=Object.assign({},b,{usage:(b.usage||[]).filter(u=>u.t!==c.t)});
+  if(remainRaw(nb)>0) nb.outOfStock=false;
+  if(await persist(nb)) toast("重來：已退回這杯的庫存");
+}
+
+/* ---------- stock adjust sheet ---------- */
+function openStock(b){
+  const layer=$("#layer");
+  const bought=sumW(b), used=usedG(b);
+  const adj=adjG(b);
+  layer.innerHTML=`<div class="scrim" data-act="close-sheet"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="調整庫存">
+    <div class="shd"><h2>調整庫存 · ${esc(b.name)}</h2><button class="iconbtn" data-act="close-sheet" aria-label="關閉">✕</button></div>
+    <div class="small muted num">採購合計 ${money(bought)}g · 已沖 ${money(used)}g${adj?" · 校正 "+(adj>0?"+":"−")+money(Math.abs(adj))+"g":""}</div>
+    <label class="field"><span>期初數量（克）：開始記錄前原本就有的量</span><input class="inp num" id="s-init" type="number" inputmode="numeric" min="0" value="${Number(b.initialGrams)||0}"></label>
+    <label class="field"><span>目前剩餘（克）：直接填實際秤出來的量，和紀錄的差額會記成「校正」</span><input class="inp num" id="s-rem" type="number" inputmode="numeric" min="0" value="${remainG(b)}"></label>
+    <div class="costline" id="s-info"></div>
+    <div class="status err small" id="s-err" hidden></div>
+    <button class="btn primary block" data-act="save-stock" id="save-stock">存下庫存</button>
+  </div></div>`;
+  const num=id=>Number($("#"+id).value);
+  const info=()=>{ const g=Math.max(0,num("s-rem")||0); $("#s-info").innerHTML=`剩 <b>${money(g)}</b>g，約 ${cupsOf(g)} 杯（每杯 ${DOSE}g）`; };
+  info();
+  layer.oninput=ev=>{
+    if(ev.target.id==="s-init"){ $("#s-rem").value=Math.max(0,Math.round((num("s-init")||0)+bought+adj-used)); }
+    info();
+  };
+  layer.onclick=async ev=>{
+    const t=ev.target.closest("[data-act]"); if(!t) return;
+    const a=t.dataset.act;
+    if(a==="close-sheet" && (t===ev.target || t.classList.contains("iconbtn"))){ layer.innerHTML=""; layer.onclick=null; layer.oninput=null; }
+    else if(a==="save-stock"){
+      const err=$("#s-err");
+      if($("#s-init").value===""||!(num("s-init")>=0)){ err.textContent="請填期初數量（0 以上）。"; err.hidden=false; return; }
+      if($("#s-rem").value===""||!(num("s-rem")>=0)){ err.textContent="請填目前剩餘（0 以上）。"; err.hidden=false; return; }
+      const cur=beanById(b.id)||b, init=Math.round(num("s-init")), want=Math.round(num("s-rem"));
+      const newAdj=want-(init+sumW(cur)-usedG(cur));
+      const nb=Object.assign({},cur,{initialGrams:init});
+      if(newAdj) nb.adjustGrams=newAdj; else delete nb.adjustGrams;
+      nb.outOfStock = remainRaw(nb)<=0;
+      t.disabled=true;
+      if(await persist(nb)){ layer.innerHTML=""; layer.onclick=null; layer.oninput=null; toast("庫存已更新"); } else t.disabled=false;
     }
   };
 }
@@ -1383,7 +1500,7 @@ document.addEventListener("input",ev=>{
 });
 document.addEventListener("change",ev=>{
   if(ev.target.id==="m-track"){ Music.select(Number(ev.target.value)); if(!Music.playing()&&Music.start()) setMusicPref(true); return; }
-  if(ev.target.id==="t-bean"){ cancelAnimationFrame(T.raf); tickOn(false); T.beanId=ev.target.value; T.running=false; T.elapsed=0; T.lastStep=-1; render(); }
+  if(ev.target.id==="t-bean"){ T.counted=null; cancelAnimationFrame(T.raf); tickOn(false); T.beanId=ev.target.value; T.running=false; T.elapsed=0; T.lastStep=-1; render(); }
 });
 document.addEventListener("click",async ev=>{
   const t=ev.target.closest("[data-act],[data-tab]"); if(!t || t.closest("#layer")) return;
@@ -1391,6 +1508,7 @@ document.addEventListener("click",async ev=>{
   const a=t.dataset.act, id=t.dataset.id;
   if(a!=="del") ui.confirmDel=null;
   if(a!=="del-pur") ui.confirmPur=null;
+  if(a!=="del-use") ui.confirmUse=null;
   switch(a){
     case "settings": openSettings(); break;
     case "tip-next": ui.tipIdx=(ui.tipIdx+1)%KNOW.length; render(); break;
@@ -1400,6 +1518,14 @@ document.addEventListener("click",async ev=>{
     case "new": ui.form=newForm(null); go("home","form"); break;
     case "edit": ui.form=newForm(beanById(id)); ui.tab="home"; ui.view="form"; ui.msg=""; render(); window.scrollTo(0,0); break;
     case "ktag": ui.ktag=t.dataset.v; render(); break;
+    case "stock-adjust": { const b=beanById(id); if(b) openStock(b); break; }
+    case "del-use": {
+      const key=id+":"+t.dataset.i, b=beanById(id); if(!b) break;
+      if(ui.confirmUse===key){ ui.confirmUse=null; const i=Number(t.dataset.i);
+        const nb=Object.assign({},b,{usage:(b.usage||[]).filter((_,k)=>k!==i)}); if(remainRaw(nb)>0) nb.outOfStock=false;
+        if(await persist(nb)) toast("已退回這杯的庫存"); render(); }
+      else { ui.confirmUse=key; render(); }
+      break; }
     case "stock-filter": ui.stock=t.dataset.v; render(); break;
     case "stock": readForm(); ui.form.outOfStock=t.dataset.v==="out"; render(); break;
     case "toggle-stock": { const b=beanById(id); if(!b) break;
@@ -1444,9 +1570,10 @@ document.addEventListener("click",async ev=>{
     case "brew": T.beanId=id; T.running=false; T.elapsed=0; T.lastStep=-1; go("timer"); break;
     case "t-toggle":
       if(T.running){ T.elapsed=curElapsed(); T.running=false; cancelAnimationFrame(T.raf); tickOn(false); lockWake(false); }
-      else { T.start=performance.now(); T.running=true; lockWake(true); beep(); T.lastStep=-2; tickOn(true); if(musicPref()&&!Music.playing()) Music.start(); }
+      else { T.start=performance.now(); T.running=true; lockWake(true); beep(); T.lastStep=-2; tickOn(true); if(musicPref()&&!Music.playing()) Music.start(); if(T.elapsed===0&&!T.counted) consumeCup(); }
       t.textContent=T.running?"暫停":"繼續"; paintTimer(); break;
-    case "t-reset": cancelAnimationFrame(T.raf); tickOn(false); T.running=false; T.elapsed=0; T.lastStep=-1; lockWake(false); Music.stop(); render(); break;
+    case "t-reset": { const eNow=curElapsed(), bb=timerBean(), rr=bb&&normalizeRecipe(bb.recipe,bb), total=rr?rr.pours[rr.pours.length-1].to:150; if(T.counted&&eNow<total) refundCup(); else T.counted=null; }
+      cancelAnimationFrame(T.raf); tickOn(false); T.running=false; T.elapsed=0; T.lastStep=-1; lockWake(false); Music.stop(); render(); break;
     case "m-next": Music.next(); if(!Music.playing()&&Music.start()) setMusicPref(true); break;
     case "m-toggle": if(Music.playing()){ Music.stop(); setMusicPref(false); } else { if(Music.start()) setMusicPref(true); else toast("這個瀏覽器無法播放音樂"); } break;
   }
