@@ -116,7 +116,7 @@ button{cursor:pointer}
 /* tab bar */
 .tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-radius:24px 24px 0 0;box-shadow:0 -4px 18px rgba(140,80,50,.10);
   padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:6}
-.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
 .tab{border:0;background:transparent;border-radius:18px;padding:8px 0 6px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;font-weight:700;color:var(--ink-soft)}
 .tab svg{display:block}
 .tab[aria-current="page"]{background:var(--accent-soft);color:var(--rasp)}
@@ -203,6 +203,30 @@ button{cursor:pointer}
 .sb-bar i{display:block;height:100%;border-radius:6px;background:var(--teal)}
 .stockbox.low .sb-bar i{background:#E5566F}
 .use{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--surface);border-radius:14px;padding:8px 12px;font-size:13px}
+.calbox{background:var(--surface);border-radius:24px;padding:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.calnav{display:flex;align-items:center;justify-content:space-between}
+.calnav b{font-family:var(--f-display);font-size:17px}
+.calnav .iconbtn{width:36px;height:36px;box-shadow:none;background:var(--surface-2);font-size:20px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .dh{font-size:11px;text-align:center;color:var(--ink-soft)}
+.cal .day{aspect-ratio:1;max-width:100%;border:0;background:transparent;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0;min-width:0}
+.cal .day .dn{font-family:var(--f-num);font-size:13px;line-height:1}
+.cal .day.has{background:var(--butter-soft)}
+.cal .day.today .dn{color:var(--rasp);font-weight:700}
+.cal .day.sel{outline:2px solid var(--accent);outline-offset:-2px}
+.cal .day .dots{display:flex;gap:2px;height:6px}
+.cal .day .dots i{width:6px;height:6px;border-radius:50%}
+.calsum{font-size:13.5px;color:var(--ink-soft);text-align:center}
+.calsum b{color:var(--rasp);font-size:17px}
+.dayh{display:flex;justify-content:space-between;align-items:baseline;font-size:16px;margin-top:4px}
+.brew{display:flex;gap:10px;align-items:center;background:var(--surface);border-radius:18px;padding:8px 12px 8px 8px;border:0;width:100%;text-align:left;box-shadow:var(--shadow)}
+.brew .th{flex:none;width:44px;height:44px;border-radius:14px;overflow:hidden;line-height:0}
+.brew .th svg{width:100%;height:100%}
+.brew .bi{flex:1;min-width:0;display:flex;flex-direction:column}
+.brew .bn{font-weight:700;font-size:14.5px;overflow-wrap:anywhere}
+.brew .bm{font-size:12.5px;color:var(--ink-soft);overflow-wrap:anywhere}
+.brew .bdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.brew .go{color:var(--ink-soft);font-size:20px}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
 .buy .price{font-family:var(--f-num);font-weight:700;font-size:17px;color:var(--rasp)}
 .costline{font-size:14px;background:var(--butter-soft);border-radius:14px;padding:10px 12px}
@@ -290,6 +314,7 @@ textarea.inp{min-height:76px;resize:vertical}
 <nav class="tabs" aria-label="主要分頁"><div class="in">
   <button class="tab" id="tab-home" data-tab="home"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(20 12 12)"/><path d="M14.6 3.6C9.6 8 15 14 9.4 20.4"/></svg>豆櫃</button>
   <button class="tab" id="tab-timer" data-tab="timer"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5h4"/></svg>沖煮計時</button>
+  <button class="tab" id="tab-log" data-tab="log"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/><circle cx="9" cy="14.5" r="1.2" fill="currentColor"/><circle cx="14" cy="14.5" r="1.2" fill="currentColor"/></svg>日誌</button>
   <button class="tab" id="tab-buy" data-tab="buy"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><path d="M5 8h14l-1.1 11.2a1.5 1.5 0 0 1-1.5 1.3H7.6a1.5 1.5 0 0 1-1.5-1.3z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>採購</button>
   <button class="tab" id="tab-know" data-tab="know"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>咖啡知識</button>
 </div></nav>
@@ -669,7 +694,7 @@ async function boot(){
 }
 
 /* ---------- ui state ---------- */
-const ui = { tab:"home", view:"list", beanId:null, q:"", stock:"all", ktag:"all", tipIdx: Math.floor(Math.random()*KNOW.length), form:null, busy:false, msg:"" };
+const ui = { tab:"home", view:"list", beanId:null, q:"", stock:"all", ktag:"all", logMonth:"", logDay:null, logBean:"all", tipIdx: Math.floor(Math.random()*KNOW.length), form:null, busy:false, msg:"" };
 try{ const t=localStorage.getItem("beanbook.tab"); if(t) ui.tab=t; }catch(e){}
 
 function go(tab, view="list", beanId=null){
@@ -701,6 +726,7 @@ function render(){
     else { ui.view="list"; app.innerHTML=viewList(); }
   } else if(ui.tab==="timer") app.innerHTML=viewTimer();
   else if(ui.tab==="buy") app.innerHTML=viewBuy();
+  else if(ui.tab==="log") app.innerHTML=viewLog();
   else app.innerHTML=viewKnow();
   if(ui.tab==="timer") paintTimer();
 }
@@ -975,6 +1001,61 @@ function viewBuy(){
     <div class="stack" style="gap:10px">${rows}</div>
   </div>
   ${canWrite&&beans.length?`<button class="fab" id="fab-buy" data-act="buy-any">${icoPlus}記一筆採購</button>`:""}`;
+}
+
+/* ---------- brew journal: when, and which bean ---------- */
+const BEAN_COLORS=["#C65370","#4E9688","#C49A45","#7F4592","#5E9E6E","#D9485B","#5A9BCB","#8A5232","#E08A3C","#3F7F8C"];
+const beanColor=b=>BEAN_COLORS[beanRank(b)%BEAN_COLORS.length];
+const pad2=n=>String(n).padStart(2,"0");
+const localDate=iso=>{ const d=new Date(iso); return isNaN(d)?"":d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()); };
+const hhmm=iso=>{ const d=new Date(iso); return isNaN(d)?"":pad2(d.getHours())+":"+pad2(d.getMinutes()); };
+const WEEK="日一二三四五六";
+const dayLabel=ds=>{ const d=new Date(ds+"T00:00:00"); return isNaN(d)?ds:(d.getMonth()+1)+"/"+d.getDate()+"（"+WEEK[d.getDay()]+"）"; };
+function allBrews(){
+  return beans.flatMap(b=>[
+    ...(b.usage||[]).map(u=>({kind:"cup",bean:b,date:localDate(u.t),time:hhmm(u.t),g:Number(u.g)||0})),
+    ...(b.logs||[]).map(l=>({kind:"log",bean:b,date:String(l.date||""),time:"",log:l}))
+  ]).filter(e=>e.date).sort((a,c)=>(c.date+" "+(c.time||"99")).localeCompare(a.date+" "+(a.time||"99")));
+}
+function shiftMonth(ym,delta){ const [y,m]=ym.split("-").map(Number); const d=new Date(y,m-1+delta,1); return d.getFullYear()+"-"+pad2(d.getMonth()+1); }
+function viewLog(){
+  const ym=ui.logMonth||today().slice(0,7);
+  const all=allBrews().filter(e=>ui.logBean==="all"||e.bean.id===ui.logBean);
+  const month=all.filter(e=>e.date.startsWith(ym));
+  const cups=month.filter(e=>e.kind==="cup");
+  const grams=cups.reduce((a,e)=>a+e.g,0);
+  const tally={}; cups.forEach(e=>{ tally[e.bean.id]=(tally[e.bean.id]||0)+1; });
+  const topId=Object.keys(tally).sort((a,c)=>tally[c]-tally[a])[0], top=topId&&beanById(topId);
+  // calendar
+  const [y,m]=ym.split("-").map(Number), first=new Date(y,m-1,1).getDay(), days=new Date(y,m,0).getDate(), tdy=today();
+  const byDay={}; month.forEach(e=>{ (byDay[e.date]=byDay[e.date]||[]).push(e); });
+  let cells=""; for(let i=0;i<first;i++) cells+='<span class="day blank" aria-hidden="true"></span>';
+  for(let d=1;d<=days;d++){
+    const ds=ym+"-"+pad2(d), list=byDay[ds]||[], uniq=[...new Map(list.map(e=>[e.bean.id,e.bean])).values()];
+    const nCup=list.filter(e=>e.kind==="cup").length;
+    cells+=`<button type="button" class="day${list.length?" has":""}${ui.logDay===ds?" sel":""}${ds===tdy?" today":""}" data-act="log-day" data-v="${ds}" aria-label="${m} 月 ${d} 日${list.length?"，"+(nCup||list.length)+" 筆":""}">
+      <span class="dn">${d}</span><span class="dots">${uniq.slice(0,3).map(b=>`<i style="background:${beanColor(b)}"></i>`).join("")}</span></button>`;
+  }
+  const shown=ui.logDay?month.filter(e=>e.date===ui.logDay):month;
+  const groups=[]; shown.forEach(e=>{ const g=groups[groups.length-1]; if(g&&g.date===e.date) g.items.push(e); else groups.push({date:e.date,items:[e]}); });
+  const rows=groups.map(g=>`<h3 class="dayh">${dayLabel(g.date)}<span class="muted small num">${g.items.filter(e=>e.kind==="cup").length} 杯</span></h3>
+    ${g.items.map(e=>`<button class="brew" data-act="open" data-id="${esc(e.bean.id)}">
+      <span class="th">${artThumb(e.bean,44)}</span>
+      <span class="bi"><span class="bn"><i class="bdot" style="background:${beanColor(e.bean)}"></i>${esc(e.bean.name)}</span>
+        <span class="bm num">${e.kind==="cup"?`${e.time} · 沖了一杯 · ${e.g}g`:`品飲紀錄 · ${"☕".repeat(Number(e.log.rating)||0)}${e.log.note?" · "+esc(e.log.note):""}`}</span></span>
+      <span class="go" aria-hidden="true">›</span></button>`).join("")}`).join("");
+  const opts=sorted().map(b=>`<option value="${esc(b.id)}" ${ui.logBean===b.id?"selected":""}>${esc(b.name)}</option>`).join("");
+  return `${header()}<div class="stack" style="margin-top:10px">
+    <div class="sechead"><h2>${icoBean("#8A5232",24)}沖煮日誌${sparks()}</h2><span class="muted small num">共 ${all.filter(e=>e.kind==="cup").length} 杯</span></div>
+    <label class="field"><span>看哪一支？</span><select class="inp" id="log-bean"><option value="all">全部豆子</option>${opts}</select></label>
+    <div class="calbox">
+      <div class="calnav"><button class="iconbtn" data-act="log-prev" aria-label="上個月">‹</button><b class="num">${y} 年 ${m} 月</b><button class="iconbtn" data-act="log-next" aria-label="下個月">›</button></div>
+      <div class="cal">${[...WEEK].map(w=>`<span class="dh">${w}</span>`).join("")}${cells}</div>
+      <div class="calsum num">這個月沖了 <b>${cups.length}</b> 杯 · 用豆 ${money(grams)}g${top?` · 最常沖：${esc(top.name)}`:""}</div>
+    </div>
+    ${ui.logDay?`<div class="row" style="justify-content:space-between"><span class="small muted">只顯示 ${dayLabel(ui.logDay)}</span><button class="linkbtn" data-act="log-day" data-v="${ui.logDay}">看整個月</button></div>`:""}
+    ${rows||`<div class="empty">${beanSvg("淺中焙",64,"sleep")}<h3 style="margin-top:6px">${ui.logDay?"這天沒有沖咖啡":"這個月還沒有沖煮紀錄"}</h3><p class="muted small">在「沖煮計時」按「開始」，就會自動記下時間和豆子；沖完按「記一杯」可以加評分和心得。</p></div>`}
+  </div>`;
 }
 
 function viewKnow(){
@@ -1499,6 +1580,7 @@ document.addEventListener("input",ev=>{
   if(ev.target.id==="q"){ ui.q=ev.target.value; const pos=ev.target.selectionStart; render(); const q=$("#q"); if(q){ q.focus(); try{q.setSelectionRange(pos,pos);}catch(e){} } }
 });
 document.addEventListener("change",ev=>{
+  if(ev.target.id==="log-bean"){ ui.logBean=ev.target.value; render(); return; }
   if(ev.target.id==="m-track"){ Music.select(Number(ev.target.value)); if(!Music.playing()&&Music.start()) setMusicPref(true); return; }
   if(ev.target.id==="t-bean"){ T.counted=null; cancelAnimationFrame(T.raf); tickOn(false); T.beanId=ev.target.value; T.running=false; T.elapsed=0; T.lastStep=-1; render(); }
 });
@@ -1517,6 +1599,9 @@ document.addEventListener("click",async ev=>{
       ui.form=null; ui.busy=false; go("home", backId?"detail":"list", backId); break; }
     case "new": ui.form=newForm(null); go("home","form"); break;
     case "edit": ui.form=newForm(beanById(id)); ui.tab="home"; ui.view="form"; ui.msg=""; render(); window.scrollTo(0,0); break;
+    case "log-prev": ui.logMonth=shiftMonth(ui.logMonth||today().slice(0,7),-1); ui.logDay=null; render(); break;
+    case "log-next": ui.logMonth=shiftMonth(ui.logMonth||today().slice(0,7),1); ui.logDay=null; render(); break;
+    case "log-day": ui.logDay = ui.logDay===t.dataset.v ? null : t.dataset.v; render(); break;
     case "ktag": ui.ktag=t.dataset.v; render(); break;
     case "stock-adjust": { const b=beanById(id); if(b) openStock(b); break; }
     case "del-use": {
